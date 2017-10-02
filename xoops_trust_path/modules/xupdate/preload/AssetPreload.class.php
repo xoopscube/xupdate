@@ -68,7 +68,7 @@ class Xupdate_AssetPreloadBase extends XCube_ActionFilter
         $this->mRoot->mDelegateManager->add('Legacy_Utils.CreateBlockProcedure', 'Xupdate_AssetPreloadBase::getBlock');
         
         $this->mRoot->mDelegateManager->add('Legacy.Admin.Event.ModuleListSave.Success', array(&$this, '_setNeedCacheRemake'));
-        $this->mRoot->mDelegateManager->add('Legacy.Admin.Event.ModuleInstall.Success', array(&$this, '_setNeedCacheRemake'));
+        $this->mRoot->mDelegateManager->add('Legacy.Admin.Event.ModuleInstall.Success', array(&$this, '_setNeedCacheRemakeOnInstall'));
         $this->mRoot->mDelegateManager->add('Legacy.Admin.Event.ModuleUpdate.Success', array(&$this, '_setNeedCacheRemake'));
         $this->mRoot->mDelegateManager->add('Legacy.Admin.Event.ModuleUninstall.Success', array(&$this, '_setNeedCacheRemake'));
 
@@ -127,6 +127,12 @@ class Xupdate_AssetPreloadBase extends XCube_ActionFilter
         $handler->setNeedCacheRemake();
     }
 
+    public function _setNeedCacheRemakeOnInstall()
+    {
+    	$handler = Legacy_Utils::getModuleHandler('store', 'xupdate');
+    	$handler->setNeedCacheRemake(true);
+    }
+    
     /**
      * getManager
      *
