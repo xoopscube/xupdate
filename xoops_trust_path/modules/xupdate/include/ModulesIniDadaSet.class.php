@@ -124,7 +124,7 @@ class Xupdate_ModulesIniDadaSet
 
         if (($checkonly && $cacheCheckStr === 'running')
             || (!$checkonly && $cacheCheckStr === 'bg_ok'.$cacheCheckMd5)
-            || @ filemtime($cacheCheckFile) + $this->cacheTTL > $_SERVER['REQUEST_TIME'] && $cacheCheckStr === ($checkonly? 'bg_ok' : 'ok').$cacheCheckMd5
+            || (@ filemtime($cacheCheckFile) + $this->cacheTTL > $_SERVER['REQUEST_TIME'] && $cacheCheckStr === ($checkonly? 'bg_ok' : 'ok').$cacheCheckMd5)
         ) {
             return false;
         }
