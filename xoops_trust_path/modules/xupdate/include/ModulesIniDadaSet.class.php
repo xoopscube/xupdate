@@ -385,6 +385,10 @@ class Xupdate_ModulesIniDadaSet
 
     private function _encodeItem(&$item, $items_lang, $key)
     {
+        $enc = str_replace(array('-', '_'), '', strtolower(_CHARSET));
+        if (! empty($item['addon_url_'.$enc])) {
+            $item['addon_url'] = $item['addon_url_'.$enc];
+        }
         foreach (array('description', 'tag') as $_key) {
             if (! @ json_encode($item[$_key])) {
                 // if not UTF-8
@@ -436,6 +440,7 @@ class Xupdate_ModulesIniDadaSet
         || isset($item['writable_dir'])
         || isset($item['no_overwrite'])
         || isset($item['no_update'])
+        || isset($item['rename_item'])
         || isset($item['delete_file'])
         || isset($item['delete_dir'])) {
             if (isset($item['writable_file'])) {
@@ -449,6 +454,9 @@ class Xupdate_ModulesIniDadaSet
             }
             if (isset($item['no_update'])) {
                 $item_arr['no_update'] = array_filter($item['no_update'], 'strlen');
+            }
+            if (isset($item['rename_item'])) {
+                $item_arr['rename_item'] = array_filter($item['rename_item'], 'strlen');
             }
             if (isset($item['delete_file'])) {
                 $item_arr['delete_file'] = array_filter($item['delete_file'], 'strlen');
@@ -541,6 +549,7 @@ class Xupdate_ModulesIniDadaSet
         $item['writable_file'] = $options['writable_file'];
         $item['delete_dir'] = $options['delete_dir'];
         $item['delete_file'] = $options['delete_file'];
+        $item['rename_item'] = $options['rename_item'];
         $item['force_languages'] = $options['force_languages'];
         if (isset($options['modinfo'])) {
             $item['modinfo'] = $options['modinfo'];

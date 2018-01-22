@@ -315,4 +315,19 @@ class Xupdate_Utils
         }
         return $arg;
     }
+
+    /**
+     * For debuging function
+     */
+    public static function debug()
+    {
+        $arg = func_get_args();
+        ob_start();
+        foreach($arg as $v) {
+            var_dump($v);
+        }
+        $o = ob_get_contents();
+        ob_end_clean();
+        file_put_contents(XOOPS_TRUST_PATH.'/uploads/xupdate/debug.txt', $o, FILE_APPEND);
+    }
 }

@@ -555,6 +555,20 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive
     }
     
     /**
+     * Rename local file
+     *
+     * @param  string  $pair   The pair "from|to"
+     * @return void
+     */
+    private function _rename($pair)
+    {
+        list($from, $to) = explode('|', $pair);
+        if ($from && $to && !file_exists($to)) {
+            $this->Ftp->localRename($from, $to);
+        }
+    }
+
+    /**
      * Delete local file
      * 
      * @param string $path local path
@@ -608,6 +622,11 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive
      */
     private function _set_item_perm()
     {
+        // rename items
+        Xupdate_Utils::debug($this->options['rename_item']);
+        if (isset($this->options['rename_item'])) {
+            array_map(array($this, '_rename'), $this->options['rename_item']);
+        }
         // change directories to writable
         if (isset($this->options['writable_dir'])) {
             array_map(array($this, '_chmod_dir'), $this->options['writable_dir']);

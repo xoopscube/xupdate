@@ -410,6 +410,13 @@ class Xupdate_ModuleStore extends Legacy_AbstractObject
         } else {
             $options['no_update'] = array();
         }
+        if (isset($options['rename_item'])) {
+            if (! $readini) {
+                array_walk($options['rename_item'], array($this, '_printf'), array($dirname, XOOPS_ROOT_PATH, XOOPS_TRUST_PATH));
+            }
+        } else {
+            $options['rename_item'] = array();
+        }
         if (isset($options['delete_dir'])) {
             if (! $readini) {
                 array_walk($options['delete_dir'], array($this, '_printf'), array($dirname, XOOPS_ROOT_PATH, XOOPS_TRUST_PATH));
