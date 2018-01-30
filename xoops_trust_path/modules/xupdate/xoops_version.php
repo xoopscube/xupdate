@@ -21,8 +21,8 @@ $basename = basename($dirname);
 // Define a basic manifesto.
 //
 $modversion['name'] = _MI_XUPDATE_LANG_XUPDATE;
-$modversion['version'] = '0.73';
-$modversion['detailed_version'] = '0.73.0';
+$modversion['version'] = '0.74';
+$modversion['detailed_version'] = '0.74.0';
 $modversion['description'] = _MI_XUPDATE_DESC_XUPDATE;
 $modversion['author'] = _MI_XUPDATE_LANG_AUTHOR;
 $modversion['credits'] = _MI_XUPDATE_LANG_CREDITS;
@@ -323,6 +323,16 @@ $modversion['config'] = array(
         'options'    => array(),
     ) ,
     
+    array(
+        'name'        => 'disabled_items' ,
+        'title'        => '_MI_XUPDATE_DISABLED_ITEMS',
+        'description'    => '_MI_XUPDATE_DISABLED_ITEMSDSC',
+        'formtype'    => 'textarea',
+        'valuetype'    => 'string',
+        'default'    => '',
+        'options'    => array(),
+    ) ,
+
     array(
         'name'          => 'tag_dirname' ,
         'title'         => '_MI_XUPDATE_TAG_DIRNAME' ,

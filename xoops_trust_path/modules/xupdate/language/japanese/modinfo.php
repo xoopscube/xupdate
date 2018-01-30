@@ -122,6 +122,8 @@ define('_MI_XUPDATE_PHP_PERM', '.php パーミッション');
 define('_MI_XUPDATE_PHP_PERMDSC', '拡張子が php のファイルにセットするパーミッション(PHP が CGI モードの場合など、必要であれば指定します。)');
 define('_MI_XUPDATE_ONLY_CONF_LANG', '使用言語ファイルのみ');
 define('_MI_XUPDATE_ONLY_CONF_LANGDSC', 'language ディレクトリは、英語と使用言語のファイルのみ配置する。<br />マルチランゲージを必要としない場合に「はい」を選択することで、不必要なファイルを配置しないようにできます。');
+define('_MI_XUPDATE_DISABLED_ITEMS', '非表示にするアイテム');
+define('_MI_XUPDATE_DISABLED_ITEMSDSC', '一覧に表示しないアイテムを行単位で指定します。<br>書式 - ストアID:アイテムキー<br>例 - 1:cubeUtils');
 define('_MI_XUPDATE_DEBUG', 'デバグ出力を表示する');
 define('_MI_XUPDATE_FTP_ADDON_URL', 'アドオンURL');
 define('_MI_XUPDATE_FTP_THEME_URL', 'テーマURL');

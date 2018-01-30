@@ -53,6 +53,8 @@ class Xupdate_ModulesIniDadaSet
     
     
     private $mTagModule;
+
+    private $disabled_items = array();
     
     protected $mSiteObjects = array();
     protected $mSiteItemArray = array();
@@ -72,6 +74,17 @@ class Xupdate_ModulesIniDadaSet
             'theme' => $mAsset->getObject('handler', 'ThemeStore', false),
             'preload' => $mAsset->getObject('handler', 'PreloadStore', false));
         $this->modHand['package'] = $this->modHand['module'];
+
+        if ($root->mContext->mModuleConfig['disabled_items']) {
+            $_disabled = preg_split('/[\r\n]+/', $root->mContext->mModuleConfig['disabled_items']);
+            foreach($_disabled as $_line) {
+                $_line = trim($_line);
+                list($_sid, $_key) = array_pad(preg_split('/\s*:\s*/', $_line), 2, '');
+                if ($_sid && $_key) {
+                    $this->disabled_items[$_sid . ':' . $_key] = true; 
+                }
+            }
+        }
     }
 
     public function execute($callers, $checkonly = false)
@@ -375,7 +388,7 @@ class Xupdate_ModulesIniDadaSet
         foreach ($items as $key => $check) {
             $_sid = $isPackage? intval(substr($check['dirname'], 1)) : $sid;
             // $sid >= 10000: My store (all approve)
-            if ($sid >= 10000 || (isset($this->master[$_sid]) && isset($this->master[$_sid][$check['target_key']]))) {
+            if ($sid >= 10000 || (isset($this->master[$_sid]) && isset($this->master[$_sid][$check['target_key']]) && empty($this->disabled_items[$_sid . ':' . $check['target_key']]))) {
                 $this->approved[$sid][$check['target_key']] = true;
             } else {
                 unset($items[$key]);
