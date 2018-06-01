@@ -48,10 +48,13 @@ class Xupdate_Admin_UserPassColumnLenFixAction extends Xupdate_AbstractAction
                     $add =  '    // Alrady fixed length of users table pass column of this DB (Auto inserts by X-update)'."\n";
                     $add .= '    define(\'XCUBE_CORE_USER_PASS_LEN_FIXED\', true);'."\n\n";
                     $src = preg_replace($sens, '$0' . $add, $src);
+                    $local = XOOPS_TRUST_PATH.'/'.$this->mod_config['temp_path'].'/mainfile.custom.php';
+                    file_put_contents($local, $src);
                     $mod = @ fileperms($mainfile);
                     $this->Ftp->localChmod($mainfile, 0606);
-                    file_put_contents($mainfile, $src, LOCK_EX);
+                    $this->Ftp->localPut($local, $mainfile);
                     $this->Ftp->localChmod($mainfile, $mod? $mod : 0404);
+                    @unlink($local);
                 }
             }
         }
