@@ -143,7 +143,7 @@ class Xupdate_AdminRenderSystem extends Legacy_AdminRenderSystem
             'dirname' => null,
             'file'    => null
         );
-        if (strpos($file, '..') !== false || strpos($prefix, '..' !== false)) {
+        if (strpos($file, '..') !== false || ($prefix && strpos($prefix, '..') !== false)) {
             return $ret;
         }
         $root =& XCube_Root::getSingleton();
