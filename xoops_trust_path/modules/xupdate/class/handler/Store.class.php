@@ -65,7 +65,7 @@ class Xupdate_StoreHandler extends XoopsObjectGenericHandler
     public function setNeedCacheRemake($remove = false)
     {
         if ($remove) {
-            unlink($this->cacheCheckFile);
+            is_file($this->cacheCheckFile) && unlink($this->cacheCheckFile);
         } else {
             touch($this->cacheCheckFile, 0);
         }
