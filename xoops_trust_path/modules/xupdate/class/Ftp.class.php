@@ -370,7 +370,7 @@ class Xupdate_Ftp extends Xupdate_Ftp_
     // remove directories recursively
     protected function removeDirectory($dir)
     {
-        if ($handle = opendir("$dir")) {
+        if ($handle = opendir((string)$dir)) {
             while (false !== ($item = readdir($handle))) {
                 if ($item != "." && $item != "..") {
                     if (is_dir("$dir/$item")) {

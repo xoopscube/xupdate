@@ -133,8 +133,8 @@ class Xupdate_AbstractInstallAction extends Xupdate_AbstractAction
         $jQuery = $this->mRoot->mContext->getAttribute('headerScript');
         $jQuery->addScript($this->modalBoxJs(), false);
         
-        $this->id = intval($this->Xupdate->get('id'));
-        $this->sid = intval($this->Xupdate->get('sid'));
+        $this->id = (int)$this->Xupdate->get('id');
+        $this->sid = (int)$this->Xupdate->get('sid');
 
         $modHand =& $this->_getModuleStoreHandler();
         $storeHand =  & $this->_getStoreHandler();
@@ -254,7 +254,7 @@ class Xupdate_AbstractInstallAction extends Xupdate_AbstractAction
         $xupdateFtpModuleInstall->dirname = $this->mActionForm->get('dirname');
         $xupdateFtpModuleInstall->html_only = $this->mActionForm->get('html_only');
 
-        $this->id = intval($this->Xupdate->get('id'));
+        $this->id = (int)$this->Xupdate->get('id');
         $modHand =& $this->_getModuleStoreHandler();
         $mobj =& $modHand->get($this->id);
         if (is_object($mobj)) {
@@ -382,7 +382,7 @@ class Xupdate_AbstractInstallAction extends Xupdate_AbstractAction
                  ||
                 !(@include($xoops_version))
                  ||
-                sprintf('%01.2f', floatval($modversion['version'])) != $mobj->getRenderedVersion()
+                sprintf('%01.2f', (float)$modversion['version']) != $mobj->getRenderedVersion()
                  ||
                 ($mobj->options['detailed_version'] && ($mobj->options['detailed_version'] != @$modversion['detailed_version']))
                 );

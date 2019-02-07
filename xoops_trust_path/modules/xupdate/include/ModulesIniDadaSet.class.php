@@ -307,7 +307,7 @@ class Xupdate_ModulesIniDadaSet
                     $rObjs = array();
                     foreach ($items as $key => $item) {
                         if ($isPackage) {
-                            $_sid = intval(substr($item['dirname'], 1));
+                            $_sid = (int)substr($item['dirname'], 1);
                             if (!isset($rObjs[$_sid])) {
                                 $_objs = $this->modHand[$caller]->getObjects(new Criteria('sid', $_sid), null, null, true);
                                 foreach ($_objs as $id => $mobj) {
@@ -386,7 +386,7 @@ class Xupdate_ModulesIniDadaSet
         $this->approved[$sid] = array();
         // $sid >= 10000: My store
         foreach ($items as $key => $check) {
-            $_sid = $isPackage? intval(substr($check['dirname'], 1)) : $sid;
+            $_sid = $isPackage? (int)substr($check['dirname'], 1) : $sid;
             // $sid >= 10000: My store (all approve)
             if ($sid >= 10000 || (isset($this->master[$_sid]) && isset($this->master[$_sid][$check['target_key']]) && empty($this->disabled_items[$_sid . ':' . $check['target_key']]))) {
                 $this->approved[$sid][$check['target_key']] = true;
@@ -700,8 +700,8 @@ class Xupdate_ModulesIniDadaSet
     {
         $sid = $item['sid'];
         //trustモジュールでない(複製可能なものはどうしよう)
-        $item['version']= isset($item['version']) ? round(floatval($item['version'])*100): 0 ;
-        $item['replicatable']= isset($item['replicatable']) ? intval($item['replicatable']): 0 ;
+        $item['version']= isset($item['version']) ? round((float)$item['version'] * 100): 0 ;
+        $item['replicatable']= isset($item['replicatable']) ? (int)$item['replicatable'] : 0 ;
         $item['target_key']= isset($item['target_key']) ? $item['target_key']: $item['dirname'] ;
         $item['trust_dirname']= '' ;
         $item['description']= isset($item['description']) ? $item['description']: '' ;
@@ -732,8 +732,8 @@ class Xupdate_ModulesIniDadaSet
     private function _setDataTrustModule($item, $caller)
     {
         $sid = $item['sid'];
-        $item['version']= isset($item['version']) ? round(floatval($item['version'])*100): 0 ;
-        $item['replicatable']= isset($item['replicatable']) ? intval($item['replicatable']): 0 ;
+        $item['version']= isset($item['version']) ? round((float)$item['version'] * 100): 0 ;
+        $item['replicatable']= isset($item['replicatable']) ? (int)$item['replicatable'] : 0 ;
         $item['target_key']= isset($item['target_key']) ? $item['target_key']: $item['dirname'] ;
         $item['trust_dirname']= isset($item['trust_dirname']) ? $item['trust_dirname']: $item['dirname'] ;
         $item['description']= isset($item['description']) ? $item['description']: '' ;

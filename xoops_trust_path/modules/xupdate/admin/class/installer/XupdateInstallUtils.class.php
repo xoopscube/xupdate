@@ -336,7 +336,7 @@ class Xupdate_InstallUtils
         $blockObj->set('template', $filename['public']);
         $blockObj->set('last_modified', time());
         $blockObj->set('visible', $visible);
-        $blockObj->set('func_num', intval($block['func_num']));
+        $blockObj->set('func_num', (int)$block['func_num']);
         return $blockObj;
     }
 

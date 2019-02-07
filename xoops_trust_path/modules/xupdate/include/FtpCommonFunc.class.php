@@ -120,7 +120,7 @@ class Xupdate_FtpCommonFunc
     protected function is_xupdate_excutable()
     {
         if (file_exists(_MD_XUPDATE_SYS_LOCK_FILE) && filemtime(_MD_XUPDATE_SYS_LOCK_FILE) + 600 > time()) {
-            $this->retry_phase = intval(file_get_contents(_MD_XUPDATE_SYS_LOCK_FILE));
+            $this->retry_phase = (int)file_get_contents(_MD_XUPDATE_SYS_LOCK_FILE);
             return false;
         }
         ignore_user_abort(true); // Ignore user aborts and allow the script
