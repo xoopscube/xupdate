@@ -375,7 +375,7 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive
     {
         static $langs = null;
         
-        if (is_null($langs)) {
+        if (null === $langs) {
             $langs = array();
             if ($handle = opendir(XOOPS_ROOT_PATH . '/language')) {
                 while (false !== ($name = readdir($handle))) {

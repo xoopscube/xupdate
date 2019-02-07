@@ -307,7 +307,7 @@ class Xupdate_Utils
     public static function convertEncoding($arg)
     {
         static $doConvert = null;
-        if (is_null($doConvert)) {
+        if (null === $doConvert) {
             $doConvert = (function_exists('mb_convert_variables') && strtoupper(_CHARSET) !== 'UTF-8');
         }
         if ($doConvert) {

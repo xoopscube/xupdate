@@ -468,7 +468,7 @@ class Xupdate_ModuleStore extends Legacy_AbstractObject
     {
         static $names = array();
         static $sHandler = null;
-        if (is_null($sHandler)) {
+        if (null === $sHandler) {
             $sHandler = Legacy_Utils::getModuleHandler('Store', 'xupdate');
         }
         if (! isset($names[$sid])) {

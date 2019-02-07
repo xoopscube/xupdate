@@ -419,7 +419,7 @@ class Xupdate_ModulesIniDadaSet
     private function _createItemOptions($item, $caller)
     {
         static $mVars;
-        if (is_null($mVars)) {
+        if (null === $mVars) {
             $mobj = $this->modHand[$caller]->create();
             $mVars = $mobj->mVars;
             unset($mobj);

@@ -149,7 +149,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 
     protected function Passive($pasv=null)
     {
-        if (is_null($pasv)) {
+        if (null === $pasv) {
             $this->_passive=!$this->_passive;
         } else {
             $this->_passive=$pasv;
@@ -281,12 +281,12 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 
     protected function login($user=null, $pass=null)
     {
-        if (!is_null($user)) {
+        if (null !== $user) {
             $this->_login=$user;
         } else {
             $this->_login="anonymous";
         }
-        if (!is_null($pass)) {
+        if (null !== $pass) {
             $this->_password=$pass;
         } else {
             $this->_password="anon@anon.com";
@@ -562,7 +562,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 
     protected function get($remotefile, $localfile=null, $rest=0)
     {
-        if (is_null($localfile)) {
+        if (null === $localfile) {
             $localfile=$remotefile;
         }
         if (@file_exists($localfile)) {
@@ -615,7 +615,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 
     protected function put($localfile, $remotefile=null, $rest=0)
     {
-        if (is_null($remotefile)) {
+        if (null === $remotefile) {
             $remotefile=$localfile;
         }
         if (!@file_exists($localfile)) {
