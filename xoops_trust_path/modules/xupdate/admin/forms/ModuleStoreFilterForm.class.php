@@ -46,7 +46,7 @@ class Xupdate_Admin_ModuleStoreFilterForm extends Xupdate_AbstractFilterForm
         MODULE_SORT_KEY_CATEGORY_ID => "category_id"
     );
 
-    public function Xupdate_Admin_ModuleStoreFilterForm()
+    public function __construct()
     {
         $this->_mCriteria =new CriteriaCompo();
     }
