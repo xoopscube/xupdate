@@ -20,7 +20,7 @@ class Xupdate_Admin_ModuleStoreForm extends XCube_ActionForm
     {
         //
         //
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return "module.xupdate.Admin_ModuleStorForm.TOKEN";
         } else {
             return null;

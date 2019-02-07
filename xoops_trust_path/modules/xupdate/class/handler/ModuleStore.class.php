@@ -20,7 +20,7 @@ class Xupdate_ModuleStore extends Legacy_AbstractObject
 
     public function __construct()
     {
-        if (XOOPS_DB_TYPE == "pdo_pgsql") {
+        if (XOOPS_DB_TYPE === "pdo_pgsql") {
             $this->initVar('id', XOBJ_DTYPE_INT, "nextval('".XOOPS_DB_PREFIX."_".$this->mDirname."_modulestore_id_seq')", false);//Primary key
         } else {
             $this->initVar('id', XOBJ_DTYPE_INT, '0', false);//Primary key
@@ -195,7 +195,7 @@ class Xupdate_ModuleStore extends Legacy_AbstractObject
                 $this->setVar('isactive', -1);
                 if (! $_isModule) {
                     // for Theme
-                    if ($this->getVar('contents') == 'theme') {
+                    if ($this->getVar('contents') === 'theme') {
                         $t_dir = XOOPS_ROOT_PATH . '/themes/' . $this->getVar('dirname');
                         if (is_dir($t_dir)) {
                             $this->setVar('isactive', 1);
@@ -228,7 +228,7 @@ class Xupdate_ModuleStore extends Legacy_AbstractObject
                         }
                     }
                     // for Preload
-                    if ($this->getVar('contents') == 'preload') {
+                    if ($this->getVar('contents') === 'preload') {
                         $t_file = XOOPS_ROOT_PATH . '/preload/' . $this->getVar('target_key') . '.class.php';
                         if (is_file($t_file)) {
                             $lastupdate = filemtime($t_file);
@@ -265,7 +265,7 @@ class Xupdate_ModuleStore extends Legacy_AbstractObject
      */
     public function isDirnameError()
     {
-        if ($this->getVar('target_type') == 'TrustModule') {
+        if ($this->getVar('target_type') === 'TrustModule') {
             if (is_object($this->mModule)) {
                 if ($this->mModule->getVar('mid')) {
                     if ($this->getVar('trust_dirname') == $this->mModule->getVar('trust_dirname')) {

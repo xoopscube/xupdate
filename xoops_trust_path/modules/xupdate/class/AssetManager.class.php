@@ -182,7 +182,7 @@ class Xupdate_AssetManager
             }
         }
 
-        if ($type == 'handler') {
+        if ($type === 'handler') {
             $root =& XCube_Root::getSingleton();
             $instance = new $className($root->mController->getDB(), $this->mDirname);
         } else {

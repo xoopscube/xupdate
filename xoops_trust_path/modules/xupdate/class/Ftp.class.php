@@ -372,7 +372,7 @@ class Xupdate_Ftp extends Xupdate_Ftp_
     {
         if ($handle = opendir((string)$dir)) {
             while (false !== ($item = readdir($handle))) {
-                if ($item != "." && $item != "..") {
+                if ($item !== "." && $item !== "..") {
                     if (is_dir("$dir/$item")) {
                         $this->removeDirectory("$dir/$item");
                     } else {
@@ -511,7 +511,7 @@ class Xupdate_Ftp extends Xupdate_Ftp_
         $dh = opendir($dir);
         if ($dh) {
             while (($file = readdir($dh)) !== false) {
-                if ($file == '.' || $file == '..') {
+                if ($file === '.' || $file === '..') {
                     continue;
                 } elseif (is_dir("$dir/$file")) {
                     $list = $this->_getFileList("$dir/$file", $list);

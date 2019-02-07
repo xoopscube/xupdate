@@ -52,7 +52,7 @@ class Xupdate_FtpCommonZipArchive extends Xupdate_FtpCommonFunc
                             if (! class_exists('ZipArchive')) {
                                 if (! extension_loaded('zip')) {
                                     if (function_exists('dl')) {
-                                        $prefix = (PHP_SHLIB_SUFFIX == 'dll') ? 'php_' : '';
+                                        $prefix = (PHP_SHLIB_SUFFIX === 'dll') ? 'php_' : '';
                                         @ dl($prefix . 'zip.' . PHP_SHLIB_SUFFIX);
                                     }
                                 }
@@ -244,7 +244,7 @@ class Xupdate_FtpCommonZipArchive extends Xupdate_FtpCommonFunc
     
                 // make dirctory at first for safe_mode
                 if ($this->Ftp->isSafeMode) {
-                    $dir = (substr($file, -1) == '/') ? substr($file, 0, -1) : dirname($file);
+                    $dir = (substr($file, -1) === '/') ? substr($file, 0, -1) : dirname($file);
                     if (!isset($dirs[$dir]) && $dir != $exploredDirPath) {
                         $this->Ftp->localMkdir($dir);
                         while (!isset($dirs[$dir]) && $dir != $exploredDirPath) {

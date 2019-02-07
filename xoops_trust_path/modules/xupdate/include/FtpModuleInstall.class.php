@@ -246,7 +246,7 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive
         $this->Ftp->appendMes('start uploading..<br />');
         $this->content.= _MI_XUPDATE_PROG_UPLOADING . '<br />';
 
-        if ($caller === 'module' && $this->target_type == 'TrustModule') {
+        if ($caller === 'module' && $this->target_type === 'TrustModule') {
             if (!empty($this->trust_dirname) && !empty($this->dirname) && $this->trust_dirname != $this->dirname) {
                 if (! $this->html_only) {
                     // copy xoops_trust_path

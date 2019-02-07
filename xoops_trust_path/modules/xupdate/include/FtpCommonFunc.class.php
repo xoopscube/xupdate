@@ -66,7 +66,7 @@ class Xupdate_FtpCommonFunc
         if ($handle = opendir($dir)) {
             $this->Ftp->appendMes('removing directory: '.$dir.'<br />');
             while (false !== ($item = readdir($handle))) {
-                if ($item != "." && $item != "..") {
+                if ($item !== "." && $item !== "..") {
                     if (is_dir("$dir/$item")) {
                         $this->_cleanup("$dir/$item");
                     } else {

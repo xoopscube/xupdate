@@ -97,7 +97,7 @@ class Xupdate_Uninstaller
                     array(XOOPS_DB_PREFIX, $dirname),
                     $table
                 );
-                if (XOOPS_DB_TYPE == "pdo_pgsql") {
+                if (XOOPS_DB_TYPE === "pdo_pgsql") {
                     $sql = sprintf('drop table "%s";', $tableName);
                 } else {
                     $sql = sprintf('drop table `%s`;', $tableName);

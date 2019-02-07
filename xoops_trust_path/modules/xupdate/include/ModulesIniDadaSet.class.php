@@ -311,7 +311,7 @@ class Xupdate_ModulesIniDadaSet
                             if (!isset($rObjs[$_sid])) {
                                 $_objs = $this->modHand[$caller]->getObjects(new Criteria('sid', $_sid), null, null, true);
                                 foreach ($_objs as $id => $mobj) {
-                                    if ($mobj->get('target_type') != 'TrustModule' || $mobj->get('trust_dirname') === $mobj->get('dirname')) {
+                                    if ($mobj->get('target_type') !== 'TrustModule' || $mobj->get('trust_dirname') === $mobj->get('dirname')) {
                                         $rObjs[$_sid][$mobj->get('target_key')] = $mobj;
                                     }
                                 }
@@ -679,7 +679,7 @@ class Xupdate_ModulesIniDadaSet
             }
             
             // モジュールディレクトリが存在しなければ削除
-            if (($mobj->getVar('contents') == 'module' || $mobj->getVar('contents') == 'package')
+            if (($mobj->getVar('contents') === 'module' || $mobj->getVar('contents') === 'package')
                     && $mobj->getVar('trust_dirname')
                     && $mobj->getVar('trust_dirname') != $mobj->getVar('dirname')
                     && ! file_exists(XOOPS_MODULE_PATH . '/' . $mobj->getVar('dirname'))) {
