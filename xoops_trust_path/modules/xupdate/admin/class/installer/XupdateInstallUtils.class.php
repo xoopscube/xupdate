@@ -225,7 +225,7 @@ class Xupdate_InstallUtils
         $tplFile->setVar('tpl_refid', $module->getVar('mid'));
         $tplFile->setVar('tpl_lastimported', 0);
         $tplFile->setVar('tpl_lastmodified', time());
-        $tplFile->setVar('tpl_type', (substr($filename['trust'], -4) == '.css') ? 'css' : 'module');
+        $tplFile->setVar('tpl_type', (substr($filename['trust'], -4) === '.css') ? 'css' : 'module');
         $tplFile->setVar('tpl_source', $tplData, true);
         $tplFile->setVar('tpl_module', $module->getVar('dirname'));
         $tplFile->setVar('tpl_tplset', 'default');
@@ -336,7 +336,7 @@ class Xupdate_InstallUtils
         $blockObj->set('template', $filename['public']);
         $blockObj->set('last_modified', time());
         $blockObj->set('visible', $visible);
-        $blockObj->set('func_num', intval($block['func_num']));
+        $blockObj->set('func_num', (int)$block['func_num']);
         return $blockObj;
     }
 

@@ -116,7 +116,7 @@ class Xupdate_Ftp extends Xupdate_Ftp_
 
     public function app_login($server = null)
     {
-        if (is_null($server)) {
+        if (null === $server) {
             $server = (empty($this->mod_config['FTP_server']))? '127.0.0.1' : $this->mod_config['FTP_server'];
         }
         if (! $ret = parent::app_login($server)) {
@@ -336,7 +336,7 @@ class Xupdate_Ftp extends Xupdate_Ftp_
         $xoops_root_path = $this->XupdateObj->xoops_root_path;
         static $ftp_root = null;
 
-        if (!is_null($ftp_root)) {
+        if (null !== $ftp_root) {
             return $ftp_root ;
         }
 
@@ -370,9 +370,9 @@ class Xupdate_Ftp extends Xupdate_Ftp_
     // remove directories recursively
     protected function removeDirectory($dir)
     {
-        if ($handle = opendir("$dir")) {
+        if ($handle = opendir((string)$dir)) {
             while (false !== ($item = readdir($handle))) {
-                if ($item != "." && $item != "..") {
+                if ($item !== "." && $item !== "..") {
                     if (is_dir("$dir/$item")) {
                         $this->removeDirectory("$dir/$item");
                     } else {
@@ -511,7 +511,7 @@ class Xupdate_Ftp extends Xupdate_Ftp_
         $dh = opendir($dir);
         if ($dh) {
             while (($file = readdir($dh)) !== false) {
-                if ($file == '.' || $file == '..') {
+                if ($file === '.' || $file === '..') {
                     continue;
                 } elseif (is_dir("$dir/$file")) {
                     $list = $this->_getFileList("$dir/$file", $list);
@@ -533,14 +533,14 @@ class Xupdate_Ftp extends Xupdate_Ftp_
         static $no_overwrite = null;
         static $no_update = null;
         
-        if (is_null($only_conf_lang)) {
+        if (null === $only_conf_lang) {
             $only_conf_lang = $this->mod_config['only_conf_lang'];
             list($no_overwrite, $no_update) = $this->no_overwrite;
         }
         
         // language check
         if ($only_conf_lang) {
-            if (is_null($reg_lang)) {
+            if (null === $reg_lang) {
                 $html = preg_quote(XOOPS_ROOT_PATH, '#');
                 $trust = preg_quote(XOOPS_TRUST_PATH, '#');
                 $reg_lang = '#^(?:'.$html.'|'.$trust.')/(?:modules/[^/]+/)?language/([^/]+)(?:/|$)#';
@@ -558,7 +558,7 @@ class Xupdate_Ftp extends Xupdate_Ftp_
             }
         }
         
-        if (is_null($no_overwrite)) {
+        if (null === $no_overwrite) {
             list($no_overwrite, $no_update) = $this->no_overwrite;
         }
         if ($no_update) {
@@ -646,7 +646,7 @@ class Xupdate_Ftp extends Xupdate_Ftp_
     private function getLocalPath($path)
     {
         static $FTP_root_len = null;
-        if (is_null($FTP_root_len)) {
+        if (null === $FTP_root_len) {
             $FTP_root_len = strlen($this->seekFTPRoot());
         }
         $localPath = substr($path, $FTP_root_len);

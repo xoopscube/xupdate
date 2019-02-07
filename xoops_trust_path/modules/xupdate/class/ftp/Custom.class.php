@@ -90,14 +90,14 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
             if (in_array($v["group"], $bad)) {
                 $v["group"]=null;
             }
-            $v["perms"]+=00400*(int)($ret[2]{0}=="r");
-            $v["perms"]+=00200*(int)($ret[2]{1}=="w");
+            $v["perms"]+=00400*(int)($ret[2]{0} === "r");
+            $v["perms"]+=00200*(int)($ret[2]{1} === "w");
             $v["perms"]+=00100*(int)in_array($ret[2]{2}, array("x", "s"));
-            $v["perms"]+=00040*(int)($ret[2]{3}=="r");
-            $v["perms"]+=00020*(int)($ret[2]{4}=="w");
+            $v["perms"]+=00040*(int)($ret[2]{3} === "r");
+            $v["perms"]+=00020*(int)($ret[2]{4} === "w");
             $v["perms"]+=00010*(int)in_array($ret[2]{5}, array("x", "s"));
-            $v["perms"]+=00004*(int)($ret[2]{6}=="r");
-            $v["perms"]+=00002*(int)($ret[2]{7}=="w");
+            $v["perms"]+=00004*(int)($ret[2]{6} === "r");
+            $v["perms"]+=00002*(int)($ret[2]{7} === "w");
             $v["perms"]+=00001*(int)in_array($ret[2]{8}, array("x", "t"));
             $v["perms"]+=04000*(int)in_array($ret[2]{2}, array("S", "s"));
             $v["perms"]+=02000*(int)in_array($ret[2]{5}, array("S", "s"));
@@ -149,7 +149,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 
     protected function Passive($pasv=null)
     {
-        if (is_null($pasv)) {
+        if (null === $pasv) {
             $this->_passive=!$this->_passive;
         } else {
             $this->_passive=$pasv;
@@ -281,12 +281,12 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 
     protected function login($user=null, $pass=null)
     {
-        if (!is_null($user)) {
+        if (null !== $user) {
             $this->_login=$user;
         } else {
             $this->_login="anonymous";
         }
-        if (!is_null($pass)) {
+        if (null !== $pass) {
             $this->_password=$pass;
         } else {
             $this->_password="anon@anon.com";
@@ -562,7 +562,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 
     protected function get($remotefile, $localfile=null, $rest=0)
     {
-        if (is_null($localfile)) {
+        if (null === $localfile) {
             $localfile=$remotefile;
         }
         if (@file_exists($localfile)) {
@@ -615,7 +615,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 
     protected function put($localfile, $remotefile=null, $rest=0)
     {
-        if (is_null($remotefile)) {
+        if (null === $remotefile) {
             $remotefile=$localfile;
         }
         if (!@file_exists($localfile)) {
@@ -685,7 +685,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
         if ($handle = opendir($local)) {
             $list=array();
             while (false !== ($file = readdir($handle))) {
-                if ($file != "." && $file != "..") {
+                if ($file !== "." && $file !== "..") {
                     $list[]=$file;
                 }
             }
@@ -732,13 +732,13 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
         }
         foreach ($list as $k=>$v) {
             $list[$k]=$this->parselisting($v);
-            if ($list[$k]["name"]=="." or $list[$k]["name"]=="..") {
+            if ($list[$k]["name"] === "." or $list[$k]["name"] === "..") {
                 unset($list[$k]);
             }
         }
         $ret=true;
         foreach ($list as $el) {
-            if ($el["type"]=="d") {
+            if ($el["type"] === "d") {
                 if (!$this->mget($remote."/".$el["name"], $local."/".$el["name"], $continious)) {
                     $this->PushError("mget", "can't copy folder", "Can't copy remote folder \"".$remote."/".$el["name"]."\" to local \"".$local."/".$el["name"]."\"");
                     $ret=false;
@@ -774,14 +774,14 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 
         foreach ($list as $k=>$v) {
             $list[$k]=$this->parselisting($v);
-            if ($list[$k]["name"]=="." or $list[$k]["name"]=="..") {
+            if ($list[$k]["name"] === "." or $list[$k]["name"] === "..") {
                 unset($list[$k]);
             }
         }
         $ret=true;
 
         foreach ($list as $el) {
-            if ($el["type"]=="d") {
+            if ($el["type"] === "d") {
                 if (!$this->mdel($remote."/".$el["name"], $continious)) {
                     $ret=false;
                     if (!$continious) {
@@ -811,7 +811,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
         if (empty($dir)) {
             return false;
         }
-        if ($this->is_exists($dir) or $dir == "/") {
+        if ($this->is_exists($dir) or $dir === "/") {
             return true;
         }
         if (!$this->mmkdir(dirname($dir), $mode)) {
@@ -825,7 +825,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
     protected function glob($pattern, $handle=null)
     {
         $path=$output=null;
-        if (PHP_OS=='WIN32') {
+        if (PHP_OS === 'WIN32') {
             $slash='\\';
         } else {
             $slash='/';
@@ -893,7 +893,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 
     protected function glob_regexp($pattern, $probe)
     {
-        $sensitive=(PHP_OS!='WIN32');
+        $sensitive=(PHP_OS !== 'WIN32');
 //fix ereg,eregi -> preg_match for php5.3+
         return ($sensitive?
             preg_match('/'.$pattern.'/', $probe):
@@ -974,7 +974,7 @@ class Xupdate_Ftp_CustomBase extends Xupdate_Ftp_Abstract
 $mod_sockets=false;
 if (!extension_loaded('sockets')) {
     if (function_exists('dl')) {
-        $prefix = (PHP_SHLIB_SUFFIX == 'dll') ? 'php_' : '';
+        $prefix = (PHP_SHLIB_SUFFIX === 'dll') ? 'php_' : '';
         if (@dl($prefix . 'sockets.' . PHP_SHLIB_SUFFIX)) {
             $mod_sockets=true;
         }

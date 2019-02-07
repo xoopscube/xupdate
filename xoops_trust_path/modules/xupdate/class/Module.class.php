@@ -259,7 +259,7 @@ class Xupdate_Module extends Legacy_ModuleAdapter
             die();
         }
 
-        $viewStatus = (Xupdate_Utils::getEnv('REQUEST_METHOD') == 'POST') ?
+        $viewStatus = (Xupdate_Utils::getEnv('REQUEST_METHOD') === 'POST') ?
             $this->mAction->execute() :
             $this->mAction->getDefaultView();
 

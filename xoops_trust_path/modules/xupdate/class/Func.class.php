@@ -75,7 +75,7 @@ if (! class_exists('Xupdate_Func')) {
 
         $this->appendMes('downloaded in: '.$downloadDirPath);
         
-        $max = (!empty($this->mod_config['parallel_fetch_max']))? intval($this->mod_config['parallel_fetch_max']) : 50;
+        $max = (!empty($this->mod_config['parallel_fetch_max']))? (int)$this->mod_config['parallel_fetch_max'] : 50;
         $start = 0;
         $count = count($multiData);
         $ret = true;
@@ -483,7 +483,7 @@ if (! class_exists('Xupdate_Func')) {
                     $main_perm = substr(sprintf('%o', $main_perm), -3);
                     $set_perm = '';
                     for ($i=0; $i < 3; $i++) {
-                        $set_perm .= strval(intval($main_perm[$i], 8) & 5);
+                        $set_perm .= (string)(intval($main_perm[$i], 8) & 5);
                     }
                     $set_perm = intval($set_perm, 8);
                 } else {

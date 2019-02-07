@@ -158,7 +158,7 @@ class Xupdate_AssetPreloadBase extends XCube_ActionFilter
     **/
     public static function getModule(/*** Legacy_AbstractModule ***/ &$obj, /*** XoopsModule ***/ $module)
     {
-        if ($module->getInfo('trust_dirname') == 'xupdate') {
+        if ($module->getInfo('trust_dirname') === 'xupdate') {
             require_once XUPDATE_TRUST_PATH . '/class/Module.class.php';
             $obj = new Xupdate_Module($module);
         }
@@ -176,7 +176,7 @@ class Xupdate_AssetPreloadBase extends XCube_ActionFilter
     {
         $moduleHandler =& Xupdate_Utils::getXoopsHandler('module');
         $module =& $moduleHandler->get($block->get('mid'));
-        if (is_object($module) && $module->getInfo('trust_dirname') == 'xupdate') {
+        if (is_object($module) && $module->getInfo('trust_dirname') === 'xupdate') {
             require_once XUPDATE_TRUST_PATH . '/blocks/' . $block->get('func_file');
             $className = 'Xupdate_' . substr($block->get('show_func'), 4);
             $obj = new $className($block);

@@ -97,9 +97,9 @@ abstract class Xupdate_AbstractFilterForm
     {
         $root =& XCube_Root::getSingleton();
 //fix pagenavi
-        $this->mNavi->setStart(intval($root->mContext->mRequest->getRequest($this->mNavi->mPrefix . 'start')));
+        $this->mNavi->setStart((int)$root->mContext->mRequest->getRequest($this->mNavi->mPrefix . 'start'));
 
-        $this->mSort = intval($root->mContext->mRequest->getRequest($this->mNavi->mPrefix . 'sort'));
+        $this->mSort = (int)$root->mContext->mRequest->getRequest($this->mNavi->mPrefix . 'sort');
 
         if (!isset($this->mSortKeys[abs($this->mSort)])) {
             $this->mSort = $this->getDefaultSortKey();
@@ -156,8 +156,8 @@ abstract class Xupdate_AbstractFilterForm
     **/
     public function &getCriteria(/*** int ***/ $start = null, /*** int ***/ $limit = null)
     {
-        $t_start = ($start === null) ? $this->mNavi->getStart() : intval($start);
-        $t_limit = ($limit === null) ? $this->mNavi->getPerpage() : intval($limit);
+        $t_start = ($start === null) ? $this->mNavi->getStart() : (int)$start;
+        $t_limit = ($limit === null) ? $this->mNavi->getPerpage() : (int)$limit;
 
         $criteria = $this->_mCriteria;
 

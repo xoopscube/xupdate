@@ -34,7 +34,7 @@ class Xupdate_AbstractStoreAction extends Xupdate_AbstractListAction
         parent::__construct();
 
         $this->sid = (int)$this->mRoot->mContext->mRequest->getRequest('sid');
-        $this->sid = empty($this->sid)? 0 : intval($this->sid);
+        $this->sid = empty($this->sid)? 0 : (int)$this->sid;
         
         if (! $this->template) {
             $this->template = $this->contents;

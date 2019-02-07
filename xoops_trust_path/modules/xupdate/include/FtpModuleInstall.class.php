@@ -57,7 +57,7 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive
         $result = true;
         $siteCloseConf = null;
         if ($this->Xupdate->params['is_writable']['result'] === true) {
-            $this->retry_phase = isset($_POST['upload_retry'])? intval($_POST['upload_retry']) : 0;
+            $this->retry_phase = isset($_POST['upload_retry'])? (int)$_POST['upload_retry'] : 0;
             
             $downloadDirPath = realpath($this->Xupdate->params['temp_path']);
             // check excutable & retry_phase
@@ -246,7 +246,7 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive
         $this->Ftp->appendMes('start uploading..<br />');
         $this->content.= _MI_XUPDATE_PROG_UPLOADING . '<br />';
 
-        if ($caller === 'module' && $this->target_type == 'TrustModule') {
+        if ($caller === 'module' && $this->target_type === 'TrustModule') {
             if (!empty($this->trust_dirname) && !empty($this->dirname) && $this->trust_dirname != $this->dirname) {
                 if (! $this->html_only) {
                     // copy xoops_trust_path
@@ -375,7 +375,7 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive
     {
         static $langs = null;
         
-        if (is_null($langs)) {
+        if (null === $langs) {
             $langs = array();
             if ($handle = opendir(XOOPS_ROOT_PATH . '/language')) {
                 while (false !== ($name = readdir($handle))) {
@@ -710,7 +710,7 @@ function xupdate_on_shutdown($cache_dir, $download_url)
             }
         }
         $msg = array();
-        $upload_retry = isset($_POST['upload_retry'])? intval($_POST['upload_retry']) : 0;
+        $upload_retry = isset($_POST['upload_retry'])? (int)$_POST['upload_retry'] : 0;
         $uploaded_count = count($GLOBALS['xupdate_retry_cache']['uploaded_files']);
         $uploaded_count_before = isset($_POST['uploaded_count'])? $_POST['uploaded_count'] : 0;
         $total_files = 0;

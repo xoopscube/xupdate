@@ -243,7 +243,7 @@ class Xupdate_Updater
     **/
     public function getCurrentVersion()
     {
-        return intval($this->_mCurrentVersion);
+        return (int)$this->_mCurrentVersion;
     }
 
     /**
@@ -259,7 +259,7 @@ class Xupdate_Updater
     
         foreach ($this->_mMileStone as $tVer => $tMethod) {
             if ($tVer > $this->getCurrentVersion()) {
-                return intval($tVer);
+                return (int)$tVer;
             }
         }
     

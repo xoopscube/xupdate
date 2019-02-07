@@ -209,9 +209,9 @@ class Xupdate_Utils
                 
                 if (isset($proxy['port'])) {
                     $proxyURL .= ":" . $proxy['port'];
-                } elseif ('http://' == substr($proxyURL, 0, 7)) {
+                } elseif ('http://' === substr($proxyURL, 0, 7)) {
                     $proxyURL .= ":80";
-                } elseif ('https://' == substr($proxyURL, 0, 8)) {
+                } elseif ('https://' === substr($proxyURL, 0, 8)) {
                     $proxyURL .= ":443";
                 }
                 try {
@@ -307,7 +307,7 @@ class Xupdate_Utils
     public static function convertEncoding($arg)
     {
         static $doConvert = null;
-        if (is_null($doConvert)) {
+        if (null === $doConvert) {
             $doConvert = (function_exists('mb_convert_variables') && strtoupper(_CHARSET) !== 'UTF-8');
         }
         if ($doConvert) {
