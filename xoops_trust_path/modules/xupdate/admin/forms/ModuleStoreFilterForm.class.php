@@ -50,6 +50,12 @@ class Xupdate_Admin_ModuleStoreFilterForm extends Xupdate_AbstractFilterForm
     {
         $this->_mCriteria =new CriteriaCompo();
     }
+
+    public function Xupdate_Admin_ModuleStoreFilterForm()
+    {
+        self::__construct();
+    }
+
     public function prepare(/*** XCube_PageNavigator ***/ &$navi, /*** XoopsObjectGenericHandler ***/ &$handler)
     {
         parent::prepare($navi, $handler);
