@@ -1,3 +1,19 @@
+
+## 🚧 X-update module was merged into XCL branch module/xupdate !
+https://github.com/xoopscube/xcl/tree/module/xupdate
+
+## ⚠️ This repository is planned to be archived !
+
+# X-update (GUI Free Store)
+
+**X-update** is a module with a user-friendly GUI for updates from your XCL dashboard.
+You can quickly install and update XCL itself, modules and themes without any FTP client.
+
+With the introduction of X-update, site administrators just need to log-in to the admin site and browser to complete the installation or update of XCL, modules, themes, libraries, preloads (extenions), etc. X-update will download from distribution sites such as GitHub or GitLab repositories. X-update also supports the installation and update of D3 modules (clone and change the public name).
+
+X-update ensures the latest code is always deploying for the all the benefit of all, webmasters, modules and themes developers.
+
+
 # X-update （えっくす・あっぷでーと）
 
 アップデートモジュール「X-update」をXCL (Xoops Cube Legacy) 2.2 以降にインストールすることで、XCL本体や他のモジュールやテーマのインストール、アップデートをFTPクライアントを使わずに迅速に行うことが可能になります。
