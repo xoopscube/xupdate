@@ -1,10 +1,9 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Read a rar archive, requires PECL rar extension
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +23,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Reader/Archive.php";
@@ -36,176 +35,169 @@ require_once "File/Archive/Reader/File.php";
 /**
  * Read a rar archive, requires PECL rar extension
  */
-class File_Archive_Reader_Rar extends File_Archive_Reader_Archive
-{
-    public $rarFile = null;
-    public $rarEntry = null;
-    public $rarList = array();
+class File_Archive_Reader_Rar extends File_Archive_Reader_Archive {
+	public $rarFile = null;
+	public $rarEntry = null;
+	public $rarList = array();
 
-    public $rarTmpName = null;
-    public $entryTmpName = null;
-    public $fileReader = null;
+	public $rarTmpName = null;
+	public $entryTmpName = null;
+	public $fileReader = null;
 
-    /**
-     * @see File_Archive_Reader::next()
-     */
-    public function next()
-    {
-        $error = parent::next();
-        if (PEAR::isError($error)) {
-            return $error;
-        }
+	/**
+	 * @see File_Archive_Reader::next()
+	 */
+	public function next() {
+		$error = parent::next();
+		if ( ( new PEAR )->isError( $error ) ) {
+			return $error;
+		}
 
-        if ($this->rarFile === null) {
-            $dataFilename = $this->source->getDataFilename();
-            if ($dataFilename !== null) {
-                $this->rarTmpName = null;
-                $this->rarFile = rar_open($dataFilename);
-            } else {
-                $this->rarTmpName = tempnam(File_Archive::getOption('tmpDirectory'), 'far');
+		if ( $this->rarFile === null ) {
+			$dataFilename = $this->source->getDataFilename();
+			if ( $dataFilename !== null ) {
+				$this->rarTmpName = null;
+				$this->rarFile    = rar_open( $dataFilename );
+			} else {
+				$this->rarTmpName = tempnam( ( new File_Archive )->getOption( 'tmpDirectory' ), 'far' );
 
-                //Generate the tmp data
-                $dest = new File_Archive_Writer_Files();
-                $dest->newFile($this->tmpName);
-                $this->source->sendData($dest);
-                $dest->close();
+				//Generate the tmp data
+				$dest = new File_Archive_Writer_Files();
+				$dest->newFile( $this->tmpName );
+				$this->source->sendData( $dest );
+				$dest->close();
 
-                $this->rarFile = rar_open($this->tmpName);
-            }
-            if (!$this->rarFile) {
-                return PEAR::raiseError("Unable to open rar file $dataFilename");
-            }
+				$this->rarFile = rar_open( $this->tmpName );
+			}
+			if ( ! $this->rarFile ) {
+				return PEAR::raiseError( "Unable to open rar file $dataFilename" );
+			}
 
-            if ($this->rarList === null) {
-                $this->rarList = rar_list($this->rarFile);
-                reset($this->rarList);
-            }
-        }
-        if ($fileReader !== null) {
-            $this->fileReader->close();
-            $this->fileReader = null;
-        }
+			if ( $this->rarList === null ) {
+				$this->rarList = rar_list( $this->rarFile );
+				reset( $this->rarList );
+			}
+		}
+		if ( $fileReader !== null ) {
+			$this->fileReader->close();
+			$this->fileReader = null;
+		}
 
-        $entryName = next($this->rarList);
-        $this->source = null;
-        if ($entryName === false) {
-            return false;
-        }
-        $this->rarEntry = rar_entry_get($this->rarFile, $entryName);
-        if (!$this->rarEntry) {
-            return PEAR::raiseError("Error reading entry $entryName");
-        }
+		$entryName    = next( $this->rarList );
+		$this->source = null;
+		if ( $entryName === false ) {
+			return false;
+		}
+		$this->rarEntry = rar_entry_get( $this->rarFile, $entryName );
+		if ( ! $this->rarEntry ) {
+			return PEAR::raiseError( "Error reading entry $entryName" );
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * @see File_Archive_Reader::close()
-     */
-    public function close()
-    {
-        rar_close($this->rarEntry);
-        if ($this->fileReader !== null) {
-            $this->fileReader->close();
-        }
-        if ($this->rarTmpName !== null) {
-            unlink($this->rarTmpName);
-        }
-        if ($this->entryTmpName !== null) {
-            unlink($this->entryTmpName);
-        }
-        $this->rarFile = null;
-        $this->rarEntry = null;
-        reset($this->rarList);
+	/**
+	 * @see File_Archive_Reader::close()
+	 */
+	public function close() {
+		rar_close( $this->rarEntry );
+		if ( $this->fileReader !== null ) {
+			$this->fileReader->close();
+		}
+		if ( $this->rarTmpName !== null ) {
+			unlink( $this->rarTmpName );
+		}
+		if ( $this->entryTmpName !== null ) {
+			unlink( $this->entryTmpName );
+		}
+		$this->rarFile  = null;
+		$this->rarEntry = null;
+		reset( $this->rarList );
 
-        return parent::close();
-    }
+		return parent::close();
+	}
 
-    /**
-     * Ensure data has been extracted to $this->entryTmpName
-     */
-    public function ensureDataExtracted()
-    {
-        if ($this->fileReader !== null) {
-            return;
-        }
-        if ($this->entryTmpName === null) {
-            $this->entryTmpName = tempnam(File_Archive::getOption('tmpDirectory'), 'far');
-        }
-        $this->rarEntry->extract(false, $this->entryTmpName);
-        $this->fileReader = new File_Archive_Reader_File(
-            $this->entryTmpName, $this->rarEntry->getName()
-        );
-    }
+	/**
+	 * Ensure data has been extracted to $this->entryTmpName
+	 */
+	public function ensureDataExtracted() {
+		if ( $this->fileReader !== null ) {
+			return;
+		}
+		if ( $this->entryTmpName === null ) {
+			$this->entryTmpName = tempnam( ( new File_Archive )->getOption( 'tmpDirectory' ), 'far' );
+		}
+		$this->rarEntry->extract( false, $this->entryTmpName );
+		$this->fileReader = new File_Archive_Reader_File(
+			$this->entryTmpName, $this->rarEntry->getName()
+		);
+	}
 
-    /**
-     * @see File_Archive_Reader::skip()
-     */
-    public function skip($length = -1)
-    {
-        $this->ensureDataExtracted();
-        return $this->fileReader->skip($length);
-    }
+	/**
+	 * @see File_Archive_Reader::skip()
+	 */
+	public function skip( $length = - 1 ) {
+		$this->ensureDataExtracted();
 
-    /**
-     * @see File_Archive_Reader::rewind()
-     */
-    public function rewind($length = -1)
-    {
-        $this->ensureDataExtracted();
-        return $this->fileReader->rewind($length);
-    }
+		return $this->fileReader->skip( $length );
+	}
 
-    /**
-     * @see File_Archive_Reader::tell()
-     */
-    public function tell()
-    {
-        if ($this->fileReader === null) {
-            return 0;
-        } else {
-            return $this->fileReader->tell();
-        }
-    }
+	/**
+	 * @see File_Archive_Reader::rewind()
+	 */
+	public function rewind( $length = - 1 ) {
+		$this->ensureDataExtracted();
 
-    /**
-     * @see File_Archive_Reader::getFilename()
-     */
-    public function getFilename()
-    {
-        return $this->rarEntry->getName();
-    }
-    /**
-     * @see File_Archive_Reader::getFileList()
-     */
-    public function getFileList()
-    {
-        return $this->rarList;
-    }
+		return $this->fileReader->rewind( $length );
+	}
 
-    /**
-     * @see File_Archive_Reader::getStat()
-     */
-    public function getStat()
-    {
-        return $this->currentStat;
-    }
+	/**
+	 * @see File_Archive_Reader::tell()
+	 */
+	public function tell() {
+		if ( $this->fileReader === null ) {
+			return 0;
+		} else {
+			return $this->fileReader->tell();
+		}
+	}
 
-    /**
-     * @see File_Archive_Reader::getDataFilename()
-     */
-    public function getDataFilename()
-    {
-        $this->ensureDataExtracted();
-        return $this->entryTmpName;
-    }
+	/**
+	 * @see File_Archive_Reader::getFilename()
+	 */
+	public function getFilename() {
+		return $this->rarEntry->getName();
+	}
 
-    /**
-     * @see File_Archive_Reader::getData()
-     */
-    public function getData($length = -1)
-    {
-        $this->ensureDataExtracted();
-        return $this->fileReader->getData($length);
-    }
+	/**
+	 * @see File_Archive_Reader::getFileList()
+	 */
+	public function getFileList() {
+		return $this->rarList;
+	}
+
+	/**
+	 * @see File_Archive_Reader::getStat()
+	 */
+	public function getStat() {
+		return $this->currentStat;
+	}
+
+	/**
+	 * @see File_Archive_Reader::getDataFilename()
+	 */
+	public function getDataFilename() {
+		$this->ensureDataExtracted();
+
+		return $this->entryTmpName;
+	}
+
+	/**
+	 * @see File_Archive_Reader::getData()
+	 */
+	public function getData( $length = - 1 ) {
+		$this->ensureDataExtracted();
+
+		return $this->fileReader->getData( $length );
+	}
 }

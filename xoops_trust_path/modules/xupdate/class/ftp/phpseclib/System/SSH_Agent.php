@@ -31,9 +31,9 @@
  * @package   System_SSH_Agent
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2014 Jim Wigginton
- * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
- * @link      http://phpseclib.sourceforge.net
- * @internal  See http://api.libssh.org/rfc/PROTOCOL.agent
+ * @license   https://www.opensource.org/licenses/mit-license.html  MIT License
+ * @link      https://phpseclib.sourceforge.net
+ * @internal  See https://api.libssh.org/rfc/PROTOCOL.agent
  */
 
 require_once 'SSH/Agent.php';

@@ -5,6 +5,7 @@
  * Custom predicate built by supplying a string expression
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +25,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Predicate.php";
@@ -42,45 +43,44 @@ require_once "File/Archive/Predicate.php";
  *
  * @see        File_Archive_Predicate, File_Archive_Reader_Filter
  */
-class File_Archive_Predicate_Custom extends File_Archive_Predicate
-{
-    public $expression;
-    public $useName;
-    public $useStat;
-    public $useMIME;
+class File_Archive_Predicate_Custom extends File_Archive_Predicate {
+	public $expression;
+	public $useName;
+	public $useStat;
+	public $useMIME;
 
-    /**
-     * @param string $expression PHP code that evaluates too a boolean
-     *        It can use the $source variable. If return is ommited, it will be
-     *        added to the begining of the expression. A ; will also be added at
-     *        the end so that you don't need to write it
-     */
-    public function File_Archive_Predicate_Custom($expression)
-    {
-        $this->expression = $expression.";";
-        if (strpos($this->expression, "return") === false) {
-            $this->expression = "return ".$this->expression;
-        }
-        $this->useName = (strpos($this->expression, '$name') !== false);
-        $this->useStat = (strpos($this->expression, '$stat') !== false);
-        $this->useMIME = (strpos($this->expression, '$mime') !== false);
-    }
-    /**
-     * @see File_Archive_Predicate::isTrue()
-     */
-    public function isTrue(&$source)
-    {
-        if ($this->useName) {
-            $name = $source->getFilename();
-        }
-        if ($this->useStat) {
-            $stat = $source->getStat();
-            $size = $stat[7];
-            $time = (isset($stat[9]) ? $stat[9] : null);
-        }
-        if ($this->useMIME) {
-            $mime = $source->getMIME();
-        }
-        return (bool)eval($this->expression);
-    }
+	/**
+	 * @param string $expression PHP code that evaluates too a boolean
+	 *        It can use the $source variable. If return is ommited, it will be
+	 *        added to the begining of the expression. A ; will also be added at
+	 *        the end so that you don't need to write it
+	 */
+	public function __construct( $expression ) {
+		$this->expression = $expression . ";";
+		if ( strpos( $this->expression, "return" ) === false ) {
+			$this->expression = "return " . $this->expression;
+		}
+		$this->useName = ( strpos( $this->expression, '$name' ) !== false );
+		$this->useStat = ( strpos( $this->expression, '$stat' ) !== false );
+		$this->useMIME = ( strpos( $this->expression, '$mime' ) !== false );
+	}
+
+	/**
+	 * @see File_Archive_Predicate::isTrue()
+	 */
+	public function isTrue( &$source ) {
+		if ( $this->useName ) {
+			$name = $source->getFilename();
+		}
+		if ( $this->useStat ) {
+			$stat = $source->getStat();
+			$size = $stat[7];
+			$time = ( isset( $stat[9] ) ? $stat[9] : null );
+		}
+		if ( $this->useMIME ) {
+			$mime = $source->getMIME();
+		}
+
+		return (bool) eval( $this->expression );
+	}
 }

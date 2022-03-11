@@ -5,6 +5,7 @@
  * Base class for any writer
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +25,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "PEAR.php";
@@ -34,86 +35,79 @@ require_once "PEAR.php";
 /**
  * Base class for any writer
  */
-class File_Archive_Writer
-{
-    /**
-     * Create a new file in the writer
-     *
-     * @param string $filename Name of the file, eventually including a path
-     * @param array $stat Its Statistics. None of the indexes are required
-     * @param string $mime MIME type of the file
-     */
-    public function newFile($filename, $stat = array(), $mime = "application/octet-stream")
-    {
-    }
+class File_Archive_Writer {
+	/**
+	 * Create a new file in the writer
+	 *
+	 * @param string $filename Name of the file, eventually including a path
+	 * @param array $stat Its Statistics. None of the indexes are required
+	 * @param string $mime MIME type of the file
+	 */
+	public function newFile( $filename, $stat = array(), $mime = "application/octet-stream" ) {
+	}
 
-    /**
-     * Create a new file in the writer with the content of the physical file $filename
-     * and then unlink $filename.
-     * newFromTempFile($tmpfile, $filename, $stat, $mime) is equivalent to
-     * newFile($filename, $stat, $mime); writeFile($tmpfile); unlink($tmpfile);
-     * but can be more efficient.
-     * A typical use is for File_Archive_Writer_Files: it renames the temporary
-     * file instead of copy/delete
-     *
-     * @param string $tmpfile Name of the physical file that contains data and will be unlinked
-     * @param string $filename Name of the file, eventually including a path
-     * @param array $stat Its Statistics. None of the indexes are required
-     * @param string $mime MIME type of the file
-     */
-    public function newFromTempFile($tmpfile, $filename, $stat = array(), $mime = "application/octet-stream")
-    {
-        $this->newFile($filename, $stat, $mime);
-        $this->writeFile($tmpfile);
-        unlink($tmpfile);
-    }
+	/**
+	 * Create a new file in the writer with the content of the physical file $filename
+	 * and then unlink $filename.
+	 * newFromTempFile($tmpfile, $filename, $stat, $mime) is equivalent to
+	 * newFile($filename, $stat, $mime); writeFile($tmpfile); unlink($tmpfile);
+	 * but can be more efficient.
+	 * A typical use is for File_Archive_Writer_Files: it renames the temporary
+	 * file instead of copy/delete
+	 *
+	 * @param string $tmpfile Name of the physical file that contains data and will be unlinked
+	 * @param string $filename Name of the file, eventually including a path
+	 * @param array $stat Its Statistics. None of the indexes are required
+	 * @param string $mime MIME type of the file
+	 */
+	public function newFromTempFile( $tmpfile, $filename, $stat = array(), $mime = "application/octet-stream" ) {
+		$this->newFile( $filename, $stat, $mime );
+		$this->writeFile( $tmpfile );
+		unlink( $tmpfile );
+	}
 
-    /**
-     * Returns whether the writer newFile function needs the $mime parameter
-     * Default is false
-     */
-    public function newFileNeedsMIME()
-    {
-        return false;
-    }
+	/**
+	 * Returns whether the writer newFile function needs the $mime parameter
+	 * Default is false
+	 */
+	public function newFileNeedsMIME() {
+		return false;
+	}
 
-    /**
-     * Append the specified data to the writer
-     *
-     * @param String $data the data to append to the writer
-     */
-    public function writeData($data)
-    {
-    }
+	/**
+	 * Append the specified data to the writer
+	 *
+	 * @param String $data the data to append to the writer
+	 */
+	public function writeData( $data ) {
+	}
 
-    /**
-     * Append the content of the physical file $filename to the writer
-     * writeFile($filename) must be equivalent to
-     * writeData(file_get_contents($filename)) but can be more efficient
-     *
-     * @param string $filename Name of the file which content must be appended
-     *        to the writer
-     */
-    public function writeFile($filename)
-    {
-        $handle = fopen($filename, "r");
-        if (!is_resource($handle)) {
-            return PEAR::raiseError("Unable to write to $filename");
-        }
-        while (!feof($handle)) {
-            $error = $this->writeData(fread($handle, 102400));
-            if (PEAR::isError($error)) {
-                return $error;
-            }
-        }
-        fclose($handle);
-    }
+	/**
+	 * Append the content of the physical file $filename to the writer
+	 * writeFile($filename) must be equivalent to
+	 * writeData(file_get_contents($filename)) but can be more efficient
+	 *
+	 * @param string $filename Name of the file which content must be appended
+	 *        to the writer
+	 */
+	public function writeFile( $filename ) {
+		$handle = fopen( $filename, "r" );
+		if ( ! is_resource( $handle ) ) {
+			return PEAR::raiseError( "Unable to write to $filename" );
+		}
+		while ( ! feof( $handle ) ) {
+			$error = $this->writeData( fread( $handle, 102400 ) );
+			if ( ( new PEAR )->isError( $error ) ) {
+				return $error;
+			}
+		}
+		fclose( $handle );
+	}
 
-    /**
-     * Close the writer, eventually flush the data, write the footer...
-     * This function must be called before the end of the script
-     */
-    public function close()
-    {
-    }
+	/**
+	 * Close the writer, eventually flush the data, write the footer...
+	 * This function must be called before the end of the script
+	 */
+	public function close() {
+	}
 }

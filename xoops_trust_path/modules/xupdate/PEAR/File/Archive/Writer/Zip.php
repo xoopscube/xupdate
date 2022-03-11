@@ -5,6 +5,7 @@
  * ZIP archive writer
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +25,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Writer/MemoryArchive.php";
@@ -34,229 +35,225 @@ require_once "File/Archive/Writer/MemoryArchive.php";
 /**
  * ZIP archive writer
  */
-class File_Archive_Writer_Zip extends File_Archive_Writer_MemoryArchive
-{
-    /**
-     * @var int Compression level
-     * @access private
-     */
-    public $compressionLevel;
+class File_Archive_Writer_Zip extends File_Archive_Writer_MemoryArchive {
+	/**
+	 * @var int Compression level
+	 * @access private
+	 */
+	public $compressionLevel;
 
-    /**
-     * @var int Current position in the writer
-     * @access private
-     */
-    public $offset = 0;
+	/**
+	 * @var int Current position in the writer
+	 * @access private
+	 */
+	public $offset = 0;
 
-    /**
-     * @var string Optionnal comment to add to the zip
-     * @access private
-     */
-    public $comment = "";
+	/**
+	 * @var string Optionnal comment to add to the zip
+	 * @access private
+	 */
+	public $comment = "";
 
-    /**
-     * @var string Data written at the end of the ZIP file
-     * @access private
-     */
-    public $central = "";
+	/**
+	 * @var string Data written at the end of the ZIP file
+	 * @access private
+	 */
+	public $central = "";
 
-    public function File_Archive_Writer_Zip($filename, &$innerWriter,
-                                     $stat=array(), $autoClose = true)
-    {
-        global $_File_Archive_Options;
-        parent::File_Archive_Writer_MemoryArchive(
-                    $filename, $innerWriter, $stat, $autoClose
-                );
+	public function File_Archive_Writer_Zip(
+		$filename, &$innerWriter,
+		$stat = array(), $autoClose = true
+	) {
+		global $_File_Archive_Options;
+		parent::File_Archive_Writer_MemoryArchive(
+			$filename, $innerWriter, $stat, $autoClose
+		);
 
-        $this->compressionLevel = File_Archive::getOption('zipCompressionLevel', 9);
-    }
+		$this->compressionLevel = ( new File_Archive )->getOption( 'zipCompressionLevel', 9 );
+	}
 
-    /**
-     * Change the level of the compression. This may be done between two files
-     *
-     * @param Int $compressionLevel New compression level from 0 to 9
-     */
-    public function setCompressionLevel($compressionLevel)
-    {
-        $this->compressionLevel = $compressionLevel;
-    }
+	/**
+	 * Change the level of the compression. This may be done between two files
+	 *
+	 * @param Int $compressionLevel New compression level from 0 to 9
+	 */
+	public function setCompressionLevel( $compressionLevel ) {
+		$this->compressionLevel = $compressionLevel;
+	}
 
-    /**
-     * Set a comment on the ZIP file
-     */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-    }
+	/**
+	 * Set a comment on the ZIP file
+	 */
+	public function setComment( $comment ) {
+		$this->comment = $comment;
+	}
 
-    /**
-     * @param int $time Unix timestamp of the date to convert
-     * @return the date formated as a ZIP date
-     */
-    public function getMTime($time)
-    {
-        $mtime = ($time !== null ? getdate($time) : getdate());
-        $mtime = preg_replace(
-                     "/(..){1}(..){1}(..){1}(..){1}/",
-                     "\\x\\4\\x\\3\\x\\2\\x\\1",
-                     dechex(($mtime['year']-1980<<25)|
-                            ($mtime['mon'    ]<<21)|
-                            ($mtime['mday'   ]<<16)|
-                            ($mtime['hours'  ]<<11)|
-                            ($mtime['minutes']<<5)|
-                            ($mtime['seconds']>>1)));
-        eval('$mtime = "'.$mtime.'";');
-        return $mtime;
-    }
+	/**
+	 * @param int $time Unix timestamp of the date to convert
+	 *
+	 * @return the date formated as a ZIP date
+	 */
+	public function getMTime( $time ) {
+		$mtime = ( $time !== null ? getdate( $time ) : getdate() );
+		$mtime = preg_replace(
+			"/(..){1}(..){1}(..){1}(..){1}/",
+			"\\x\\4\\x\\3\\x\\2\\x\\1",
+			dechex( ( $mtime['year'] - 1980 << 25 ) |
+			        ( $mtime['mon'] << 21 ) |
+			        ( $mtime['mday'] << 16 ) |
+			        ( $mtime['hours'] << 11 ) |
+			        ( $mtime['minutes'] << 5 ) |
+			        ( $mtime['seconds'] >> 1 ) ) );
+		eval( '$mtime = "' . $mtime . '";' );
 
-    /**
-     * Inform the archive that $filename is present.
-     * Consequences are the same as appendFileData, but no data is output
-     * to the inner writer.
-     * This is used by File_Archive_Reader_Zip::makeWriter()
-     *
-     * @param string $filename name of the file
-     * @param array $stat stats of the file, indexes 9 and 7 must be present
-     * @param int $crc32 checksum of the file
-     * @param int $compLength length of the compressed data
-     */
-    public function alreadyWrittenFile($filename, $stat, $crc32, $complength)
-    {
-        $filename = preg_replace("/^(\.{1,2}(\/|\\\))+/", "", $filename);
+		return $mtime;
+	}
 
-        $mtime = $this->getMTime(isset($stat[9]) ? $stat[9] : null);
-        $normlength = $stat[7];
+	/**
+	 * Inform the archive that $filename is present.
+	 * Consequences are the same as appendFileData, but no data is output
+	 * to the inner writer.
+	 * This is used by File_Archive_Reader_Zip::makeWriter()
+	 *
+	 * @param string $filename name of the file
+	 * @param array $stat stats of the file, indexes 9 and 7 must be present
+	 * @param int $crc32 checksum of the file
+	 * @param int $compLength length of the compressed data
+	 */
+	public function alreadyWrittenFile( $filename, $stat, $crc32, $complength ) {
+		$filename = preg_replace( "/^(\.{1,2}(\/|\\\))+/", "", $filename );
 
-        $this->nbFiles++;
+		$mtime      = $this->getMTime( isset( $stat[9] ) ? $stat[9] : null );
+		$normlength = $stat[7];
 
-        $this->central .= "\x50\x4b\x01\x02\x00\x00\x14\x00\x00\x00\x08\x00".
-                   $mtime.
-                   pack("VVVvvvvvVV",
-                       $crc32, $complength, $normlength,
-                       strlen($filename), 0x00, 0x00, 0x00, 0x00,
-                       0x0000, $this->offset).
-                   $filename;
+		$this->nbFiles ++;
 
-        $this->offset += 30 + strlen($filename) + $complength;
-    }
+		$this->central .= "\x50\x4b\x01\x02\x00\x00\x14\x00\x00\x00\x08\x00" .
+		                  $mtime .
+		                  pack( "VVVvvvvvVV",
+			                  $crc32, $complength, $normlength,
+			                  strlen( $filename ), 0x00, 0x00, 0x00, 0x00,
+			                  0x0000, $this->offset ) .
+		                  $filename;
 
-    /**
-     * @see    File_Archive_Writer_MemoryArchive::appendFileData()
-     * @access protected
-     */
-    public function appendFileData($filename, $stat, $data)
-    {
-        $crc32 = crc32($data);
-        $normlength = strlen($data);
-        $data = gzcompress($data, $this->compressionLevel);
-        $data = substr($data, 2, strlen($data)-6);
+		$this->offset += 30 + strlen( $filename ) + $complength;
+	}
 
-        return $this->appendCompressedData($filename, $stat, $data, $crc32, $normlength);
-    }
+	/**
+	 * @see    File_Archive_Writer_MemoryArchive::appendFileData()
+	 * @access protected
+	 */
+	public function appendFileData( $filename, $stat, $data ) {
+		$crc32      = crc32( $data );
+		$normlength = strlen( $data );
+		$data       = gzcompress( $data, $this->compressionLevel );
+		$data       = substr( $data, 2, strlen( $data ) - 6 );
 
-    public function appendCompressedData($filename, $stat, $data, $crc32, $normlength)
-    {
-        $filename = preg_replace("/^(\.{1,2}(\/|\\\))+/", "", $filename);
-        $mtime = $this->getMTime(isset($stat[9]) ? $stat[9] : null);
+		return $this->appendCompressedData( $filename, $stat, $data, $crc32, $normlength );
+	}
 
-        $complength = strlen($data);
+	public function appendCompressedData( $filename, $stat, $data, $crc32, $normlength ) {
+		$filename = preg_replace( "/^(\.{1,2}(\/|\\\))+/", "", $filename );
+		$mtime    = $this->getMTime( isset( $stat[9] ) ? $stat[9] : null );
 
-        $zipData = "\x50\x4b\x03\x04\x14\x00\x00\x00\x08\x00".
-                   $mtime.
-                   pack("VVVvv",
-                        $crc32,
-                        $complength,
-                        $normlength,
-                        strlen($filename),
-                        0x00).
-                   $filename.
-                   $data;
+		$complength = strlen( $data );
 
-        $error = $this->innerWriter->writeData($zipData);
-        if (PEAR::isError($error)) {
-            return $error;
-        }
+		$zipData = "\x50\x4b\x03\x04\x14\x00\x00\x00\x08\x00" .
+		           $mtime .
+		           pack( "VVVvv",
+			           $crc32,
+			           $complength,
+			           $normlength,
+			           strlen( $filename ),
+			           0x00 ) .
+		           $filename .
+		           $data;
 
-        $this->central .= "\x50\x4b\x01\x02\x00\x00\x14\x00\x00\x00\x08\x00".
-                   $mtime.
-                   pack("VVVvvvvvVV",
-                       $crc32, $complength, $normlength,
-                       strlen($filename), 0x00, 0x00, 0x00, 0x00,
-                       0x0000, $this->offset).
-                   $filename;
+		$error = $this->innerWriter->writeData( $zipData );
+		if ( ( new PEAR )->isError( $error ) ) {
+			return $error;
+		}
 
-        $this->offset += strlen($zipData);
-    }
+		$this->central .= "\x50\x4b\x01\x02\x00\x00\x14\x00\x00\x00\x08\x00" .
+		                  $mtime .
+		                  pack( "VVVvvvvvVV",
+			                  $crc32, $complength, $normlength,
+			                  strlen( $filename ), 0x00, 0x00, 0x00, 0x00,
+			                  0x0000, $this->offset ) .
+		                  $filename;
 
-    public function appendFile($filename, $dataFilename)
-    {
-        //Try to read from the cache
-        $cache = File_Archive::getOption('cache', null);
-        if ($cache !== null && $this->compressionLevel > 0) {
-            $id = realpath($dataFilename);
-            $id = urlencode($id);
-            $id = str_replace('_', '%5F', $id);
+		$this->offset += strlen( $zipData );
+	}
 
-            $group = 'FileArchiveZip'.$this->compressionLevel;
-            $mtime = filemtime($dataFilename);
+	public function appendFile( $filename, $dataFilename ) {
+		//Try to read from the cache
+		$cache = ( new File_Archive )->getOption( 'cache', null );
+		if ( $cache !== null && $this->compressionLevel > 0 ) {
+			$id = realpath( $dataFilename );
+			$id = urlencode( $id );
+			$id = str_replace( '_', '%5F', $id );
 
-            //Tries to read from cache
-            if (($data = $cache->get($id, $group)) !== false) {
-                $info = unpack('Vmtime/Vcrc/Vnlength', substr($data, 0, 12));
-                $data = substr($data, 12);
-            }
+			$group = 'FileArchiveZip' . $this->compressionLevel;
+			$mtime = filemtime( $dataFilename );
 
-            //If cache failed or file modified since then
-            if ($data === false ||
-                $info['mtime'] != $mtime) {
-                $data = file_get_contents($dataFilename);
+			//Tries to read from cache
+			if ( ( $data = $cache->get( $id, $group ) ) !== false ) {
+				$info = unpack( 'Vmtime/Vcrc/Vnlength', substr( $data, 0, 12 ) );
+				$data = substr( $data, 12 );
+			}
 
-                $info = array(
-                        'crc' => crc32($data),
-                        'nlength' => strlen($data),
-                        'mtime' => $mtime
-                       );
+			//If cache failed or file modified since then
+			if ( $data === false ||
+			     $info['mtime'] != $mtime ) {
 
-                $data = gzcompress($data, $this->compressionLevel);
-                $data = substr($data, 2, strlen($data)-6);
-                $data = pack('VVV', $info['mtime'], $info['crc'], $info['nlength']).$data;
-                $cache->save($data, $id, $group);
-            }
+				$data = file_get_contents( $dataFilename );
 
-            return $this->appendCompressedData(
-                                    $filename,
-                                    stat($dataFilename),
-                                    $data,
-                                    $info['crc'],
-                                    $info['nlength']
-                   );
-        }
+				$info = array(
+					'crc'     => crc32( $data ),
+					'nlength' => strlen( $data ),
+					'mtime'   => $mtime
+				);
 
-        //If no cache system, use the standard way
-        return parent::appendFile($filename, $dataFilename);
-    }
+				$data = gzcompress( $data, $this->compressionLevel );
+				$data = substr( $data, 2, strlen( $data ) - 6 );
+				$data = pack( 'VVV', $info['mtime'], $info['crc'], $info['nlength'] ) . $data;
+				$cache->save( $data, $id, $group );
+			}
 
-    /**
-     * @see    File_Archive_Writer_MemoryArchive::sendFooter()
-     * @access protected
-     */
-    public function sendFooter()
-    {
-        return $this->innerWriter->writeData(
-            $this->central.
-            "\x50\x4b\x05\x06\x00\x00\x00\x00".
-            pack("vvVVv",
-                $this->nbFiles, $this->nbFiles,
-                strlen($this->central), $this->offset,
-                strlen($this->comment)).
-            $this->comment
-        );
-    }
-    /**
-     * @see File_Archive_Writer::getMime()
-     */
-    public function getMime()
-    {
-        return "application/zip";
-    }
+			return $this->appendCompressedData(
+				$filename,
+				stat( $dataFilename ),
+				$data,
+				$info['crc'],
+				$info['nlength']
+			);
+
+		}
+
+		//If no cache system, use the standard way
+		return parent::appendFile( $filename, $dataFilename );
+	}
+
+	/**
+	 * @see    File_Archive_Writer_MemoryArchive::sendFooter()
+	 * @access protected
+	 */
+	public function sendFooter() {
+		return $this->innerWriter->writeData(
+			$this->central .
+			"\x50\x4b\x05\x06\x00\x00\x00\x00" .
+			pack( "vvVVv",
+				$this->nbFiles, $this->nbFiles,
+				strlen( $this->central ), $this->offset,
+				strlen( $this->comment ) ) .
+			$this->comment
+		);
+	}
+
+	/**
+	 * @see File_Archive_Writer::getMime()
+	 */
+	public function getMime() {
+		return "application/zip";
+	}
 }

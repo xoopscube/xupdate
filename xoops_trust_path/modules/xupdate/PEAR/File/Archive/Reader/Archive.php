@@ -1,10 +1,9 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Base class for all the archive readers (that read from a single file)
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +23,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Reader.php";
@@ -34,63 +33,62 @@ require_once "File/Archive/Reader.php";
 /**
  * Base class for all the archive readers (that read from a single file)
  */
-class File_Archive_Reader_Archive extends File_Archive_Reader
-{
-    /**
-     * @var    File_Archive_Reader Single file source that contains the archive
-     *         to uncompress
-     * @access protected
-     */
-    public $source = null;
+class File_Archive_Reader_Archive extends File_Archive_Reader {
+	/**
+	 * @var    File_Archive_Reader Single file source that contains the archive
+	 *         to uncompress
+	 * @access protected
+	 */
+	public $source = null;
 
-    /**
-     * @var    bool Indicate whether the $source is currently opened
-     * @access private
-     */
-    public $sourceOpened = false;
+	/**
+	 * @var    bool Indicate whether the $source is currently opened
+	 * @access private
+	 */
+	public $sourceOpened = false;
 
-    /**
-     * The source was let in this state at the end
-     *
-     * @var    bool Indicate whether the $source was given opened
-     * @access private
-     */
-    public $sourceInitiallyOpened;
+	/**
+	 * The source was let in this state at the end
+	 *
+	 * @var    bool Indicate whether the $source was given opened
+	 * @access private
+	 */
+	public $sourceInitiallyOpened;
 
 //ABSTRACT
-    /**
-     * @see File_Archive_Reader::next()
-     *
-     * Open the source if necessary
-     */
-    public function next()
-    {
-        if (!$this->sourceOpened && ($error = $this->source->next()) !== true) {
-            return $error;
-        }
 
-        $this->sourceOpened = true;
-        return true;
-    }
+	/**
+	 * @see File_Archive_Reader::next()
+	 *
+	 * Open the source if necessary
+	 */
+	public function next() {
+		if ( ! $this->sourceOpened && ( $error = $this->source->next() ) !== true ) {
+			return $error;
+		}
+
+		$this->sourceOpened = true;
+
+		return true;
+	}
 
 //PUBLIC
-    public function File_Archive_Reader_Archive(&$source, $sourceOpened = false)
-    {
-        $this->source =& $source;
-        $this->sourceOpened = $this->sourceInitiallyOpened = $sourceOpened;
-    }
-    /**
-     * Close the source if it was given closed in the constructor
-     *
-     * @see File_Archive_Reader::close()
-     */
-    public function close()
-    {
-        if (!$this->sourceInitiallyOpened && $this->sourceOpened) {
-            $this->sourceOpened = false;
-            if ($this->source !== null) {
-                return $this->source->close();
-            }
-        }
-    }
+	function File_Archive_Reader_Archive( &$source, $sourceOpened = false ) {
+		$this->source       =& $source;
+		$this->sourceOpened = $this->sourceInitiallyOpened = $sourceOpened;
+	}
+
+	/**
+	 * Close the source if it was given closed in the constructor
+	 *
+	 * @see File_Archive_Reader::close()
+	 */
+	public function close() {
+		if ( ! $this->sourceInitiallyOpened && $this->sourceOpened ) {
+			$this->sourceOpened = false;
+			if ( $this->source !== null ) {
+				return $this->source->close();
+			}
+		}
+	}
 }

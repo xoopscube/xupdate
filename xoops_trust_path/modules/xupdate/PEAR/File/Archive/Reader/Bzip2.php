@@ -1,10 +1,9 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Uncompress a file that was compressed in the Bzip2 format
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +23,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Reader/Archive.php";
@@ -35,219 +34,213 @@ require_once "File/Archive/Writer/Files.php";
 /**
  * Uncompress a file that was compressed in the Bzip2 format
  */
-class File_Archive_Reader_Bzip2 extends File_Archive_Reader_Archive
-{
-    public $nbRead = 0;
-    public $bzfile = null;
-    public $tmpName = null;
-    public $filePos = 0;
+class File_Archive_Reader_Bzip2 extends File_Archive_Reader_Archive {
+	public $nbRead = 0;
+	public $bzfile = null;
+	public $tmpName = null;
+	public $filePos = 0;
 
-    /**
-     * @see File_Archive_Reader::close()
-     */
-    public function close($innerClose = true)
-    {
-        if ($this->bzfile !== null) {
-            bzclose($this->bzfile);
-        }
-        if ($this->tmpName !== null) {
-            unlink($this->tmpName);
-        }
+	/**
+	 * @see File_Archive_Reader::close()
+	 */
+	public function close( $innerClose = true ) {
+		if ( $this->bzfile !== null ) {
+			bzclose( $this->bzfile );
+		}
+		if ( $this->tmpName !== null ) {
+			unlink( $this->tmpName );
+		}
 
-        $this->bzfile = null;
-        $this->tmpName = null;
-        $this->nbRead = 0;
-        $this->filePos = 0;
-        return parent::close($innerClose);
-    }
+		$this->bzfile  = null;
+		$this->tmpName = null;
+		$this->nbRead  = 0;
+		$this->filePos = 0;
 
-    /**
-     * @see File_Archive_Reader::next()
-     */
-    public function next()
-    {
-        if (!parent::next()) {
-            return false;
-        }
+		return parent::close( $innerClose );
+	}
 
-        $this->nbRead++;
-        if ($this->nbRead > 1) {
-            return false;
-        }
+	/**
+	 * @see File_Archive_Reader::next()
+	 */
+	public function next() {
+		if ( ! parent::next() ) {
+			return false;
+		}
 
-        $dataFilename = $this->source->getDataFilename();
-        if ($dataFilename !== null) {
-            $this->tmpName = null;
-            $this->bzfile = @bzopen($dataFilename, 'r');
-            if ($this->bzfile === false) {
-                return PEAR::raiseError("bzopen failed to open $dataFilename");
-            }
-        } else {
-            $this->tmpName = tempnam(File_Archive::getOption('tmpDirectory'), 'far');
+		$this->nbRead ++;
+		if ( $this->nbRead > 1 ) {
+			return false;
+		}
 
-            //Generate the tmp data
-            $dest = new File_Archive_Writer_Files();
-            $dest->newFile($this->tmpName);
-            $this->source->sendData($dest);
-            $dest->close();
+		$dataFilename = $this->source->getDataFilename();
+		if ( $dataFilename !== null ) {
+			$this->tmpName = null;
+			$this->bzfile  = @bzopen( $dataFilename, 'r' );
+			if ( $this->bzfile === false ) {
+				return PEAR::raiseError( "bzopen failed to open $dataFilename" );
+			}
+		} else {
+			$this->tmpName = tempnam( ( new File_Archive )->getOption( 'tmpDirectory' ), 'far' );
 
-            $this->bzfile = bzopen($this->tmpName, 'r');
-        }
+			//Generate the tmp data
+			$dest = new File_Archive_Writer_Files();
+			$dest->newFile( $this->tmpName );
+			$this->source->sendData( $dest );
+			$dest->close();
 
-        return true;
-    }
-    /**
-     * Return the name of the single file contained in the archive
-     * deduced from the name of the archive (the extension is removed)
-     *
-     * @see File_Archive_Reader::getFilename()
-     */
-    public function getFilename()
-    {
-        $name = $this->source->getFilename();
-        $pos = strrpos($name, ".");
-        if ($pos === false || $pos === 0) {
-            return $name;
-        } else {
-            return substr($name, 0, $pos);
-        }
-    }
-    /**
-     * @see File_Archive_Reader::getData()
-     */
-    public function getData($length = -1)
-    {
-        if ($length == -1) {
-            $data = '';
-            do {
-                $newData = bzread($this->bzfile);
-                $data .= $newData;
-            } while ($newData != '');
-            $this->filePos += strlen($data);
-        } elseif ($length == 0) {
-            return '';
-        } else {
-            $data = '';
+			$this->bzfile = bzopen( $this->tmpName, 'r' );
+		}
 
-            //The loop is here to correct what appears to be a bzread bug
-            while (strlen($data) < $length) {
-                $newData = bzread($this->bzfile, $length - strlen($data));
-                if ($newData == '') {
-                    break;
-                }
-                $data .= $newData;
-            }
-            $this->filePos += strlen($data);
-        }
+		return true;
+	}
 
-        return $data == '' ? null : $data;
-    }
+	/**
+	 * Return the name of the single file contained in the archive
+	 * deduced from the name of the archive (the extension is removed)
+	 *
+	 * @see File_Archive_Reader::getFilename()
+	 */
+	public function getFilename() {
+		$name = $this->source->getFilename();
+		$pos  = strrpos( $name, "." );
+		if ( $pos === false || $pos === 0 ) {
+			return $name;
+		} else {
+			return substr( $name, 0, $pos );
+		}
+	}
 
-    /**
-     * @see File_Archive_Reader::rewind
-     */
-    public function rewind($length = -1)
-    {
-        $before = $this->filePos;
+	/**
+	 * @see File_Archive_Reader::getData()
+	 */
+	public function getData( $length = - 1 ) {
+		if ( $length == - 1 ) {
+			$data = '';
+			do {
+				$newData = bzread( $this->bzfile );
+				$data    .= $newData;
+			} while ( $newData != '' );
+			$this->filePos += strlen( $data );
+		} elseif ( $length == 0 ) {
+			return '';
+		} else {
+			$data = '';
 
-        bzclose($this->bzfile);
-        if ($this->tmpName === null) {
-            $this->bzfile = bzopen($this->source->getDataFilename(), 'r');
-        } else {
-            $this->bzfile = bzopen($this->tmpName, 'r');
-        }
-        $this->filePos = 0;
+			//The loop is here to correct what appears to be a bzread bug
+			while ( strlen( $data ) < $length ) {
+				$newData = bzread( $this->bzfile, $length - strlen( $data ) );
+				if ( $newData == '' ) {
+					break;
+				}
+				$data .= $newData;
+			}
+			$this->filePos += strlen( $data );
+		}
 
-        if ($length != -1) {
-            $this->skip($before - $length);
-        }
-        return $before - $this->filePos;
-    }
+		return $data == '' ? null : $data;
+	}
 
-    /**
-     * @see File_Archive_Reader::tell()
-     */
-    public function tell()
-    {
-        return $this->filePos;
-    }
+	/**
+	 * @see File_Archive_Reader::rewind
+	 */
+	public function rewind( $length = - 1 ) {
+		$before = $this->filePos;
 
-    /**
-     * @see File_Archive_Reader::makeAppendWriter()
-     */
-    public function makeAppendWriter()
-    {
-        return PEAR::raiseError('Unable to append files to a bzip2 archive');
-    }
+		bzclose( $this->bzfile );
+		if ( $this->tmpName === null ) {
+			$this->bzfile = bzopen( $this->source->getDataFilename(), 'r' );
+		} else {
+			$this->bzfile = bzopen( $this->tmpName, 'r' );
+		}
+		$this->filePos = 0;
 
-    /**
-     * @see File_Archive_Reader::makeWriterRemoveFiles()
-     */
-    public function makeWriterRemoveFiles($pred)
-    {
-        return PEAR::raiseError('Unable to remove files from a bzip2 archive');
-    }
+		if ( $length != - 1 ) {
+			$this->skip( $before - $length );
+		}
 
-    /**
-     * @see File_Archive_Reader::makeWriterRemoveBlocks()
-     */
-    public function makeWriterRemoveBlocks($blocks, $seek = 0)
-    {
-        require_once "File/Archive/Writer/Bzip2.php";
+		return $before - $this->filePos;
+	}
 
-        if ($this->nbRead == 0) {
-            return PEAR::raiseError('No file selected');
-        }
+	/**
+	 * @see File_Archive_Reader::tell()
+	 */
+	public function tell() {
+		return $this->filePos;
+	}
 
-        //Uncompress data to a temporary file
-        $tmp = tmpfile();
-        $expectedPos = $this->filePos + $seek;
+	/**
+	 * @see File_Archive_Reader::makeAppendWriter()
+	 */
+	public function makeAppendWriter() {
+		return PEAR::raiseError( 'Unable to append files to a bzip2 archive' );
+	}
 
-        $this->rewind();
+	/**
+	 * @see File_Archive_Reader::makeWriterRemoveFiles()
+	 */
+	public function makeWriterRemoveFiles( $pred ) {
+		return PEAR::raiseError( 'Unable to remove files from a bzip2 archive' );
+	}
 
-        //Read the begining of the file
-        while ($this->filePos < $expectedPos &&
-               ($data = $this->getData(min($expectedPos - $this->filePos, 8192))) !== null) {
-            fwrite($tmp, $data);
-        }
+	/**
+	 * @see File_Archive_Reader::makeWriterRemoveBlocks()
+	 */
+	public function makeWriterRemoveBlocks( $blocks, $seek = 0 ) {
+		require_once "File/Archive/Writer/Bzip2.php";
 
-        $keep = false;
-        foreach ($blocks as $length) {
-            if ($keep) {
-                $expectedPos = $this->filePos + $length;
-                while ($this->filePos < $expectedPos &&
-                       ($data = $this->getData(min($expectedPos - $this->filePos, 8192))) !== null) {
-                    fwrite($tmp, $data);
-                }
-            } else {
-                $this->skip($length);
-            }
-            $keep = !$keep;
-        }
-        if ($keep) {
-            //Read the end of the file
-            while (($data = $this->getData(8192)) !== null) {
-                fwrite($tmp, $data);
-            }
-        }
-        fseek($tmp, 0);
+		if ( $this->nbRead == 0 ) {
+			return PEAR::raiseError( 'No file selected' );
+		}
 
-        //Create the writer
-        $this->source->rewind();
-        $innerWriter = $this->source->makeWriterRemoveBlocks(array());   //Truncate the source
-        unset($this->source);
-        $writer = new File_Archive_Writer_Bzip2(null, $innerWriter);
+		//Uncompress data to a temporary file
+		$tmp         = tmpfile();
+		$expectedPos = $this->filePos + $seek;
 
-        //And compress data from the temporary file
-        while (!feof($tmp)) {
-            $data = fread($tmp, 8192);
-            $writer->writeData($data);
-        }
-        fclose($tmp);
+		$this->rewind();
 
-        //Do not close inner writer since makeWriter was called
-        $this->close();
+		//Read the begining of the file
+		while ( $this->filePos < $expectedPos &&
+		        ( $data = $this->getData( min( $expectedPos - $this->filePos, 8192 ) ) ) !== null ) {
+			fwrite( $tmp, $data );
+		}
 
-        return $writer;
-    }
+		$keep = false;
+		foreach ( $blocks as $length ) {
+			if ( $keep ) {
+				$expectedPos = $this->filePos + $length;
+				while ( $this->filePos < $expectedPos &&
+				        ( $data = $this->getData( min( $expectedPos - $this->filePos, 8192 ) ) ) !== null ) {
+					fwrite( $tmp, $data );
+				}
+			} else {
+				$this->skip( $length );
+			}
+			$keep = ! $keep;
+		}
+		if ( $keep ) {
+			//Read the end of the file
+			while ( ( $data = $this->getData( 8192 ) ) !== null ) {
+				fwrite( $tmp, $data );
+			}
+		}
+		fseek( $tmp, 0 );
+
+		//Create the writer
+		$this->source->rewind();
+		$innerWriter = $this->source->makeWriterRemoveBlocks( array() );   //Truncate the source
+		unset( $this->source );
+		$writer = new File_Archive_Writer_Bzip2( null, $innerWriter );
+
+		//And compress data from the temporary file
+		while ( ! feof( $tmp ) ) {
+			$data = fread( $tmp, 8192 );
+			$writer->writeData( $data );
+		}
+		fclose( $tmp );
+
+		//Do not close inner writer since makeWriter was called
+		$this->close();
+
+		return $writer;
+	}
 }

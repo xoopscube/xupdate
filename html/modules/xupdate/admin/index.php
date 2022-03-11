@@ -6,7 +6,7 @@
  * @version $Id$
 **/
 
-// for tag update on GET request @todo more smart
+// for tag update on GET request @todo smarter request
 if (preg_match('/action=(?:ModuleView|ModuleStore|ThemeStore)/', $_SERVER['QUERY_STRING'])) {
     $_SERVER['REQUEST_METHOD'] = 'POST';
 }

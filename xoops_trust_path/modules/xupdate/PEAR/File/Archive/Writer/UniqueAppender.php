@@ -1,7 +1,8 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
+ * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
+ *
  * A writer wrapper that will remove the files the eventual duplicate
  * files from the reader to keep only the new ones
  * When calling newFile, the file with the highest index in the reader
@@ -28,9 +29,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Writer.php";
@@ -45,97 +46,89 @@ require_once "File/Archive/Predicate/Index.php";
  * If you use newFile with the same filename several file, only the latest
  * write will be kept (no time comparision is done)
  */
-class File_Archive_Writer_UniqueAppender extends File_Archive_Writer
-{
-    public $reader;
-    public $writer;
-    public $fileList = array();
-    public $toDelete = array();
+class File_Archive_Writer_UniqueAppender extends File_Archive_Writer {
+	public $reader;
+	public $writer;
+	public $fileList = array();
+	public $toDelete = array();
 
-    /**
-     * Construct a unique writer that will write to the specified writer
-     * and remove duplicate files from the reader on close
-     */
-    public function File_Archive_Writer_UniqueAppender(&$reader)
-    {
-        $reader->close();
-        $pos = 0;
-        while ($reader->next()) {
-            $this->fileList[$reader->getFilename()] = $pos++;
-        }
+	/**
+	 * Construct a unique writer that will write to the specified writer
+	 * and remove duplicate files from the reader on close
+	 */
+	public function File_Archive_Writer_UniqueAppender( &$reader ) {
+		$reader->close();
+		$pos = 0;
+		while ( $reader->next() ) {
+			$this->fileList[ $reader->getFilename() ] = $pos ++;
+		}
 
-        $this->reader =& $reader;
-        $this->writer = $reader->makeAppendWriter();
-    }
+		$this->reader =& $reader;
+		$this->writer = $reader->makeAppendWriter();
+	}
 
-    /**
-     * @see File_Archive_Writer::newFile()
-     */
-    public function newFile($filename, $stat = array(), $mime = "application/octet-stream")
-    {
-        if (isset($this->fileList[$filename])) {
-            $this->toDelete[$this->fileList[$filename]] = true;
-        }
+	/**
+	 * @see File_Archive_Writer::newFile()
+	 */
+	public function newFile( $filename, $stat = array(), $mime = "application/octet-stream" ) {
+		if ( isset( $this->fileList[ $filename ] ) ) {
+			$this->toDelete[ $this->fileList[ $filename ] ] = true;
+		}
 
-        return $this->writer->newFile($filename, $stat, $mime);
-    }
+		return $this->writer->newFile( $filename, $stat, $mime );
+	}
 
-    /**
-     * @see File_Archive_Writer::newFromTempFile()
-     */
-    public function newFromTempFile($tmpfile, $filename, $stat = array(), $mime = "application/octet-stream")
-    {
-        if (isset($this->fileList[$filename])) {
-            $this->toDelete[$this->fileList[$filename]] = true;
-        }
+	/**
+	 * @see File_Archive_Writer::newFromTempFile()
+	 */
+	public function newFromTempFile( $tmpfile, $filename, $stat = array(), $mime = "application/octet-stream" ) {
+		if ( isset( $this->fileList[ $filename ] ) ) {
+			$this->toDelete[ $this->fileList[ $filename ] ] = true;
+		}
 
-        return $this->writer->newFromTempFile($tmpfile, $filename, $stat, $mime);
-    }
+		return $this->writer->newFromTempFile( $tmpfile, $filename, $stat, $mime );
+	}
 
-    /**
-     * @see File_Archive_Writer::newFileNeedsMIME()
-     */
-    public function newFileNeedsMIME()
-    {
-        return $this->writer->newFileNeedsMIME();
-    }
+	/**
+	 * @see File_Archive_Writer::newFileNeedsMIME()
+	 */
+	public function newFileNeedsMIME() {
+		return $this->writer->newFileNeedsMIME();
+	}
 
-    /**
-     * @see File_Archive_Writer::writeData()
-     */
-    public function writeData($data)
-    {
-        return $this->writer->writeData($data);
-    }
+	/**
+	 * @see File_Archive_Writer::writeData()
+	 */
+	public function writeData( $data ) {
+		return $this->writer->writeData( $data );
+	}
 
-    /**
-     * @see File_Archive_Writer::writeFile()
-     */
-    public function writeFile($filename)
-    {
-        return $this->writer->writeFile($filename);
-    }
+	/**
+	 * @see File_Archive_Writer::writeFile()
+	 */
+	public function writeFile( $filename ) {
+		return $this->writer->writeFile( $filename );
+	}
 
-    /**
-     * Close the writer, eventually flush the data, write the footer...
-     * This function must be called before the end of the script
-     */
-    public function close()
-    {
-        $error = $this->writer->close();
-        if (PEAR::isError($error)) {
-            return $error;
-        }
+	/**
+	 * Close the writer, eventually flush the data, write the footer...
+	 * This function must be called before the end of the script
+	 */
+	public function close() {
+		$error = $this->writer->close();
+		if ( ( new PEAR )->isError( $error ) ) {
+			return $error;
+		}
 
-        if (!empty($this->toDelete)) {
-            $tmp = $this->reader->makeWriterRemoveFiles(
-                new File_Archive_Predicate_Index($this->toDelete)
-            );
-            if (PEAR::isError($tmp)) {
-                return $tmp;
-            }
+		if ( ! empty( $this->toDelete ) ) {
+			$tmp = $this->reader->makeWriterRemoveFiles(
+				new File_Archive_Predicate_Index( $this->toDelete )
+			);
+			if ( ( new PEAR )->isError( $tmp ) ) {
+				return $tmp;
+			}
 
-            return $tmp->close();
-        }
-    }
+			return $tmp->close();
+		}
+	}
 }

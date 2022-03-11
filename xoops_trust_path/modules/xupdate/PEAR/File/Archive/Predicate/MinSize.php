@@ -5,6 +5,7 @@
  * Keep only the files larger than a given size
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +25,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Predicate.php";
@@ -36,23 +37,22 @@ require_once "File/Archive/Predicate.php";
  *
  * @see        File_Archive_Predicate, File_Archive_Reader_Filter
  */
-class File_Archive_Predicate_MinSize extends File_Archive_Predicate
-{
-    public $minSize = 0;
+class File_Archive_Predicate_MinSize extends File_Archive_Predicate {
+	public $minSize = 0;
 
-    /**
-     * @param int $minSize minimal size of the file (in Bytes)
-     */
-    public function File_Archive_Predicate_MinSize($minSize)
-    {
-        $this->minSize = $minSize;
-    }
-    /**
-     * @see File_Archive_Predicate::isTrue()
-     */
-    public function isTrue(&$source)
-    {
-        $stat = $source->getStat();
-        return !isset($stat[7]) || $stat[7]>=$this->minSize;
-    }
+	/**
+	 * @param int $minSize minimal size of the file (in Bytes)
+	 */
+	public function __construct( $minSize ) {
+		$this->minSize = $minSize;
+	}
+
+	/**
+	 * @see File_Archive_Predicate::isTrue()
+	 */
+	public function isTrue( &$source ) {
+		$stat = $source->getStat();
+
+		return ! isset( $stat[7] ) || $stat[7] >= $this->minSize;
+	}
 }

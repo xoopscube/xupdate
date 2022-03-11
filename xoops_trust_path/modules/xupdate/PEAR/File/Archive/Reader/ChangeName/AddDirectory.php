@@ -5,6 +5,7 @@
  * Add a directory to the public name of all the files of a reader
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +25,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Reader/ChangeName.php";
@@ -42,44 +43,41 @@ require_once "File/Archive/Reader/ChangeName.php";
  *     )
  *  ) is a reader containing files bar/a.txt and bar/foo/b.txt
  */
-class File_Archive_Reader_ChangeName_AddDirectory extends File_Archive_Reader_ChangeName
-{
-    public $baseName;
-    public function File_Archive_Reader_ChangeName_AddDirectory($baseName, &$source)
-    {
-        parent::File_Archive_Reader_ChangeName($source);
-        $this->baseName = $this->getStandardURL($baseName);
-    }
+class File_Archive_Reader_ChangeName_AddDirectory extends File_Archive_Reader_ChangeName {
+	public $baseName;
 
-    /**
-     * Modify the name by adding baseName to it
-     */
-    public function modifyName($name)
-    {
-        return $this->baseName.
-               (empty($this->baseName) || empty($name) ? '': '/').
-               $name;
-    }
+	public function __construct( $baseName, &$source ) {
+		parent::File_Archive_Reader_ChangeName( $source );
+		$this->baseName = $this->getStandardURL( $baseName );
+	}
 
-    /**
-     * Remove baseName from the name
-     * Return false if the name doesn't start with baseName
-     */
-    public function unmodifyName($name)
-    {
-        if (strncmp($name, $this->baseName.'/', strlen($this->baseName)+1) == 0) {
-            $res = substr($name, strlen($this->baseName)+1);
-            if ($res === false) {
-                return '';
-            } else {
-                return $res;
-            }
-        } elseif (empty($this->baseName)) {
-            return $name;
-        } elseif ($name == $this->baseName) {
-            return '';
-        } else {
-            return false;
-        }
-    }
+	/**
+	 * Modify the name by adding baseName to it
+	 */
+	public function modifyName( $name ) {
+		return $this->baseName .
+		       ( empty( $this->baseName ) || empty( $name ) ? '' : '/' ) .
+		       $name;
+	}
+
+	/**
+	 * Remove baseName from the name
+	 * Return false if the name doesn't start with baseName
+	 */
+	public function unmodifyName( $name ) {
+		if ( strncmp( $name, $this->baseName . '/', strlen( $this->baseName ) + 1 ) == 0 ) {
+			$res = substr( $name, strlen( $this->baseName ) + 1 );
+			if ( $res === false ) {
+				return '';
+			} else {
+				return $res;
+			}
+		} elseif ( empty( $this->baseName ) ) {
+			return $name;
+		} elseif ( $name == $this->baseName ) {
+			return '';
+		} else {
+			return false;
+		}
+	}
 }

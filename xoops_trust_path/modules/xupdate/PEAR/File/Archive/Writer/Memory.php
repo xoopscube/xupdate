@@ -1,10 +1,9 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Write the concatenation of the files in a buffer
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +23,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Writer.php";
@@ -34,104 +33,97 @@ require_once "File/Archive/Writer.php";
 /**
  * Write the concatenation of the files in a buffer
  */
-class File_Archive_Writer_Memory extends File_Archive_Writer
-{
-    /**
-     * @var string $data The buffer
-     * @access private
-     */
-    public $data = "";
-    /**
-     * Information about the file being written into this writer
-     * @access private
-     */
-    public $filename;
-    public $stat;
-    public $mime;
+class File_Archive_Writer_Memory extends File_Archive_Writer {
+	/**
+	 * @var string $data The buffer
+	 * @access private
+	 */
+	public $data = "";
+	/**
+	 * Information about the file being written into this writer
+	 * @access private
+	 */
+	public $filename;
+	public $stat;
+	public $mime;
 
-    /**
-     * @param reference $data If provided, the data will be output in this
-     *        variable. Any existent data in $data will be overwritten by the
-     *        actual data of the writer. You should not modify manually this
-     *        variable while using this writer (you can safely use all the
-     *        functions of the archive, like clear for example)
-     * @param int keptData is the offset from where to start writing in $data
-     *        Any data located after $seek will be erased
-     *        The default value is 0
-     */
-    public function File_Archive_Writer_Memory(&$data, $seek = 0)
-    {
-        $this->data =& $data;
-        $this->data = substr($data, 0, $seek);
-    }
+	/**
+	 * @param reference $data If provided, the data will be output in this
+	 *        variable. Any existent data in $data will be overwritten by the
+	 *        actual data of the writer. You should not modify manually this
+	 *        variable while using this writer (you can safely use all the
+	 *        functions of the archive, like clear for example)
+	 * @param int keptData is the offset from where to start writing in $data
+	 *        Any data located after $seek will be erased
+	 *        The default value is 0
+	 */
+	public function File_Archive_Writer_Memory( &$data, $seek = 0 ) {
+		$this->data =& $data;
+		$this->data = substr( $data, 0, $seek );
+	}
 
-    public function writeData($d)
-    {
-        $this->data .= $d;
-    }
+	public function writeData( $d ) {
+		$this->data .= $d;
+	}
 
-    /**
-     * @see File_Archive_Writer::newFile()
-     */
-    public function newFile($filename, $stat, $mime = "application/octet-stream")
-    {
-        $this->filename = $filename;
-        $this->stat = $stat;
-        $this->mime = $mime;
-    }
-    /**
-     * @see File_Archive_Writer::newFileNeedsMIME
-     */
-    public function newFileNeedsMIME()
-    {
-        return true;
-    }
+	/**
+	 * @see File_Archive_Writer::newFile()
+	 */
+	public function newFile( $filename, $stat, $mime = "application/octet-stream" ) {
+		$this->filename = $filename;
+		$this->stat     = $stat;
+		$this->mime     = $mime;
+	}
 
-    /**
-     * Retrieve the concatenated data
-     * The value is returned by reference for performance problems, but you
-     * should not manually modify it
-     *
-     * @return string buffer
-     */
-    public function &getData()
-    {
-        return $this->data;
-    }
+	/**
+	 * @see File_Archive_Writer::newFileNeedsMIME
+	 */
+	public function newFileNeedsMIME() {
+		return true;
+	}
 
-    /**
-     * Clear the buffer
-     */
-    public function clear()
-    {
-        $this->data = "";
-    }
+	/**
+	 * Retrieve the concatenated data
+	 * The value is returned by reference for performance problems, but you
+	 * should not manually modify it
+	 *
+	 * @return string buffer
+	 */
+	public function &getData() {
+		return $this->data;
+	}
 
-    /**
-     * Returns true iif the buffer is empty
-     */
-    public function isEmpty()
-    {
-        return empty($this->data);
-    }
+	/**
+	 * Clear the buffer
+	 */
+	public function clear() {
+		$this->data = "";
+	}
 
-    /**
-     * Create a reader from this writer
-     *
-     * @param string $filename Name of the file provided by the reader
-     * @param array $stat Statistics of the file provided by the reader
-     * @param string $mime Mime type of the file provided by the reader
-     *
-     * Any unspecified parameter will be set to the value of the last file
-     * written in this writer
-     */
-    public function makeReader($filename = null, $stat = null, $mime = null)
-    {
-        require_once "File/Archive/Reader/Memory.php";
-        return new File_Archive_Reader_Memory(
-            $this->data,
-            $filename === null ? $this->filename : $filename,
-            $stat     === null ? $this->stat     : $stat,
-            $mime     === null ? $this->mime     : $mime);
-    }
+	/**
+	 * Returns true iif the buffer is empty
+	 */
+	public function isEmpty() {
+		return empty( $this->data );
+	}
+
+	/**
+	 * Create a reader from this writer
+	 *
+	 * @param string $filename Name of the file provided by the reader
+	 * @param array $stat Statistics of the file provided by the reader
+	 * @param string $mime Mime type of the file provided by the reader
+	 *
+	 * Any unspecified parameter will be set to the value of the last file
+	 * written in this writer
+	 */
+	public function makeReader( $filename = null, $stat = null, $mime = null ) {
+		require_once "File/Archive/Reader/Memory.php";
+
+		return new File_Archive_Reader_Memory(
+			$this->data,
+			$filename === null ? $this->filename : $filename,
+			$stat === null ? $this->stat : $stat,
+			$mime === null ? $this->mime : $mime );
+	}
 }

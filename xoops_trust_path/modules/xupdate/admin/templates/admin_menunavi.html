@@ -1,10 +1,8 @@
-  <div id="menunavi">
-  <{if !empty($adminMenu) }>
-    <ul class="submenunavi">
-      <{foreach item=menu from=$adminMenu}>
-          <li><a href="<{$menu.link|xoops_escape:link}>"><{$menu.title|xoops_escape}></a></li>
-      <{/foreach}>
-          <li style="background:#87CEFA;"><a href="<{$xoops_url}>/admin.php" style="color:#ffffff;"><{$smarty.const._CPHOME}></a></li>
-    </ul>
-  <{/if}>
-  </div>
+<div id="menunavi" class="admin-menu">
+    <{if !empty($adminMenu) }>
+    <{foreach item=menu from=$adminMenu}>
+    <a href="<{$menu.link|xoops_escape:link}>" class="adminavi-item"><{$menu.title|xoops_escape}></a>
+    <{/foreach}>
+    <a href="<{$xoops_url}>/admin.php" class="adminavi-item"><{$smarty.const._CPHOME}></a>
+    <{/if}>
+</div>

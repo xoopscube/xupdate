@@ -1,10 +1,9 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Write the files as a TAR archive
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +23,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Writer/Archive.php";
@@ -34,197 +33,197 @@ require_once "File/Archive/Writer/Archive.php";
 /**
  * Write the files as a TAR archive
  */
-class File_Archive_Writer_Tar extends File_Archive_Writer_Archive
-{
-    public $buffer;
-    public $useBuffer;
+class File_Archive_Writer_Tar extends File_Archive_Writer_Archive {
+	public $buffer;
+	public $useBuffer;
 
-    public $filename = null;
-    public $stats = null;
+	public $filename = null;
+	public $stats = null;
 
 
-    /**
-     * Creates the TAR header for a file
-     *
-     * @param string $filename name of the file
-     * @param array $stat statistics of the file
-     * @return string A 512 byte header for the file
-     * @access private
-     */
-    public function tarHeader($filename, $stat)
-    {
-        $mode = isset($stat[2]) ? $stat[2] : 0x8000;
-        $uid  = isset($stat[4]) ? $stat[4] : 0;
-        $gid  = isset($stat[5]) ? $stat[5] : 0;
-        $size = $stat[7];
-        $time = isset($stat[9]) ? $stat[9] : time();
-        $link = "";
+	/**
+	 * Creates the TAR header for a file
+	 *
+	 * @param string $filename name of the file
+	 * @param array $stat statistics of the file
+	 *
+	 * @return string A 512 byte header for the file
+	 * @access private
+	 */
+	public function tarHeader( $filename, $stat ) {
+		$mode = isset( $stat[2] ) ? $stat[2] : 0x8000;
+		$uid  = isset( $stat[4] ) ? $stat[4] : 0;
+		$gid  = isset( $stat[5] ) ? $stat[5] : 0;
+		$size = $stat[7];
+		$time = isset( $stat[9] ) ? $stat[9] : time();
+		$link = "";
 
-        if ($mode & 0x4000) {
-            $type = 5;        // Directory
-        } elseif ($mode & 0x8000) {
-            $type = 0;        // Regular
-        } elseif ($mode & 0xA000) {
-            $type = 1;        // Link
-            $link = @readlink($current);
-        } else {
-            $type = 9;        // Unknown
-        }
+		if ( $mode & 0x4000 ) {
+			$type = 5;        // Directory
+		} elseif ( $mode & 0x8000 ) {
+			$type = 0;        // Regular
+		} elseif ( $mode & 0xA000 ) {
+			$type = 1;        // Link
+			$link = @readlink( $current );
+		} else {
+			$type = 9;        // Unknown
+		}
 
-        $filePrefix = '';
-        if (strlen($filename) > 255) {
-            return PEAR::raiseError(
-                "$filename is too long to be put in a tar archive"
-            );
-        } elseif (strlen($filename) > 100) {
-            // need a path component of max 155 bytes
-            $pos = strrpos(substr($filename, 0, 155), '/');
-            if (strlen($filename) - $pos > 100) {
-                // filename-component may not exceed 100 bytes
-                return PEAR::raiseError(
-                        "$filename is too long to be put in a tar archive");
-            }
-            $filePrefix = substr($filename, 0, $pos);
-            $filename = substr($filename, $pos+1);
-        }
+		$filePrefix = '';
+		if ( strlen( $filename ) > 255 ) {
+			return PEAR::raiseError(
+				"$filename is too long to be put in a tar archive"
+			);
+		} elseif ( strlen( $filename ) > 100 ) {
+			// need a path component of max 155 bytes
+			$pos = strrpos( substr( $filename, 0, 155 ), '/' );
+			if ( strlen( $filename ) - $pos > 100 ) {
+				// filename-component may not exceed 100 bytes
+				return PEAR::raiseError(
+					"$filename is too long to be put in a tar archive" );
+			}
+			$filePrefix = substr( $filename, 0, $pos );
+			$filename   = substr( $filename, $pos + 1 );
+		}
 
-        $blockbeg = pack("a100a8a8a8a12a12",
-            $filename,
-            decoct($mode),
-            sprintf("%6s ", decoct($uid)),
-            sprintf("%6s ", decoct($gid)),
-            sprintf("%11s ", decoct($size)),
-            sprintf("%11s ", decoct($time))
-            );
+		$blockbeg = pack( "a100a8a8a8a12a12",
+			$filename,
+			decoct( $mode ),
+			sprintf( "%6s ", decoct( $uid ) ),
+			sprintf( "%6s ", decoct( $gid ) ),
+			sprintf( "%11s ", decoct( $size ) ),
+			sprintf( "%11s ", decoct( $time ) )
+		);
 
-        $blockend = pack("a1a100a6a2a32a32a8a8a155a12",
-            $type,
-            $link,
-            "ustar",
-            "00",
-            "Unknown",
-            "Unknown",
-            "",
-            "",
-            $filePrefix,
-            "");
+		$blockend = pack( "a1a100a6a2a32a32a8a8a155a12",
+			$type,
+			$link,
+			"ustar",
+			"00",
+			"Unknown",
+			"Unknown",
+			"",
+			"",
+			$filePrefix,
+			"" );
 
-        $checksum = 8*ord(" ");
-        for ($i = 0; $i < 148; $i++) {
-            $checksum += ord($blockbeg{$i});
-        }
-        for ($i = 0; $i < 356; $i++) {
-            $checksum += ord($blockend{$i});
-        }
+		$checksum = 8 * ord( " " );
+		for ( $i = 0; $i < 148; $i ++ ) {
+			$checksum += ord( $blockbeg{$i} );
+		}
+		for ( $i = 0; $i < 356; $i ++ ) {
+			$checksum += ord( $blockend{$i} );
+		}
 
-        $checksum = pack("a8", sprintf("%6s ", decoct($checksum)));
+		$checksum = pack( "a8", sprintf( "%6s ", decoct( $checksum ) ) );
 
-        return $blockbeg . $checksum . $blockend;
-    }
-    /**
-     * Creates the TAR footer for a file
-     *
-     * @param  int $size the size of the data that has been written to the TAR
-     * @return string A string made of less than 512 characteres to fill the
-     *         last 512 byte long block
-     * @access private
-     */
-    public function tarFooter($size)
-    {
-        if ($size % 512 > 0) {
-            return pack("a".(512 - $size%512), "");
-        } else {
-            return "";
-        }
-    }
+		return $blockbeg . $checksum . $blockend;
+	}
 
-    public function flush()
-    {
-        if ($this->filename !== null) {
-            if ($this->useBuffer) {
-                $this->stats[7] = strlen($this->buffer);
+	/**
+	 * Creates the TAR footer for a file
+	 *
+	 * @param int $size the size of the data that has been written to the TAR
+	 *
+	 * @return string A string made of less than 512 characteres to fill the
+	 *         last 512 byte long block
+	 * @access private
+	 */
+	public function tarFooter( $size ) {
+		if ( $size % 512 > 0 ) {
+			return pack( "a" . ( 512 - $size % 512 ), "" );
+		} else {
+			return "";
+		}
+	}
 
-                $header = $this->tarHeader($this->filename, $this->stats);
-                if (PEAR::isError($header)) {
-                    return $header;
-                }
-                $this->innerWriter->writeData($header);
-                $this->innerWriter->writeData(
-                    $this->buffer
-                );
-            }
-            $this->innerWriter->writeData(
-                $this->tarFooter($this->stats[7])
-            );
-        }
-        $this->buffer = "";
-    }
+	public function flush() {
+		if ( $this->filename !== null ) {
+			if ( $this->useBuffer ) {
+				$this->stats[7] = strlen( $this->buffer );
 
-    public function _newFile($filename, $stats = array(),
-                     $mime = "application/octet-stream")
-    {
-        $err = $this->flush();
-        if (PEAR::isError($err)) {
-            return $err;
-        }
+				$header = $this->tarHeader( $this->filename, $this->stats );
+				if ( ( new PEAR )->isError( $header ) ) {
+					return $header;
+				}
+				$this->innerWriter->writeData( $header );
+				$this->innerWriter->writeData(
+					$this->buffer
+				);
+			}
+			$this->innerWriter->writeData(
+				$this->tarFooter( $this->stats[7] )
+			);
+		}
+		$this->buffer = "";
+	}
 
-        $this->useBuffer = !isset($stats[7]);
-        $this->filename = $filename;
-        $this->stats = $stats;
+	public function _newFile(
+		$filename, $stats = array(),
+		$mime = "application/octet-stream"
+	) {
+		$err = $this->flush();
+		if ( ( new PEAR )->isError( $err ) ) {
+			return $err;
+		}
 
-        if (!$this->useBuffer) {
-            $header = $this->tarHeader($filename, $stats);
-            if (PEAR::isError($header)) {
-                return $header;
-            }
-            return $this->innerWriter->writeData($header);
-        }
-    }
+		$this->useBuffer = ! isset( $stats[7] );
+		$this->filename  = $filename;
+		$this->stats     = $stats;
 
-    /**
-     * @see File_Archive_Writer::close()
-     */
-    public function close()
-    {
-        $err = $this->flush();
-        if (PEAR::isError($err)) {
-            return $err;
-        }
-        $this->innerWriter->writeData(pack("a1024", ""));
-        parent::close();
-    }
-    /**
-     * @see File_Archive_Writer::writeData()
-     */
-    public function writeData($data)
-    {
-        if ($this->useBuffer) {
-            $this->buffer .= $data;
-        } else {
-            $this->innerWriter->writeData($data);
-        }
-    }
-    /**
-     * @see File_Archive_Writer::writeFile()
-     */
-    public function writeFile($filename)
-    {
-        if ($this->useBuffer) {
-            if (!file_exists($filename)) {
-                return PEAR::raiseError("File not found: $filename.");
-            }
-            $this->buffer .= file_get_contents($filename);
-        } else {
-            $this->innerWriter->writeFile($filename);
-        }
-    }
-    /**
-     * @see File_Archive_Writer::getMime()
-     */
-    public function getMime()
-    {
-        return "application/x-tar";
-    }
+		if ( ! $this->useBuffer ) {
+			$header = $this->tarHeader( $filename, $stats );
+			if ( ( new PEAR )->isError( $header ) ) {
+				return $header;
+			}
+
+			return $this->innerWriter->writeData( $header );
+		}
+	}
+
+	/**
+	 * @see File_Archive_Writer::close()
+	 */
+	public function close() {
+		$err = $this->flush();
+		if ( ( new PEAR )->isError( $err ) ) {
+			return $err;
+		}
+		$this->innerWriter->writeData( pack( "a1024", "" ) );
+		parent::close();
+	}
+
+	/**
+	 * @see File_Archive_Writer::writeData()
+	 */
+	public function writeData( $data ) {
+		if ( $this->useBuffer ) {
+			$this->buffer .= $data;
+		} else {
+			$this->innerWriter->writeData( $data );
+		}
+	}
+
+	/**
+	 * @see File_Archive_Writer::writeFile()
+	 */
+	public function writeFile( $filename ) {
+		if ( $this->useBuffer ) {
+			if ( ! file_exists( $filename ) ) {
+				return PEAR::raiseError( "File not found: $filename." );
+			}
+			$this->buffer .= file_get_contents( $filename );
+		} else {
+			$this->innerWriter->writeFile( $filename );
+		}
+	}
+
+	/**
+	 * @see File_Archive_Writer::getMime()
+	 */
+	public function getMime() {
+		return "application/x-tar";
+	}
 }
 
 
@@ -235,10 +234,9 @@ class File_Archive_Writer_Tar extends File_Archive_Writer_Archive
  * @see File_Archive_Predicate, File_Archive_Reader_Filter
  */
 require_once "File/Archive/Predicate.php";
-class File_Archive_Predicate_TARCompatible extends File_Archive_Predicate
-{
-    public function isTrue($source)
-    {
-        return strlen($source->getFilename()) <= 255;
-    }
+
+class File_Archive_Predicate_TARCompatible extends File_Archive_Predicate {
+	public function isTrue( $source ) {
+		return strlen( $source->getFilename() ) <= 255;
+	}
 }

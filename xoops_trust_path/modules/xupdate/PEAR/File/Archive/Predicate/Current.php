@@ -5,6 +5,7 @@
  * Evaluates to true only once, and then always to false
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +25,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Predicate.php";
@@ -34,17 +35,16 @@ require_once "File/Archive/Predicate.php";
 /**
  * Evaluates to true only once, and then always to false
  */
-class File_Archive_Predicate_Current extends File_Archive_Predicate
-{
-    public $value = true;
+class File_Archive_Predicate_Current extends File_Archive_Predicate {
+	public $value = true;
 
-    /**
-     * @see File_Archive_Predicate::isTrue()
-     */
-    public function isTrue(&$source)
-    {
-        $tmp = $this->value;
-        $this->value = false;
-        return $tmp;
-    }
+	/**
+	 * @see File_Archive_Predicate::isTrue()
+	 */
+	public function isTrue( &$source ) {
+		$tmp         = $this->value;
+		$this->value = false;
+
+		return $tmp;
+	}
 }

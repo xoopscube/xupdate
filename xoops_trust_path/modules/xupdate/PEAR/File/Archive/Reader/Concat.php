@@ -1,10 +1,9 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * A reader that concatene the data of the files of a source
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +23,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Reader/Relay.php";
@@ -35,165 +34,164 @@ require_once "File/Archive/Reader/Relay.php";
  * This reader provides one single file that is the concatenation of the data of
  * all the files of another reader
  */
-class File_Archive_Reader_Concat extends File_Archive_Reader
-{
-    public $source;
-    public $filename;
-    public $stat;
-    public $mime;
-    public $opened = false;
-    public $filePos = 0;
+class File_Archive_Reader_Concat extends File_Archive_Reader {
+	public $source;
+	public $filename;
+	public $stat;
+	public $mime;
+	public $opened = false;
+	public $filePos = 0;
 
-    public function File_Archive_Reader_Concat(&$source, $filename,
-                                        $stat=array(), $mime=null)
-    {
-        $this->source =& $source;
-        $this->filename = $filename;
-        $this->stat = $stat;
-        $this->mime = $mime;
+	public function __construct(
+		&$source, $filename,
+		$stat = array(), $mime = null
+	) {
+		$this->source   =& $source;
+		$this->filename = $filename;
+		$this->stat     = $stat;
+		$this->mime     = $mime;
 
-        //Compute the total length
-        $this->stat[7] = 0;
-        while (($error = $source->next()) === true) {
-            $sourceStat = $source->getStat();
-            if (isset($sourceStat[7])) {
-                $this->stat[7] += $sourceStat[7];
-            } else {
-                unset($this->stat[7]);
-                break;
-            }
-        }
-        if (isset($this->stat[7])) {
-            $this->stat['size'] = $this->stat[7];
-        }
-        if (PEAR::isError($error) || PEAR::isError($source->close())) {
-            die("Error in File_Archive_Reader_Concat constructor ".
-                '('.$error->getMessage().'), cannot continue');
-        }
-    }
+		//Compute the total length
+		$this->stat[7] = 0;
+		while ( ( $error = $source->next() ) === true ) {
+			$sourceStat = $source->getStat();
+			if ( isset( $sourceStat[7] ) ) {
+				$this->stat[7] += $sourceStat[7];
+			} else {
+				unset( $this->stat[7] );
+				break;
+			}
+		}
+		if ( isset( $this->stat[7] ) ) {
+			$this->stat['size'] = $this->stat[7];
+		}
+		if ( ( new PEAR )->isError( $error ) || ( new PEAR )->isError( $source->close() ) ) {
+			die( "Error in File_Archive_Reader_Concat constructor " .
+			     '(' . $error->getMessage() . '), cannot continue' );
+		}
+	}
 
-    /**
-     * @see File_Archive_Reader::next()
-     */
-    public function next()
-    {
-        if (!$this->opened) {
-            return $this->opened = $this->source->next();
-        } else {
-            return false;
-        }
-    }
-    /**
-     * @see File_Archive_Reader::getFilename()
-     */
-    public function getFilename()
-    {
-        return $this->filename;
-    }
-    /**
-     * @see File_Archive_Reader::getStat()
-     */
-    public function getStat()
-    {
-        return $this->stat;
-    }
-    /**
-     * @see File_Archive_Reader::getMime()
-     */
-    public function getMime()
-    {
-        return $this->mime==null ? parent::getMime() : $this->mime;
-    }
-    /**
-     * @see File_Archive_Reader::getData()
-     */
-    public function getData($length = -1)
-    {
-        if ($length == 0) {
-            return '';
-        }
+	/**
+	 * @see File_Archive_Reader::next()
+	 */
+	public function next() {
+		if ( ! $this->opened ) {
+			return $this->opened = $this->source->next();
+		} else {
+			return false;
+		}
+	}
 
-        $result = '';
-        while ($length == -1 || strlen($result)<$length) {
-            $sourceData = $this->source->getData(
-                $length==-1 ? -1 : $length - strlen($result)
-            );
-            if (PEAR::isError($sourceData)) {
-                return $sourceData;
-            }
+	/**
+	 * @see File_Archive_Reader::getFilename()
+	 */
+	public function getFilename() {
+		return $this->filename;
+	}
 
-            if ($sourceData === null) {
-                $error = $this->source->next();
-                if (PEAR::isError($error)) {
-                    return $error;
-                }
-                if (!$error) {
-                    break;
-                }
-            } else {
-                $result .= $sourceData;
-            }
-        }
-        $this->filePos += strlen($result);
-        return $result == '' ? null : $result;
-    }
-    /**
-     * @see File_Archive_Reader::skip()
-     */
-    public function skip($length = -1)
-    {
-        $skipped = 0;
-        while ($skipped < $length) {
-            $sourceSkipped = $this->source->skip($length);
-            if (PEAR::isError($sourceSkipped)) {
-                return $skipped;
-            }
-            $skipped += $sourceSkipped;
-            $filePos += $sourceSkipped;
-            if ($sourceSkipped < $length) {
-                $error = $this->source->next();
-                if (PEAR::isError($error)) {
-                    return $error;
-                }
-                if (!$error) {
-                    return $skipped;
-                }
-            }
-        }
-        return $skipped;
-    }
-    /**
-     * @see File_Archive_Reader::rewind()
-     */
-    public function rewind($length = -1)
-    {
-        //TODO: implement rewind
-        return parent::rewind($length);
-    }
+	/**
+	 * @see File_Archive_Reader::getStat()
+	 */
+	public function getStat() {
+		return $this->stat;
+	}
 
-    /**
-     * @see File_Archive_Reader::tell()
-     */
-    public function tell()
-    {
-        return $this->filePos;
-    }
+	/**
+	 * @see File_Archive_Reader::getMime()
+	 */
+	public function getMime() {
+		return $this->mime == null ? parent::getMime() : $this->mime;
+	}
 
-    /**
-     * @see File_Archive_Reader::close()
-     */
-    public function close()
-    {
-        $this->opened = false;
-        $this->filePos = 0;
-        return $this->source->close();
-    }
+	/**
+	 * @see File_Archive_Reader::getData()
+	 */
+	public function getData( $length = - 1 ) {
+		if ( $length == 0 ) {
+			return '';
+		}
 
-    /**
-     * @see File_Archive_Reader::makeWriter
-     */
-    public function makeWriter($fileModif = true, $seek = 0)
-    {
-        return $this->source->makeWriter($fileModif, $seek);
-    }
+		$result = '';
+		while ( $length == - 1 || strlen( $result ) < $length ) {
+			$sourceData = $this->source->getData(
+				$length == - 1 ? - 1 : $length - strlen( $result )
+			);
+			if ( ( new PEAR )->isError( $sourceData ) ) {
+				return $sourceData;
+			}
+
+			if ( $sourceData === null ) {
+				$error = $this->source->next();
+				if ( ( new PEAR )->isError( $error ) ) {
+					return $error;
+				}
+				if ( ! $error ) {
+					break;
+				}
+			} else {
+				$result .= $sourceData;
+			}
+		}
+		$this->filePos += strlen( $result );
+
+		return $result == '' ? null : $result;
+	}
+
+	/**
+	 * @see File_Archive_Reader::skip()
+	 */
+	public function skip( $length = - 1 ) {
+		$skipped = 0;
+		while ( $skipped < $length ) {
+			$sourceSkipped = $this->source->skip( $length );
+			if ( ( new PEAR )->isError( $sourceSkipped ) ) {
+				return $skipped;
+			}
+			$skipped += $sourceSkipped;
+			$filePos += $sourceSkipped;
+			if ( $sourceSkipped < $length ) {
+				$error = $this->source->next();
+				if ( ( new PEAR )->isError( $error ) ) {
+					return $error;
+				}
+				if ( ! $error ) {
+					return $skipped;
+				}
+			}
+		}
+
+		return $skipped;
+	}
+
+	/**
+	 * @see File_Archive_Reader::rewind()
+	 */
+	public function rewind( $length = - 1 ) {
+		//TODO: implement rewind
+		return parent::rewind( $length );
+	}
+
+	/**
+	 * @see File_Archive_Reader::tell()
+	 */
+	public function tell() {
+		return $this->filePos;
+	}
+
+	/**
+	 * @see File_Archive_Reader::close()
+	 */
+	public function close() {
+		$this->opened  = false;
+		$this->filePos = 0;
+
+		return $this->source->close();
+	}
+
+	/**
+	 * @see File_Archive_Reader::makeWriter
+	 */
+	public function makeWriter( $fileModif = true, $seek = 0 ) {
+		return $this->source->makeWriter( $fileModif, $seek );
+	}
 }

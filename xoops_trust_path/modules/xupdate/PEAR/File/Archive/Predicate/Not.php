@@ -5,6 +5,7 @@
  * Evaluates to true iif the predicate given in parameter evaluates to false
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +25,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Predicate.php";
@@ -36,18 +37,17 @@ require_once "File/Archive/Predicate.php";
  *
  * @see        File_Archive_Predicate, File_Archive_Reader_Filter
  */
-class File_Archive_Predicate_Not extends File_Archive_Predicate
-{
-    public $pred;
-    public function File_Archive_Predicate_Not($pred)
-    {
-        $this->pred = $pred;
-    }
-    /**
-     * @see File_Archive_Predicate::isTrue()
-     */
-    public function isTrue(&$source)
-    {
-        return !$this->pred->isTrue($source);
-    }
+class File_Archive_Predicate_Not extends File_Archive_Predicate {
+	public $pred;
+
+	public function __construct( $pred ) {
+		$this->pred = $pred;
+	}
+
+	/**
+	 * @see File_Archive_Predicate::isTrue()
+	 */
+	public function isTrue( &$source ) {
+		return ! $this->pred->isTrue( $source );
+	}
 }

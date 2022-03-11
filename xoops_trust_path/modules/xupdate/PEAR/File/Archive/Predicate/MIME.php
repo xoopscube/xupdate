@@ -5,6 +5,7 @@
  * Keep only the files that have a specific MIME type
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,9 +25,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Predicate.php";
@@ -37,37 +38,36 @@ require_once "MIME/Type.php";
  *
  * @see        File_Archive_Predicate, File_Archive_Reader_Filter
  */
-class File_Archive_Predicate_MIME extends File_Archive_Predicate
-{
-    public $mimes;
+class File_Archive_Predicate_MIME extends File_Archive_Predicate {
+	public $mimes;
 
-    /**
-     * @param $extensions array or comma separated string of allowed extensions
-     */
-    public function File_Archive_Predicate_MIME($mimes)
-    {
-        if (is_string($mimes)) {
-            $this->mimes = explode(",", $mimes);
-        } else {
-            $this->mimes = $mimes;
-        }
-    }
-    /**
-     * @see File_Archive_Predicate::isTrue()
-     */
-    public function isTrue(&$source)
-    {
-        $sourceMIME = $source->getMIME();
-        foreach ($this->mimes as $mime) {
-            if (MIME_Type::isWildcard($mime)) {
-                $result = MIME_Type::wildcardMatch($mime, $sourceMIME);
-            } else {
-                $result = ($mime == $sourceMIME);
-            }
-            if ($result !== false) {
-                return $result;
-            }
-        }
-        return false;
-    }
+	/**
+	 * @param $extensions array or comma separated string of allowed extensions
+	 */
+	public function __construct( $mimes ) {
+		if ( is_string( $mimes ) ) {
+			$this->mimes = explode( ",", $mimes );
+		} else {
+			$this->mimes = $mimes;
+		}
+	}
+
+	/**
+	 * @see File_Archive_Predicate::isTrue()
+	 */
+	public function isTrue( &$source ) {
+		$sourceMIME = $source->getMIME();
+		foreach ( $this->mimes as $mime ) {
+			if ( MIME_Type::isWildcard( $mime ) ) {
+				$result = MIME_Type::wildcardMatch( $mime, $sourceMIME );
+			} else {
+				$result = ( $mime == $sourceMIME );
+			}
+			if ( $result !== false ) {
+				return $result;
+			}
+		}
+
+		return false;
+	}
 }

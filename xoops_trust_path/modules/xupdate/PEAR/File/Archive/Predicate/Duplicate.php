@@ -9,6 +9,7 @@
  * file is not specified).
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,9 +29,9 @@
  * @package    File_Archive
  * @author     Vincent Lascaux <vincentlascaux@php.net>
  * @copyright  1997-2005 The PHP Group
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL
+ * @license    https://www.gnu.org/copyleft/lesser.html  LGPL
  * @version    CVS: $Id$
- * @link       http://pear.php.net/package/File_Archive
+ * @link       https://pear.php.net/package/File_Archive
  */
 
 require_once "File/Archive/Predicate.php";
@@ -42,73 +43,70 @@ require_once "File/Archive/Predicate.php";
  * in the archive (if two files have the same date or the date of a
  * file is not specified).
  */
-class File_Archive_Predicate_Duplicate extends File_Archive_Predicate
-{
-    /**
-     * @var array Key is the filename, value is an array of date (index 0) and
-     *      position in the archive (index) 1 of the newest entry with this filename
-     */
-    public $newest = array();
+class File_Archive_Predicate_Duplicate extends File_Archive_Predicate {
+	/**
+	 * @var array Key is the filename, value is an array of date (index 0) and
+	 *      position in the archive (index) 1 of the newest entry with this filename
+	 */
+	public $newest = array();
 
-    /**
-     * @var int The current position of the file in the source
-     */
-    public $pos = 0;
+	/**
+	 * @var int The current position of the file in the source
+	 */
+	public $pos = 0;
 
-    /**
-     * @param File_Archive_Reader $source The source will be inspected to find
-     *        the date of old files
-     *        The predicate should then be used on the same source to remove the
-     *        old duplicate files
-     */
-    public function File_Archive_Predicate_Duplicate(&$source)
-    {
-        //Ensure we are at the begining of the file
-        $source->close();
-        $pos = 0;
-        while ($source->next()) {
-            $filename = $source->getFilename();
-            $stat = $source->getStat();
-            $value = isset($this->newest[$filename]) ? $this->newest[$filename] : null;
+	/**
+	 * @param File_Archive_Reader $source The source will be inspected to find
+	 *        the date of old files
+	 *        The predicate should then be used on the same source to remove the
+	 *        old duplicate files
+	 */
+	public function __construct( &$source ) {
+		//Ensure we are at the begining of the file
+		$source->close();
+		$pos = 0;
+		while ( $source->next() ) {
+			$filename = $source->getFilename();
+			$stat     = $source->getStat();
+			$value    = isset( $this->newest[ $filename ] ) ? $this->newest[ $filename ] : null;
 
-            if ($value === null ||
-                $this->compare($stat[9], $value[0]) >= 0
-               ) {
-                $this->newest[$filename] = array($stat[9], $pos);
-            }
-            $pos++;
-        }
-    }
+			if ( $value === null ||
+			     $this->compare( $stat[9], $value[0] ) >= 0
+			) {
+				$this->newest[ $filename ] = array( $stat[9], $pos );
+			}
+			$pos ++;
+		}
+	}
 
-    /**
-     * Compare the dates of two files. null is considered infinitely old
-     *
-     * @return int < 0 if $a can be considered older than $b
-     *             = 0 if $a and $b can be considered same age
-     *             > 0 if $a can be considered newer than $b
-     */
-    public function compare($a, $b)
-    {
-        return ($a === null ? -1 : $a) - ($b === null ? -1 : $b);
-    }
+	/**
+	 * Compare the dates of two files. null is considered infinitely old
+	 *
+	 * @return int < 0 if $a can be considered older than $b
+	 *             = 0 if $a and $b can be considered same age
+	 *             > 0 if $a can be considered newer than $b
+	 */
+	public function compare( $a, $b ) {
+		return ( $a === null ? - 1 : $a ) - ( $b === null ? - 1 : $b );
+	}
 
-    /**
-     * @see File_Archive_Predicate::isTrue()
-     */
-    public function isTrue(&$source)
-    {
-        $filename = $source->getFilename();
-        $stat = $source->getStat();
-        $value = isset($this->newest[$filename]) ? $this->newest[$filename] : null;
-        if ($value === null) {
-            $delete = false;
-        } else {
-            $comp = $this->compare($stat[9], $value[0]);
+	/**
+	 * @see File_Archive_Predicate::isTrue()
+	 */
+	public function isTrue( &$source ) {
+		$filename = $source->getFilename();
+		$stat     = $source->getStat();
+		$value    = isset( $this->newest[ $filename ] ) ? $this->newest[ $filename ] : null;
+		if ( $value === null ) {
+			$delete = false;
+		} else {
+			$comp = $this->compare( $stat[9], $value[0] );
 
-            $delete = $comp < 0 ||
-                  ($comp == 0 && $this->pos != $value[1]);
-        }
-        $this->pos++;
-        return $delete;
-    }
+			$delete = $comp < 0 ||
+			          ( $comp == 0 && $this->pos != $value[1] );
+		}
+		$this->pos ++;
+
+		return $delete;
+	}
 }

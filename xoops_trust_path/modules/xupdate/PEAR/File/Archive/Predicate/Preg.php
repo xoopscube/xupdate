@@ -5,6 +5,7 @@
  * Keep only the files which name follow a given regular expression
  *
  * PHP versions 4 and 5
+ * PHP version 7 (Nuno Luciano aka gigamaster)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -36,22 +37,22 @@ require_once "File/Archive/Predicate.php";
  *
  * @see        File_Archive_Predicate, File_Archive_Reader_Filter ereg
  */
-class File_Archive_Predicate_Preg extends File_Archive_Predicate
-{
-    public $preg;
+class File_Archive_Predicate_Preg extends File_Archive_Predicate {
+	public $preg;
 
-    /**
-     * @param string $ereg is the regular expression
-     */
-    public function File_Archive_Predicate_Preg($preg)
-    {
-        $this->preg = $preg;
-    }
-    /**
-     * @see File_Archive_Predicate::isTrue()
-     */
-    public function isTrue(&$source)
-    {
-        return (bool)preg_match($this->preg, $source->getFilename());
-    }
+	/**
+	 * @param string $ereg is the regular expression
+	 */
+	public function File_Archive_Predicate_Preg( $preg ) {
+		$this->preg = $preg;
+	}
+
+	/**
+	 * @see File_Archive_Predicate::isTrue()
+	 */
+	public function isTrue( &$source ) {
+		return (bool) preg_match( $this->preg, $source->getFilename() );
+	}
 }
+
+?>
