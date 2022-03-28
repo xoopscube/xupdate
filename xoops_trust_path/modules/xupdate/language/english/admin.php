@@ -1,8 +1,8 @@
 <?php
 // Syntax replace define with const v2.3.0 2021/05/15 @gigamaster XCL-PHP7
 
-const _AD_XUPDATE_LANG_WRITABLE_RESULT = 'Result of the check folder permissions';
-const _AD_XUPDATE_LANG_EXTENSION_CHECK_RESULT = 'PHP extention check results';
+const _AD_XUPDATE_LANG_WRITABLE_RESULT = 'Check folder permissions';
+const _AD_XUPDATE_LANG_EXTENSION_CHECK_RESULT = 'PHP extension check results';
 const _AD_XUPDATE_LANG_FTP_PASS_RESULT = 'FTP configuration check results';
 const _AD_XUPDATE_LANG_EXECUTION_TIME = 'PHP Max execution time';
 const _AD_XUPDATE_LANG_EXECUTION_TIME_NOTICE = 'PHP max execution time is too short, so the large item may be unable to be updated automatically.';
@@ -29,7 +29,7 @@ const _AD_XUPDATE_LANG_CHANGE = 'Change';
 const _AD_XUPDATE_LANG_CATEGORY_ID = 'Category';
 const _AD_XUPDATE_LANG_STORE = 'Store';
 
-const _AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL = 'Batch OP';
+const _AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL = 'Batch';
 const _AD_XUPDATE_LANG_MESSAGE_WAITING = 'Waiting';
 const _AD_XUPDATE_LANG_MESSAGE_SUCCESS = 'Success';
 const _AD_XUPDATE_LANG_MESSAGE_GETTING_FILES_PRE = 'Pre-getting';

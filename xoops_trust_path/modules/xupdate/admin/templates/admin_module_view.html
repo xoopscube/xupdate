@@ -6,17 +6,41 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <hr>
     <h2 class="admintitle"><{$smarty.const._MI_XUPDATE_ADMENU_STORELIST}></h2>
 
     <{include file="admin_tips.html"}>
+
+
+    <section layout="row center-justify" class="control-action">
+
+        <!-- category selection -->
+        <div class="filtermenu">
+
+
+        </div>
+
+        <div class="control-view">
+
+            <a href="<{$xoops_url}>/modules/legacy/admin/index.php?action=InstallList" class="ui-btn"><{$smarty.const._AD_LEGACY_LANG_MODINSTALL}></a>
+
+            <button class="help-admin ui-btn" type='button' data-id='4' data-module='xupdate' data-help-article='#help-store' title="Help">
+                <span class="ui-icon ui-icon-help"></span>
+            </button>
+
+        </div>
+
+    </section>
+
+
+
 
     <script>jQuery(function ($) {
         $("#tabs").tabs();
     });</script>
 
-    <div class="ui-card-full">
+<!--    <div class="ui-card-full">-->
         <div id="tabs">
+
             <ul>
                 <{if !empty($package_items) }>
                 <li><a href="#xupdate-tabs-package"><{$smarty.const._MI_XUPDATE_ADMENU_PACKAGE}>
@@ -35,13 +59,23 @@
                     <{$smarty.const._AD_XUPDATE_LANG_STORE}></a></li>
                 <{/if}>
             </ul>
+
+
             <{if !empty($package_items) }>
+
             <div id="xupdate-tabs-package" class="storelist">
+
+                <section layout="rows sm-column" aria-label="package">
                 <{foreach item=data from=$package_items}>
-                <div class="eachstore">
+                <div class="eachstore" self="size-1of4 sm-full p-2">
                     <dl>
                         <dt>
-                            <a href="index.php?action=PackageStore&amp;sid=<{$data.storeobj->get('sid')}>"><{$data.storeobj->getShow('name')}></a>
+                            <h3>
+                            <a href="index.php?action=PackageStore&amp;sid=<{$data.storeobj->get('sid')}>">
+                               <img class="svg" src="<{$xoops_url}>/images/icons/package.svg" width="1em" height="1em" alt="package">
+                                <{$data.storeobj->getShow('name')}>
+                            </a>
+                            </h3>
                         </dt>
                         <dd>
                             <div class="module_count">(<{$smarty.const._AD_XUPDATE_LANG_ITEM_TOTAL}>:
@@ -53,8 +87,10 @@
                                     <a href="index.php?action=ModuleInstall&amp;id=<{$itemsobj.id}>"
                                        class="isactive_<{$itemsobj.isactive}>" title="<{$itemsobj.title}>">
                                         <{$itemsobj.dirname}><{if $itemsobj.hasupdate}>
-                                        <img src="<{$smarty.const.XOOPS_MODULE_URL}>/xupdate/images/new.png" alt="New!"
-                                             style="vertical-align:middle;" width="16" height="16">
+<!--                                        <img class="svg" src="<{$smarty.const.XOOPS_MODULE_URL}>/xupdate/images/new.svg" alt="New!"-->
+<!--                                             style="vertical-align:middle;" width="1em" height="1em">-->
+                                        <img class="svg" src="<{$smarty.const.XOOPS_URL}>/xupdate/images/new.svg" alt="New!"
+                                             style="vertical-align:middle;" width="1em" height="1em">
                                         <{/if}>
                                     </a>
                                     <{if $itemsobj.category_id>0}>(<{$categoryList[$itemsobj.category_id]}>)
@@ -66,17 +102,27 @@
                     </dl>
                 </div>
                 <{/foreach}>
-                <div style="clear:both;;">&nbsp;</div>
+                </section>
+
             </div>
             <{/if}>
 
+
             <{if !empty($module_items) }>
             <div id="xupdate-tabs-module" class="storelist">
+
+                <section layout="rows sm-column" aria-label="stores">
                 <{foreach item=data from=$module_items}>
-                <div class="eachstore">
+                <div class="eachstore" self="size-1of4 sm-full p-2">
                     <dl>
                         <dt>
-                            <a href="index.php?action=ModuleStore&amp;sid=<{$data.storeobj->get('sid')}>"><{$data.storeobj->getShow('name')}></a>
+                            <h3>
+                            <a href="index.php?action=ModuleStore&amp;sid=<{$data.storeobj->get('sid')}>">
+                                <img class="svg" src="<{$xoops_url}>/images/icons/store.svg" width="1em" height="1em" alt="store">
+                                <{$data.storeobj->getShow('name')|truncate:12}>
+                            </a>
+                            </h3>
+
                         </dt>
                         <dd>
                             <div class="module_count">(<{$smarty.const._AD_LEGACY_LANG_MOD_TOTAL}>:
@@ -97,14 +143,18 @@
                     </dl>
                 </div>
                 <{/foreach}>
-                <div style="clear:both;;">&nbsp;</div>
+                </section>
+
             </div>
             <{/if}>
 
+
             <{if !empty($theme_items) }>
             <div id="xupdate-tabs-theme" class="storelist">
+
+                <section layout="rows sm-column" aria-label="stores">
                 <{foreach item=data from=$theme_items}>
-                <div class="eachstore">
+                <div class="eachstore" self="size-1of4 sm-full p-2">
                     <dl>
                         <dt>
                             <a href="index.php?action=ThemeStore&amp;sid=<{$data.storeobj->get('sid')}>"><{$data.storeobj->getShow('name')}></a>
@@ -126,14 +176,18 @@
                     </dl>
                 </div>
                 <{/foreach}>
-                <div style="clear:both;;">&nbsp;</div>
+                </section>
+
             </div>
             <{/if}>
 
+
             <{if !empty($preload_items) }>
             <div id="xupdate-tabs-preload" class="storelist">
+
+                <section layout="rows sm-column" aria-label="stores">
                 <{foreach item=data from=$preload_items}>
-                <div class="eachstore">
+                <div class="eachstore" self="size-1of4 sm-full p-2">
                     <dl>
                         <dt>
                             <a href="index.php?action=PreloadStore&amp;sid=<{$data.storeobj->get('sid')}>"><{$data.storeobj->getShow('name')}></a>
@@ -146,8 +200,8 @@
                                 <{foreach item=itemsobj from=$data.itemsobj}>
                                 <li><a href="index.php?action=PreloadInstall&amp;id=<{$itemsobj.id}>"
                                        class="isactive_<{$itemsobj.isactive}>" title="<{$itemsobj.title}>"><{$itemsobj.dirname}><{if
-                                    $itemsobj.hasupdate}> <img
-                                            src="<{$smarty.const.XOOPS_MODULE_URL}>/xupdate/images/new.png" alt="New!"
+                                    $itemsobj.hasupdate}>
+                                    <img src="<{$smarty.const.XOOPS_MODULE_URL}>/xupdate/images/new.png" alt="New!"
                                             style="vertical-align:middle;" width="16" height="16"><{/if}></a></li>
                                 <{/foreach}>
                             </ul>
@@ -155,13 +209,15 @@
                     </dl>
                 </div>
                 <{/foreach}>
-                <div style="clear:both;;">&nbsp;</div>
+                </section>
+
             </div>
             <{/if}>
 
         </div>
+
         <div class="fetchLog"><{$fetchLog}></div>
 
-    </div><!-- ui-card-full -->
+    <!-- </div>ui-card-full -->
 
 </div>

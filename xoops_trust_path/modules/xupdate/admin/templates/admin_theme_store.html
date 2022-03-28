@@ -7,50 +7,62 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <hr>
     <h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_MODULES}></h2>
 
 
     <{include file="admin_tips.html"}>
 
-    <div class="ui-card-full">
-        <{if $storeObject}>
-        <h4><{$storeObject->getShow('name')}></h4>
-        <{/if}>
+    <{if $actionForm->hasError()}>
+    <div class="error">
+        <ul>
+            <{foreach item=message from=$actionForm->getErrorMessages()}>
+            <li><{$message|xoops_escape}></li>
+            <{/foreach}>
+        </ul>
+    </div>
+    <{/if}>
 
-        <div class="toptab">
-            <a href="<{$xoops_url}>/modules/legacy/admin/index.php?action=ThemeList" class="ui-btn"><{$smarty.const._AD_LEGACY_LANG_THEME}><{$smarty.const._MI_XUPDATE_MANAGE}></a>
-        </div>
 
-        <{if $actionForm->hasError()}>
-        <div class="error">
-            <ul>
-                <{foreach item=message from=$actionForm->getErrorMessages()}>
-                <li><{$message|xoops_escape}></li>
-                <{/foreach}>
-            </ul>
-        </div>
-        <{/if}>
+    <{if $storeObject}>
+    <h4><{$storeObject->getShow('name')}></h4>
+    <{/if}>
 
+
+    <section layout="row center-justify" class="control-action">
+
+        <!-- category selection -->
         <div class="filtermenu">
-            <ul class="submenunavi">
-                <li><a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>"><{$smarty.const._MI_XUPDATE_ALL}></a>
-                </li>
-                <li>
-                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=installed"><{$smarty.const._MI_XUPDATE_INSTALLED}></a>
-                </li>
-                <li>
-                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=updated"><{$smarty.const._MI_XUPDATE_UPDATED}></a>
-                </li>
-                <li>
-                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=future"><{$smarty.const._MI_XUPDATE_FUTURE}></a>
-                </li>
-            </ul>
+
+            <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>" class="ui-btn ui-btn-small">
+                <{$smarty.const._MI_XUPDATE_ALL}>
+            </a>
+            <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=installed" class="ui-btn ui-btn-small">
+                <{$smarty.const._MI_XUPDATE_INSTALLED}>
+            </a>
+            <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=updated" class="ui-btn ui-btn-small">
+                <{$smarty.const._MI_XUPDATE_UPDATED}>
+            </a>
+            <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=future" class="ui-btn ui-btn-small">
+                <{$smarty.const._MI_XUPDATE_FUTURE}>
+            </a>
         </div>
 
-        <{if $pageNavi->getPerpage() < $pageNavi->getTotalItems() }>
-        <div class="pagenavi"><{xoops_pagenavi pagenavi=$pageNavi}></div>
-        <{/if}>
+        <div class="control-view">
+
+            <a href="<{$xoops_url}>/modules/legacy/admin/index.php?action=ThemeList" class="ui-btn"><{$smarty.const._MI_XUPDATE_MANAGE}> <{$smarty.const._AD_LEGACY_LANG_THEME}></a>
+
+            <button class="help-admin ui-btn" type='button' data-id='4' data-module='xupdate' data-help-article='#help-store' title="Help">
+                <span class="ui-icon ui-icon-help"></span>
+            </button>
+
+        </div>
+
+    </section>
+
+
+<!--        <{if $pageNavi->getPerpage() < $pageNavi->getTotalItems() }>-->
+<!--        <div class="pagenavi"><{xoops_pagenavi pagenavi=$pageNavi}></div>-->
+<!--        <{/if}>-->
 
         <form action="index.php?action=ThemeStore" method="post">
             <{xoops_input type=hidden name=sid value=$sid}>
@@ -59,61 +71,91 @@
 
                 <thead>
                 <tr>
-                    <{if !$sid}>
-                    <th><{$smarty.const._MD_XUPDATE_LANG_SID}>
-                        <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_SID}>"><img
-                                src="<{" icons/up.png"|theme}>" alt="<{$smarty.const._ASCENDING}>"
-                            title="<{$smarty.const._ASCENDING}>" /></a>
-                        <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_SID}>"><img
-                                src="<{" icons/down.png"|theme}>" alt="<{$smarty.const._DESCENDING}>"
-                            title="<{$smarty.const._DESCENDING}>" /></a>
-                    </th>
-                    <{/if}>
+
                     <th>
-                        <div><{$smarty.const._AD_LEGACY_LANG_THEME}>
-                            <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_DIRNAME}>"><img
-                                    src="<{" icons/up.png"|theme}>" alt="<{$smarty.const._ASCENDING}>"
-                                title="<{$smarty.const._ASCENDING}>" /></a>
-                            <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_DIRNAME}>"><img
-                                    src="<{" icons/down.png"|theme}>" alt="<{$smarty.const._DESCENDING}>"
-                                title="<{$smarty.const._DESCENDING}>" /></a>
-                        </div>
-                        <div><{$smarty.const._AD_LEGACY_LANG_VERSION}>
-                            <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_VERSION}>"><img
-                                    src="<{" icons/up.png"|theme}>" alt="<{$smarty.const._ASCENDING}>"
-                                title="<{$smarty.const._ASCENDING}>" /></a>
-                            <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_VERSION}>"><img
-                                    src="<{" icons/down.png"|theme}>" alt="<{$smarty.const._DESCENDING}>"
-                                title="<{$smarty.const._DESCENDING}>" /></a>
-                        </div>
-                        <div><{$smarty.const._AD_XUPDATE_LANG_LICENSE}>
-                            <a href="index.php?action=ModuleStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"><img
-                                    src="<{" icons/up.png"|theme}>" alt="<{$smarty.const._ASCENDING}>"
-                                title="<{$smarty.const._ASCENDING}>" /></a>
-                            <a href="index.php?action=ModuleStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"><img
-                                    src="<{" icons/down.png"|theme}>" alt="<{$smarty.const._DESCENDING}>"
-                                title="<{$smarty.const._DESCENDING}>" /></a>
-                        </div>
+                    <div class="dropdown" id="filter-sort">
+
+                        <a href="#" class="dropdown-toggle ui-btn" aria-label="sort filter">
+                            <img class="svg" src="<{$xoops_url}>/images/icons/list-tree.svg" width="24px" height="24px" alt="options">
+                        </a>
+
+                        <div class="dropdown-content drop-left" style="min-width: 280px; padding:.5em">
+
+                            <{if !$sid}>
+                            <div layout="row center-justify inline">
+                                <h6><{$smarty.const._MD_XUPDATE_LANG_SID}></h6>
+                                <div>
+                                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_SID}>"
+                                       class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_SID}>"
+                                       class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
+                                </div>
+                            </div>
+                            <{/if}>
+
+                            <div layout="row center-justify inline">
+                                <h6><{$smarty.const._AD_LEGACY_LANG_THEME}></h6>
+                                <div>
+                                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_DIRNAME}>"
+                                       class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                                    <a href=index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_DIRNAME}>"
+                                       class="btn" title="<{$smarty.const._DESCENDING}>">&darr;
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div layout="row center-justify">
+                                <h6><{$smarty.const._AD_LEGACY_LANG_VERSION}></h6>
+                                <div>
+                                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_VERSION}>"
+                                       class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_VERSION}>"
+                                       class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
+                                </div>
+                            </div>
+
+                            <div layout="row center-justify">
+                                <h6><{$smarty.const._AD_XUPDATE_LANG_LICENSE}></h6>
+                                <div>
+                                    <a href="index.php?action=ModuleStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"
+                                       class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                                    <a href="index.php?action=ModuleStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"
+                                       class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
+                                </div>
+                            </div>
+
+                            <div layout="row center-justify">
+                                <h6><{$smarty.const._AD_LEGACY_LANG_LASTUPDATE}></h6>
+                                <div>
+                                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LASTUPDATE}>"
+                                       class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LASTUPDATE}>"
+                                       class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
+                                </div>
+                            </div>
+
+                            <div layout="row center-justify">
+                                <h6><{$smarty.const._AD_LEGACY_LANG_PACKAGE}></h6>
+                                <div>
+                                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_TARGET_KEY}>"
+                                       class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                                    <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_TARGET_KEY}>"
+                                       class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
+                                </div>
+                            </div>
+
+                        </div><{* ----- /Dropdown-content *}>
+                    </div><{* ----- /Dropdown *}>
+
                     </th>
-                    <th><{$smarty.const._AD_LEGACY_LANG_LASTUPDATE}>
-                        <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LASTUPDATE}>"><img
-                                src="<{" icons/up.png"|theme}>" alt="<{$smarty.const._ASCENDING}>"
-                            title="<{$smarty.const._ASCENDING}>" /></a>
-                        <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LASTUPDATE}>"><img
-                                src="<{" icons/down.png"|theme}>" alt="<{$smarty.const._DESCENDING}>"
-                            title="<{$smarty.const._DESCENDING}>" /></a>
-                    </th>
-                    <th colspan="2"><{$smarty.const._AD_LEGACY_LANG_PACKAGE}>
-                        <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_TARGET_KEY}>"><img
-                                src="<{" icons/up.png"|theme}>" alt="<{$smarty.const._ASCENDING}>"
-                            title="<{$smarty.const._ASCENDING}>" /></a>
-                        <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_TARGET_KEY}>"><img
-                                src="<{" icons/down.png"|theme}>" alt="<{$smarty.const._DESCENDING}>"
-                            title="<{$smarty.const._DESCENDING}>" /></a>
-                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                     <th><{$smarty.const._AD_LEGACY_LANG_CONTROL}></th>
-                    <th><{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}><br><input id="rapidInstallCheckboxAll"
-                                                                                           type="checkbox"/></th>
+                    <th><{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}><br>
+                        <input id="rapidInstallCheckboxAll" type="checkbox"/>
+                    </th>
                 </tr>
                 </thead>
 
@@ -166,8 +208,8 @@
                         <{/if}>
                     </td>
                     <td class="legacy_list_screenshot">
-                        <{if $module->options.screen_shot}><img src="<{$module->options.screen_shot}>" align="middle"
-                                                                height="60"/><{/if}>
+                        <{if $module->options.screen_shot}>
+                        <img src="<{$module->options.screen_shot}>" align="middle" height="60"/><{/if}>
                     </td>
                     <td class="legacy_list_select">
                         <{if $module->getShow('detail_url')}>
@@ -187,13 +229,15 @@
                         <{if $xupdate_writable.result==true}>
                         <{if $module->getVar('isactive') > 0}>
                         <a href="<{$module->get_StoreUrl()}>" title="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
-                            <img src="<{" icons/icon-package-update.svg"|theme}>" class="svg"
-                            alt="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>" /></a>
+                            <img src="<{"icons/icon-package-update.svg"|theme}>" class="svg" alt="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>"></a>
                         <a href="<{$module->get_UpdateUrl()}>"></a>
                         <{else}>
                         <a href="<{$module->get_StoreUrl()}>" title="<{$smarty.const._AD_LEGACY_LANG_INSTALL}>">
-                            <img src="<{" icons/icon-package.svg"|theme}>" class="svg"
-                            alt="<{$smarty.const._AD_LEGACY_LANG_INSTALL}>" /></a>
+                            <img class="svg" src="<{$xoops_url}>/images/icons/download.svg"
+                                 width="24px"
+                                 height="24px"
+                                 alt="<{$smarty.const._AD_LEGACY_LANG_INSTALL}>">
+                            </a>
                         <a href="<{$module->get_InstallUrl()}>"></a>
                         <{/if}>
                         <{/if}>
@@ -202,10 +246,10 @@
                         <{if $xupdate_writable.result==true}>
                         <{if $module->mModule && $module->mModule->getVar('mid') > 0 }>
                         <{if $module->mModule->getVar('isactive') && $module->isDirnameError() == false}>
-                        <input type="checkbox" class="rapidInstallCheckbox"/>
+                        <input type="checkbox" class="rapidInstallCheckbox">
                         <{/if}>
                         <{else}>
-                        <input type="checkbox" class="rapidInstallCheckbox"/>
+                        <input type="checkbox" class="rapidInstallCheckbox">
                         <{/if}>
                         <{/if}>
                     </td>
@@ -238,9 +282,8 @@
 
         <{include file="admin_tagcloud.html"}>
 
-    </div><!-- ui-card-full -->
-
 </div>
+
 
 <script type="text/javascript">
     jQuery(function ($) {
@@ -257,3 +300,5 @@
         );
     })
 </script>
+
+
