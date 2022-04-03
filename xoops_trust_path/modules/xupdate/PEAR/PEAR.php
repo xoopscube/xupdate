@@ -22,16 +22,16 @@
 /**#@+
  * ERROR constants
  */
-define( 'PEAR_ERROR_RETURN', 1 );
-define( 'PEAR_ERROR_PRINT', 2 );
-define( 'PEAR_ERROR_TRIGGER', 4 );
-define( 'PEAR_ERROR_DIE', 8 );
-define( 'PEAR_ERROR_CALLBACK', 16 );
+const PEAR_ERROR_RETURN = 1;
+const PEAR_ERROR_PRINT = 2;
+const PEAR_ERROR_TRIGGER = 4;
+const PEAR_ERROR_DIE = 8;
+const PEAR_ERROR_CALLBACK = 16;
 /**
  * WARNING: obsolete
  * @deprecated
  */
-define( 'PEAR_ERROR_EXCEPTION', 32 );
+const PEAR_ERROR_EXCEPTION = 32;
 /**#@-*/
 define( 'PEAR_ZE2', ( function_exists( 'version_compare' ) &&
                       version_compare( zend_version(), "2-dev", "ge" ) ) );

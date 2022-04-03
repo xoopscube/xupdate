@@ -5,9 +5,10 @@
  * @package XCL
  * @subpackage Xupdate
  * @version 2.3
- * @author Naoki Sawada, Naoki Okino, Gigamaster (XCL 2.3)
- * @copyright Copyright 2005-2022 XOOPSCube Project, Authors
- * @license https://github.com/xoopscube/xcl/blob/master/GPL_V2.txt
+ * @author Other authors Gigamaster XCL/PHP7
+ * @author Naoki Sawada, Naoki Okino
+ * @copyright  (c) 2005-2022 Authors
+ * @license GPL V2
  */
 
 if ( ! defined( 'XOOPS_ROOT_PATH' ) ) {
@@ -26,8 +27,8 @@ $basename = basename( $dirname );
 // Define a basic manifesto.
 //
 $modversion['name']             = _MI_XUPDATE_LANG_XUPDATE;
-$modversion['version']          = '2.30';
-$modversion['detailed_version'] = '2.30.0';
+$modversion['version']          = '2.31';
+$modversion['detailed_version'] = '2.31.0';
 $modversion['description']      = _MI_XUPDATE_DESC_XUPDATE;
 $modversion['author']           = _MI_XUPDATE_LANG_AUTHOR;
 $modversion['credits']          = _MI_XUPDATE_LANG_CREDITS;

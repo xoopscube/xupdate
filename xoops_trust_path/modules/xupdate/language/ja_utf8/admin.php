@@ -8,6 +8,12 @@ const _AD_XUPDATE_LANG_EXECUTION_TIME = 'PHP 実行時間制限';
 const _AD_XUPDATE_LANG_EXECUTION_TIME_NOTICE = 'PHP 実行時間制限が短いので大きなアイテムは自動更新できないことがあります。';
 
 const _AD_XUPDATE_LANG_MODULES = 'モジュール一覧';
+const _AD_XUPDATE_LANG_MODULES_TIP = 'Store Module Tip';
+const _AD_XUPDATE_LANG_THEMES = 'Themes list';
+const _AD_XUPDATE_LANG_THEMES_TIP = 'Store Themes Tip';
+const _AD_XUPDATE_LANG_PRELOADS = 'Preloads';
+const _AD_XUPDATE_LANG_PRELOADS_TIP = 'Store Preloads Tip';
+const _AD_XUPDATE_LANG_THEME_FINDER = 'Theme Finder';
 const _AD_XUPDATE_LANG_THEME_FINDER = 'テーマファインダー';
 
 const _AD_XUPDATE_LANG_TYPE = 'タイプ';
@@ -22,7 +28,7 @@ const _AD_XUPDATE_LANG_NO_UPDATE = 'アップデート時には配置・上書�
 const _AD_XUPDATE_LANG_DELETE_DIR = '不要になったディレクトリの削除';
 const _AD_XUPDATE_LANG_DELETE_FILE = '不要になったファイルの削除';
 const _AD_XUPDATE_RECENTCHANGES = '更新履歴';
-const _AD_XUPDATE_LANG_PRELOAD_NAME = 'プリロード名';
+const _AD_XUPDATE_LANG_NAME = 'プリロード名';
 const _AD_XUPDATE_DESCRIPTION = '説明';
 const _AD_XUPDATE_LANG_PERM = 'パーミッション';
 const _AD_XUPDATE_LANG_CHANGE = '変更';

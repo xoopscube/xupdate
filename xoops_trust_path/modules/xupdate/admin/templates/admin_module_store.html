@@ -7,7 +7,7 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_MODULES}></h2>
+    <h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_MODULES}> <{if $storeObject}>: <{$storeObject->getShow('name')}><{/if}></h2>
 
 
     <{include file="admin_tips.html"}>
@@ -24,16 +24,17 @@
     <{/if}>
 
 
-<!--    <div class="ui-card-full">-->
-        <{if $storeObject}>
-        <h4><{$storeObject->getShow('name')}></h4>
-        <{/if}>
+    <div class="category-list adminavi-sub">
+        <{foreach item=category from=$categoryList key=k}>
+        <p><a href="./index.php?action=ModuleStore&category_id=<{$k}>" class=" adminavi-item"><{$category}></a></p>
+        <{/foreach}>
+    </div>
 
 
-    <section layout="row center-justify" class="control-action">
+    <{* ////— ACTION-CONTROL —\\\\ *}>
+    <section layout="row center-justify sm-column" class="control-action">
 
-        <!-- category selection -->
-        <div class="filtermenu">
+        <div class="filtermenu" self="sm-full">
             <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>" class="ui-btn ui-btn-small">
                 <{$smarty.const._MI_XUPDATE_ALL}>
             </a>
@@ -48,52 +49,33 @@
             </a>
         </div>
 
-        <div class="control-view">
-
+        <div class="control-view" self="sm-full">
             <a href="<{$xoops_url}>/modules/legacy/admin/index.php?action=InstallList" class="ui-btn"><{$smarty.const._AD_LEGACY_LANG_MODINSTALL}></a>
-
             <button class="help-admin ui-btn" type='button' data-id='4' data-module='xupdate' data-help-article='#help-store' title="Help">
                 <span class="ui-icon ui-icon-help"></span>
             </button>
-
         </div>
 
     </section>
+    <{* ----- / ACTION-CONTROL *}>
 
 
 
-        <div class="category-list adminavi-sub">
-            <{foreach item=category from=$categoryList key=k}>
-            <a href="./index.php?action=ModuleStore&category_id=<{$k}>" class=" adminavi-item"><{$category}></a>
-            <{/foreach}>
-        </div>
+<form action="index.php?action=<{$action}>" method="post">
+    <{xoops_input type=hidden name=sid value=$sid}>
+    <{xoops_input type=hidden name=do_confirm value=1}>
 
-
-
-<!--        <{if $pageNavi->getPerpage() < $pageNavi->getTotalItems() }>-->
-<!--        <div class="pagenavi"><{xoops_pagenavi pagenavi=$pageNavi}></div>-->
-<!--        <{/if}>-->
-
-
-
-    <form action="index.php?action=<{$action}>" method="post">
-        <{xoops_input type=hidden name=sid value=$sid}>
-        <{xoops_input type=hidden name=do_confirm value=1}>
-
-
-    <table class="outer">
-
+<table class="outer">
     <thead>
     <tr>
         <th>
+        <{* ////— DROPDOWN SORT —\\\\ *}>
         <div class="dropdown" id="filter-sort">
-
             <a href="#" class="dropdown-toggle ui-btn" aria-label="sort filter">
                 <img class="svg" src="<{$xoops_url}>/images/icons/list-tree.svg" width="24px" height="24px" alt="options">
             </a>
-
+            <{* ----- Dropdown-content ----- *}>
             <div class="dropdown-content drop-left" style="min-width: 280px; padding:.5em">
-
                 <div layout="row center-justify inline">
                     <h6><{$smarty.const._AD_LEGACY_LANG_MOD_NAME}></h6>
                     <div>
@@ -103,7 +85,6 @@
                            class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
-
                 <div layout="row center-justify inline">
                     <h6>TRUST or <{$smarty.const._AD_LEGACY_LANG_MOD_NAME}></h6>
                     <div>
@@ -114,7 +95,6 @@
                         </a>
                     </div>
                 </div>
-
                 <div layout="row center-justify">
                     <h6><{$smarty.const._AD_XUPDATE_LANG_CATEGORY_ID}></h6>
                     <div>
@@ -124,7 +104,6 @@
                            class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
-
                 <div layout="row center-justify">
                     <h6><{$smarty.const._AD_LEGACY_LANG_LASTUPDATE}></h6>
                     <div>
@@ -134,7 +113,6 @@
                            class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
-
                 <div layout="row center-justify">
                     <h6><{$smarty.const._AD_LEGACY_LANG_VERSION}></h6>
                     <div>
@@ -144,7 +122,6 @@
                            class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
-
                 <div layout="row center-justify">
                     <h6><{$smarty.const._AD_XUPDATE_LANG_REQUIRED}></h6>
                     <div>
@@ -154,7 +131,6 @@
                            class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
-
                 <div layout="row center-justify">
                     <h6><{$smarty.const._AD_XUPDATE_LANG_TYPE}></h6>
                     <div>
@@ -164,54 +140,56 @@
                            class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
-
-            </div><{* ----- /Dropdown-content *}>
-        </div><{* ----- /Dropdown *}>
+            </div><{* ----- / Dropdown-content *}>
+        </div>
+        <{* ----- / DROPDOWN SORT *}>
         </th>
-        <th> </th>
-        <th> </th>
-        <th> </th>
-        <th> <{$smarty.const._AD_LEGACY_LANG_CONTROL}></th>
+        <th><{$smarty.const._AD_XUPDATE_LANG_CATEGORY_ID}></th>
+        <th><{$smarty.const._AD_LEGACY_LANG_LASTUPDATE}><br><{$smarty.const._AD_LEGACY_LANG_VERSION}></th>
+        <th><{$smarty.const._AD_XUPDATE_LANG_REQUIRED}><br><{$smarty.const._AD_XUPDATE_LANG_TYPE}></th>
+        <th><{$smarty.const._AD_LEGACY_LANG_CONTROL}></th>
         <th><{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}><br><input id="rapidInstallCheckboxAll" type="checkbox"></th>
     </tr>
     </thead>
-
     <tbody>
     <{foreach item=module from=$moduleObjects}>
-    <tr class="<{cycle values='odd,even'}>">
+    <tr>
         <td>
-        <div class="legacy_list_image">
-            <{if $module->getShow('target_type') == 'TrustModule' && $module->getShow('replicatable') &&
-            (!$module->mModule->getVar('mid') || $module->get('dirname') ==
-            $module->get('trust_dirname') ) }>
-            <input type="text" size="24" name="dirname[<{$module->get('id')}>]"
-                   value="<{$module->get('dirname')}>">
-            <{else}>
-            <input type="hidden" name="dirname[<{$module->get('id')}>]"
-                   value="<{$module->get('dirname')}>">
-            <strong><{$module->getShow('dirname')}></strong>
+            <div class="legacy_list_image">
+                <{if $module->getShow('target_type') == 'TrustModule' && $module->getShow('replicatable') &&
+                (!$module->mModule->getVar('mid') || $module->get('dirname') == $module->get('trust_dirname'))}>
+                <input type="text"
+                       size="20"
+                       name="dirname[<{$module->get('id')}>]"
+                       value="<{$module->get('dirname')}>">
+                <{else}>
+                <input type="text"
+                       size="20"
+                       name="dirname[<{$module->get('id')}>]"
+                       value="<{$module->get('dirname')}>"
+                       readonly>
+                <{/if}>
+            </div>
+            <div class="legacy_list_image">
+            <{if $module->isDirnameError()}>
+
+                <{if $module->modinfo.trust_dirname}>
+                    [ <{$module->modinfo.trust_dirname}> ]
+                <{else}>
+                    [ <{$module->modinfo.dirname}> ]
+                <{/if}>
+                <span class="message-warning"><{$module->getShow('target_key')}></span>
+
+                <{else}>
+
+                <{if $module->getShow('detail_url')}>
+                <p><a href="<{$module->getShow('detail_url')}>" target="_blank">&#128230; <{$module->getShow('target_key')}> &#x279A;</a></p>
+                <{else}>
+                    <{$module->getShow('target_key')}>
+                <{/if}>
+
             <{/if}>
-        </div>
-        <div class="legacy_list_image">
-        <{if $module->isDirnameError()}>
-
-            <{if $module->modinfo.trust_dirname}>
-                (<{$module->modinfo.trust_dirname}>)
-            <{else}>
-                (<{$module->modinfo.dirname}>)
-            <{/if}>
-            <span class="message-warning"><{$module->getShow('target_key')}></span>
-
-            <{else}>
-
-            <{if $module->getShow('detail_url')}>
-                <a href="<{$module->getShow('detail_url')}>" target="_blank"><{$module->getShow('target_key')}></a>
-            <{else}>
-                <{$module->getShow('target_key')}>
-            <{/if}>
-
-        <{/if}>
-        </div>
+            </div>
         </td>
         <td class="legacy_list_date">
             <{assign var=categoryId value=$module->getShow('category_id')}>
@@ -246,7 +224,7 @@
 
             <{if $hasupdate && $module->options.changes_url}>
             <div class="legacy_list_control">
-                <a href="<{$module->options.changes_url|escape:'html'}>" target="_blank"><{$smarty.const._AD_XUPDATE_RECENTCHANGES}></a>
+                <a href="<{$module->options.changes_url|escape:'html'}>" target="_blank">&#9745; <{$smarty.const._AD_XUPDATE_RECENTCHANGES}></a>
             </div>
             <{/if}>
         </td>
@@ -272,24 +250,25 @@
         </div>
         <div><{$module->get('description')}></div>
         </td>
-        <td class="legacy_list_control" <{if $module->mModule->getVar('dirname') === 'legacy'}> colspan="2"<{/if}>>
+        <td class="legacy_list_control" <{if $module->mModule->getVar('dirname') === 'legacy'}>colspan="2"<{/if}>>
         <{if $xupdate_writable.result==true}>
         <{if $module->mModule && $module->mModule->getVar('mid') > 0}>
         <{if $module->mModule->getVar('isactive')}>
         <a href="<{$module->get_StoreUrl()}>" title="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
-            <img  class="svg" src="<{"icons/icon-package-update.svg"|theme}>"
+            <img class="svg" src="<{"icons/icon-package-update.svg"|theme}>"
             width="24px"
             height="24px"
             alt="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
         </a>
         <a href="<{$module->get_UpdateUrl()}>"></a>
         <{if $module->mModule->getVar('dirname') === 'legacy'}>
-        <br><span class="legacy_list_select" style="white-space:nowrap;">
-        <a href="<{$module->get_StoreUrl()}>"><{$smarty.const._AD_LEGACY_LANG_UPDATE}></a></span>
+        <br>
+        <span class="legacy_list_select" style="white-space:nowrap;">
+        <a href="<{$module->get_StoreUrl()}>"><{$smarty.const._AD_LEGACY_LANG_UPDATE}></a>
+        </span>
         <{/if}>
         <{else}>
-        <img src="<{"icons/error.png"|theme}>" alt="<{$smarty.const._AD_LEGACY_LANG_BLOCK_INACTIVETOTAL}>"
-        title="<{$smarty.const._AD_LEGACY_LANG_BLOCK_INACTIVETOTAL}>">
+        <img src="<{"icons/error.png"|theme}>" alt="<{$smarty.const._AD_LEGACY_LANG_BLOCK_INACTIVETOTAL}>" title="<{$smarty.const._AD_LEGACY_LANG_BLOCK_INACTIVETOTAL}>">
         <{/if}>
         <{else}>
         <a href="<{$module->get_StoreUrl()}>" title="<{$smarty.const._AD_LEGACY_LANG_INSTALL}>">
@@ -302,54 +281,49 @@
         <{/if}>
         <{/if}>
         </td>
-            <{if $module->mModule->getVar('dirname') !== 'legacy'}>
-            <td class="legacy_list_select center">
-                <{if $xupdate_writable.result==true}>
-                <{if $module->mModule && $module->mModule->getVar('mid') > 0 }>
-                <{if $module->mModule->getVar('isactive') && $module->isDirnameError() == false}>
-                <input type="checkbox" class="rapidInstallCheckbox">
-                <{/if}>
-                <{else}>
-                <input type="checkbox" class="rapidInstallCheckbox">
-                <{/if}>
-                <{/if}>
-            </td>
+
+        <{if $module->mModule->getVar('dirname') !== 'legacy'}>
+        <td class="legacy_list_select">
+            <{if $xupdate_writable.result==true}>
+            <{if $module->mModule && $module->mModule->getVar('mid') > 0 }>
+            <{if $module->mModule->getVar('isactive') && $module->isDirnameError() == false}>
+            <input type="checkbox" class="rapidInstallCheckbox">
             <{/if}>
+            <{else}>
+            <input type="checkbox" class="rapidInstallCheckbox">
+            <{/if}>
+            <{/if}>
+        </td>
+        <{/if}>
     </tr>
     <{/foreach}>
     </tbody>
-
     <tfoot class="foot">
     <tr>
         <td colspan="<{if $sid}>4<{else}>4<{/if}>">
             <{xoops_token form=$actionForm}>
-            <input class="formButton" type="submit"
-                   value="<{$smarty.const._AD_LEGACY_LANG_MOD_NAME}><{$smarty.const._EDIT}>">
-            <input class="formButton" type="submit" value="<{$smarty.const._BACK}>"
-                   name="_form_control_cancel">
+            <input class="ui-btn" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
+            <input class="ui-btn" type="submit" value="<{$smarty.const._AD_LEGACY_LANG_MOD_NAME}><{$smarty.const._EDIT}>">
         </td>
         <td class="foot" colspan="2">
             <{if $xupdate_writable.result==true}>
-            <input class="formButton" type="submit"
-                   value="<{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}>"
-                   id="rapidModuleInstallButton">
+            <input class="ui-btn" type="submit" value="<{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}>" id="rapidModuleInstallButton">
             <{/if}>
         </td>
     </tr>
     </tfoot>
 
-    </table>
+</table>
 
-    </form>
+</form>
 
 
-    <{if $pageNavi->getPerpage() < $pageNavi->getTotalItems() }>
+    <{if $pageNavi->getPerpage() < $pageNavi->getTotalItems()}>
     <div class="pagenavi"><{xoops_pagenavi pagenavi=$pageNavi}></div>
     <{/if}>
 
 
     <{include file="admin_tagcloud.html"}>
 
-    <!--</div> ui-card-full -->
 
 </div>

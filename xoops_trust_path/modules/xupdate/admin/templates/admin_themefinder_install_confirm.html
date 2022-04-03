@@ -12,7 +12,7 @@
 
         <{include file="admin_menunavi.html"}>
 
-        <h2 class="admintitle"><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}></h2>
+        <h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_THEMES}> <{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}></h2>
 
 
         <{include file="admin_tips.html"}>
@@ -42,21 +42,21 @@
                     </thead>
 
                     <tbody>
-                    <tr class="<{cycle values='odd,even'}>">
+                    <tr';>
                         <td class="legacy_list_select"><{$smarty.const._MI_XUPDATE_FTP_ADDON_URL}></td>
                         <td class="legacy_list_select">
                             <{xoops_input type=hidden name=addon_url value=$addon_url }>
                             <{$addon_url|xoops_escape:show}>
                         </td>
                     </tr>
-                    <tr class="<{cycle values='odd,even'}>">
+                    <tr';>
                         <td class="legacy_list_select">target_key</td>
                         <td class="legacy_list_select">
                             <{xoops_input type=hidden name=target_key value=$target_key }>
                             <{$target_key|xoops_escape:show}>
                         </td>
                     </tr>
-                    <tr class="<{cycle values='odd,even'}>">
+                    <tr';>
                         <td class="legacy_list_select"><{$smarty.const._AD_XUPDATE_LANG_TYPE}></td>
                         <td class="legacy_list_select">
                             <{xoops_input type=hidden name=target_type value=$target_type }>
@@ -67,9 +67,8 @@
                     <tfoot>
                     <tr class="foot">
                         <td colspan="2">
-                            <input class="formButton" type="submit" value="<{$smarty.const._MI_XUPDATE_DEPLOY}>"/>
-                            <input class="formButton" type="submit" value="<{$smarty.const._BACK}>"
-                                   name="_form_control_cancel"/>
+                            <input class="formButton" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
+                            <input class="formButton" type="submit" value="<{$smarty.const._MI_XUPDATE_DEPLOY}>">
                         </td>
                     </tr>
                     </tfoot>

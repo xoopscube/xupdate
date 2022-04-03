@@ -7,7 +7,7 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_MODULES}></h2>
+    <h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_PRELOADS}></h2>
 
 
     <{include file="admin_tips.html"}>
@@ -28,7 +28,7 @@
     <h4><{$storeObject->getShow('name')}></h4>
     <{/if}>
 
-    
+
     <section layout="row center-justify" class="control-action">
 
         <!-- category selection -->
@@ -72,126 +72,127 @@
 <!--        <{/if}>-->
 
 
-        <form action="index.php?action=<{$action}>" method="post">
-            <{xoops_input type=hidden name=sid value=$sid}>
-            <{xoops_input type=hidden name=do_confirm value=1}>
+    <form action="index.php?action=<{$action}>" method="post">
+        <{xoops_input type=hidden name=sid value=$sid}>
+        <{xoops_input type=hidden name=do_confirm value=1}>
 
-        <table class="outer">
+    <table class="outer">
 
-        <thead>
+    <thead>
         <tr>
+        <th>
+        <{* ////— DROPDOWN SORT —\\\\ *}>
+        <div class="dropdown" id="filter-sort">
 
-            <th>
-            <div class="dropdown" id="filter-sort">
+            <a href="#" class="dropdown-toggle ui-btn" aria-label="sort filter">
+                <img class="svg" src="<{$xoops_url}>/images/icons/list-tree.svg" width="24px" height="24px" alt="options">
+            </a>
 
-                <a href="#" class="dropdown-toggle ui-btn" aria-label="sort filter">
-                    <img class="svg" src="<{$xoops_url}>/images/icons/list-tree.svg" width="24px" height="24px" alt="options">
-                </a>
+            <div class="dropdown-content drop-left" style="min-width: 280px; padding:.5em">
 
-                <div class="dropdown-content drop-left" style="min-width: 280px; padding:.5em">
-
-                    <{if !$sid}>
-                    <div layout="row center-justify inline">
-                        <h6><{$smarty.const._MD_XUPDATE_LANG_SID}></h6>
-                        <div>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_SID}>"
-                               class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_SID}>"
-                               class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
-                        </div>
+                <{if !$sid}>
+                <div layout="row center-justify inline">
+                    <h6><{$smarty.const._MD_XUPDATE_LANG_SID}></h6>
+                    <div>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_SID}>"
+                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_SID}>"
+                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
-                    <{/if}>
+                </div>
+                <{/if}>
 
-                    <div layout="row center-justify inline">
-                        <h6><{$smarty.const._AD_XUPDATE_LANG_PRELOAD_NAME}></h6>
-                        <div>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_DIRNAME}>"
-                               class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_DIRNAME}>"
-                                class="btn" title="<{$smarty.const._DESCENDING}>">&darr;
-                            </a>
-                        </div>
+                <div layout="row center-justify inline">
+                    <h6><{$smarty.const._AD_XUPDATE_LANG_NAME}></h6>
+                    <div>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_DIRNAME}>"
+                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_DIRNAME}>"
+                            class="btn" title="<{$smarty.const._DESCENDING}>">&darr;
+                        </a>
                     </div>
+                </div>
 
-                    <div layout="row center-justify">
-                        <h6><{$smarty.const._AD_LEGACY_LANG_VERSION}></h6>
-                        <div>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_VERSION}>"
-                               class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_VERSION}>"
-                               class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
-                        </div>
+                <div layout="row center-justify">
+                    <h6><{$smarty.const._AD_LEGACY_LANG_VERSION}></h6>
+                    <div>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_VERSION}>"
+                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_VERSION}>"
+                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
+                </div>
 
-                    <div layout="row center-justify">
-                        <h6><{$smarty.const._AD_XUPDATE_LANG_LICENSE}></h6>
-                        <div>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"
-                               class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"
-                               class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
-                        </div>
+                <div layout="row center-justify">
+                    <h6><{$smarty.const._AD_XUPDATE_LANG_LICENSE}></h6>
+                    <div>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"
+                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"
+                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
+                </div>
 
-                    <div layout="row center-justify">
-                        <h6><{$smarty.const._AD_XUPDATE_LANG_REQUIRED}></h6>
-                        <div>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_REQUIRED}>"
-                               class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_REQUIRED}>"
-                               class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
-                        </div>
+                <div layout="row center-justify">
+                    <h6><{$smarty.const._AD_XUPDATE_LANG_REQUIRED}></h6>
+                    <div>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_REQUIRED}>"
+                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_REQUIRED}>"
+                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
+                </div>
 
-                    <div layout="row center-justify">
-                        <h6><{$smarty.const._AD_LEGACY_LANG_LASTUPDATE}></h6>
-                        <div>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LASTUPDATE}>"
-                               class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
-                            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LASTUPDATE}>"
-                               class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
-                        </div>
+                <div layout="row center-justify">
+                    <h6><{$smarty.const._AD_LEGACY_LANG_LASTUPDATE}></h6>
+                    <div>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LASTUPDATE}>"
+                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                        <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LASTUPDATE}>"
+                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
+                </div>
 
-                </div><{* ----- /Dropdown-content *}>
-            </div><{* ----- /Dropdown *}>
+            </div><{* ----- /Dropdown-content *}>
+        </div>
+        <{* ----- /Dropdown *}>
         </th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th><{$smarty.const._AD_XUPDATE_LANG_NAME}></th>
+        <th><{$smarty.const._AD_XUPDATE_LANG_LICENSE}></th>
+        <th><{$smarty.const._AD_XUPDATE_LANG_REQUIRED}></th>
+        <th><{$smarty.const._AD_LEGACY_LANG_LASTUPDATE}></th>
         <th><{$smarty.const._AD_XUPDATE_DESCRIPTION}></th>
         <th><{$smarty.const._AD_LEGACY_LANG_CONTROL}></th>
-        <th><{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}>
-            <br>
-            <input id="rapidInstallCheckboxAll" type="checkbox">
-        </th>
+        <th><{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}><br><input id="rapidInstallCheckboxAll" type="checkbox"></th>
         </tr>
-        </thead>
+    </thead>
 
-        <tbody>
+    <tbody>
         <{foreach item=module from=$moduleObjects}>
-        <tr class="<{cycle values='odd,even'}>">
+        <tr>
             <!--<td class="legacy_list_id"><{$module->getShow('id')}></td>-->
-            <{if !$sid}>
-            <td class="legacy_list_id"><a
-                    href="index.php?action=<{$action}>&amp;sid=<{$module->getShow('sid')}>"><{$module->getShow('sid')}></a>
+            <td>
+                <{if !$sid}><a class="ui-btn" href="index.php?action=<{$action}>&amp;sid=<{$module->getShow('sid')}>" title="<{$smarty.const._AD_XUPDATE_LANG_STORE}>"><{$module->getShow('sid')}></a><{/if}>
             </td>
-            <{/if}>
             <td>
                 <div class="legacy_list_image">
                     <{if $module->getShow('target_type') == 'TrustModule' && $module->getShow('replicatable') &&
                     (!$module->mModule->getVar('mid') || $module->get('dirname') ==
                     $module->get('trust_dirname') ) }>
-                    <input type="text" size="24" name="dirname[<{$module->get('id')}>]"
-                           value="<{$module->get('dirname')}>"/>
+                    <input type="text"
+                           size="24"
+                           name="dirname[<{$module->get('id')}>]"
+                           value="<{$module->get('dirname')}>">
                     <{else}>
-                    <input type="hidden" size="24" name="dirname[<{$module->get('id')}>]"
-                           value="<{$module->get('dirname')}>"/>
+                    <input type="hidden"
+                           size="24"
+                           name="dirname[<{$module->get('id')}>]"
+                           value="<{$module->get('dirname')}>">
                     <{$module->getShow('dirname')}>
                     <{/if}>
                 </div>
                 <{assign var="hasupdate" value=0}>
-                <div class="legacy_list_order">
+                <div>
                     <{if $module->hasNeedUpdate()}>
                     <{assign var="hasupdate" value=1}>
                     <{$module->mModule->getRenderedVersion()}> &rarr; <strong class="legacy_module_versionMsg"><{$module->getRenderedVersion()}></strong>
@@ -211,44 +212,45 @@
                 <{/if}>
                 <{if $hasupdate && $module->options.changes_url}>
                 <div class="legacy_list_control">
-                    <a href="<{$module->options.changes_url|escape:'html'}>" target="_blank"><{$smarty.const._AD_XUPDATE_RECENTCHANGES}></a>
+                    <a href="<{$module->options.changes_url|escape:'html'}>" target="_blank"><{$smarty.const._AD_XUPDATE_RECENTCHANGES}> &#x279A;</a>
                 </div>
                 <{/if}>
+            </td>
+            <td>
                 <div class="legacy_list_control">
                     <{$module->getShow('license')}>
                 </div>
             </td>
-            <td class="legacy_list_control">
+            <td>
                 <{if $module->getShow('required')}>
                 <{if $module->getShow('required')=='required'}>
-                <span style="color:red;font-weight:bold;">required</span>
+                <span style="color:var(--color-red);font-weight:bold;">required</span>
                 <{elseif $module->getShow('required')=='recommended'}>
-                <span style="color:green;font-weight:bold;">recommended</span>
+                <span style="color:var(--color-green);font-weight:bold;">recommended</span>
                 <{else}>
                 <span style="font-weight:bold;"><{$module->getShow('required')}></span>
                 <{/if}>
                 <{/if}>
             </td>
-            <td class="legacy_list_date">
+            <td>
                 <{if $module->getVar('last_update')}>
                 <{$module->getVar('last_update')|xoops_formattimestamp:l}>
                 <{/if}>
             </td>
             <td class="legacy_list_select">
                 <{if $module->getShow('detail_url')}>
-                <a href="<{$module->getShow('detail_url')}>"
-                   target="_blank"><{$module->getShow('target_key')}></a>
+                <a href="<{$module->getShow('detail_url')}>" target="_blank" title="<{$smarty.const._MD_XUPDATE_LANG_ADDON_URL}>"><{$module->getShow('target_key')}> &#x279A;</a>
                 <{else}>
                 <{$module->getShow('target_key')}>
                 <{/if}>
-                <br/><{$module->get('description')}>
+                <br>
+                <span style="word-break: break-all;"><{$module->get('description')}></span>
             </td>
             <td class="legacy_list_control">
                 <{if $xupdate_writable.result==true}>
                 <{if $module->getVar('isactive') > 0}>
                 <a href="<{$module->get_StoreUrl()}>" title="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
-                    <img src="<{"icons/icon-package-update.svg"|theme}>" class="svg"
-                    alt="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
+                    <img class="svg" src="<{"icons/icon-package-update.svg"|theme}>"  alt="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
                 </a>
                 <a href="<{$module->get_UpdateUrl()}>"></a>
                 <{else}>
@@ -273,40 +275,39 @@
                 <{/if}>
                 <{/if}>
             </td>
+
         </tr>
         <{/foreach}>
-        </tbody>
+    </tbody>
 
-        <tfoot class="foot">
+    <tfoot>
         <tr>
-            <tdcolspan
-            ="<{if $sid}>4<{else}>5<{/if}>">
+            <td colspan="7">
             <{xoops_token form=$actionForm}>
-            <input class="formButton" type="submit"
-                   value="<{$smarty.const._AD_LEGACY_LANG_MOD_NAME}><{$smarty.const._EDIT}>">
-            <input class="formButton" type="submit" value="<{$smarty.const._BACK}>"
-                   name="_form_control_cancel">
+            <input class="ui-btn" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
+            <input class="ui-btn" type="submit" value="<{$smarty.const._AD_LEGACY_LANG_MOD_NAME}> <{$smarty.const._EDIT}>">
             </td>
-            <td class="foot" colspan="2">
+            <td>
                 <{if $xupdate_writable.result==true}>
-                <input class="formButton" type="submit"
+                <input class="ui-btn"
+                       type="submit"
                        value="<{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}>"
                        id="rapidModuleInstallButton">
                 <{/if}>
             </td>
         </tr>
-        </tfoot>
+    </tfoot>
 
-        </table>
+    </table>
 
-        </form>
-
-
-        <{if $pageNavi->getPerpage() < $pageNavi->getTotalItems() }>
-        <div class="pagenavi"><{xoops_pagenavi pagenavi=$pageNavi}></div>
-        <{/if}>
+</form>
 
 
-        <{include file="admin_tagcloud.html"}>
+    <{if $pageNavi->getPerpage() < $pageNavi->getTotalItems() }>
+    <div class="pagenavi"><{xoops_pagenavi pagenavi=$pageNavi}></div>
+    <{/if}>
+
+
+    <{include file="admin_tagcloud.html"}>
 
 </div>

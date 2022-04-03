@@ -1,9 +1,20 @@
 <div class="ui-dev-mode"><{$smarty.template}></div>
 
+
 <div class="tips">
-    <{$smarty.const._MI_XUPDATE_TEMP_PATH}><br>
-    <a href="#" class="ui-btn" type="button" id="check-app">
-        <img class="svg" src="<{$xoops_url}>/images/icons/check.svg" width="1em" height="1em" alt="check"> Configuration Checker</a>
+<{if empty($action) && $currentMenu == $smarty.const._MI_XUPDATE_ADMENU_STORELIST}>
+    <{$smarty.const._AD_XUPDATE_LANG_STORES_TIP}>
+<{elseif $action == 'ModuleStore'}>
+    <{$smarty.const._AD_XUPDATE_LANG_MODULES_TIP}>
+<{elseif $action == 'PackageStore'}>
+    <{$smarty.const._AD_XUPDATE_LANG_PRELOADS_TIP}>
+<{elseif $action == 'PreloadStore'}>
+    <{$smarty.const._AD_XUPDATE_LANG_PRELOADS_TIP}>
+<{elseif $action == 'ThemeStore'}>
+    <{$smarty.const._AD_XUPDATE_LANG_THEMES_TIP}>
+<{elseif empty($action) && $currentMenu == $smarty.const._MI_XUPDATE_ADMENU_THEMEFINDER}>
+    <{$smarty.const._AD_XUPDATE_LANG_THEME_FINDER_TIP}>
+<{/if}>
 </div>
 
 
@@ -49,13 +60,13 @@
     });
 </script>
 
+
 <div id="dialog-check-parameters" title="Configuration Checker">
 
     <div class="tips">
         <{$smarty.const._MI_XUPDATE_TEMP_PATH}><br>
         <pre><small><code class="lang-none"><{$xupdate_writable.path}></code></small></pre>
     </div>
-
 
     <{if $xupdate_writable.result==true}>
     <div class="success"><{$smarty.const._AD_XUPDATE_LANG_WRITABLE_RESULT}> : OK</div>

@@ -7,8 +7,8 @@
  * @version 2.3.1
  * @author Other authors Gigamaster (XCL 2.3)
  * @author Naoki Sawada, Naoki Okino
- * @copyright  (c) 2005-2022 Author
- * @license https://github.com/xoopscube/xcl/blob/master/GPL_V2.txt
+ * @copyright  (c) 2005-2022 Authors
+ * @license GPL V2
  */
 
 if ( ! defined( 'XOOPS_ROOT_PATH' ) ) {
@@ -126,7 +126,9 @@ class Xupdate_AssetPreloadBase extends XCube_ActionFilter {
 
 				require_once XOOPS_ROOT_PATH . '/class/template.php';
 				$xoopsTpl = new XoopsTpl();
-				$objMsg   = XCube_Utils::formatMessage();
+                // TODO @gigamaster non static, make call dynamic
+                //$objMsg   = XCube_Utils::formatMessage();
+                $objMsg   = (new XCube_Utils)->formatMessage();
 				$xoopsTpl->assign(
 					[
 						'xoops_sitename'       => htmlspecialchars( $xoopsConfig['sitename'], ENT_COMPAT, _CHARSET ),
@@ -207,7 +209,7 @@ class Xupdate_AssetPreloadBase extends XCube_ActionFilter {
 			$handler = Legacy_Utils::getModuleHandler( 'ModuleStore', 'xupdate' );
 			if ( $count = $handler->getCountHasUpdate( 'module' ) ) {
 				$this->mRoot->mLanguageManager->loadBlockMessageCatalog( 'xupdate' );
-				$checkimg                  = '<img src="' . XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=ModuleView&amp;checkonly=1" width="1" height="1" alt="" />';
+				$checkimg                  = '<img src="' . XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=ModuleView&amp;checkonly=1" width="1" height="1" alt="">';
 				$blockVal                  = [];
 				$blockVal['adminlink']     = XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=ModuleStore&amp;filter=updated&amp;sort=-6';
 				$blockVal['pendingnum']    = $count;
@@ -216,7 +218,7 @@ class Xupdate_AssetPreloadBase extends XCube_ActionFilter {
 			}
 			if ( $count = $handler->getCountHasUpdate( 'theme' ) ) {
 				$this->mRoot->mLanguageManager->loadBlockMessageCatalog( 'xupdate' );
-				$checkimg                  = '<img src="' . XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=ModuleView&amp;checkonly=1" width="1" height="1" alt="" />';
+				$checkimg                  = '<img src="' . XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=ModuleView&amp;checkonly=1" width="1" height="1" alt="">';
 				$blockVal                  = [];
 				$blockVal['adminlink']     = XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=ThemeStore&amp;filter=updated';
 				$blockVal['pendingnum']    = $count;
@@ -225,7 +227,7 @@ class Xupdate_AssetPreloadBase extends XCube_ActionFilter {
 			}
 			if ( $count = $handler->getCountHasUpdate( 'preload' ) ) {
 				$this->mRoot->mLanguageManager->loadBlockMessageCatalog( 'xupdate' );
-				$checkimg                  = '<img src="' . XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=ModuleView&amp;checkonly=1" width="1" height="1" alt="" />';
+				$checkimg                  = '<img src="' . XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=ModuleView&amp;checkonly=1" width="1" height="1" alt="">';
 				$blockVal                  = [];
 				$blockVal['adminlink']     = XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=PreloadStore&amp;filter=updated';
 				$blockVal['pendingnum']    = $count;

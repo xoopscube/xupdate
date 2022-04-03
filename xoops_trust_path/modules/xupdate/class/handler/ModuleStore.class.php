@@ -257,7 +257,7 @@ class Xupdate_ModuleStore extends Legacy_AbstractObject {
 							}
 						}
 					}
-					if ( 1 == $this->getVar( 'isactive' ) ) {
+					if ( $this->getVar( 'isactive' ) == 1) {
 						$this->options['modinfo'] = $this->modinfo;
 					} else {
 						unset( $this->options['modinfo'] );
