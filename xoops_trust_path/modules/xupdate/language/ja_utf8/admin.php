@@ -7,14 +7,16 @@ const _AD_XUPDATE_LANG_FTP_PASS_RESULT = 'FTP設定チェック結果';
 const _AD_XUPDATE_LANG_EXECUTION_TIME = 'PHP 実行時間制限';
 const _AD_XUPDATE_LANG_EXECUTION_TIME_NOTICE = 'PHP 実行時間制限が短いので大きなアイテムは自動更新できないことがあります。';
 
+const _AD_XUPDATE_LANG_STORES = 'X-Update Stores';
+const _AD_XUPDATE_LANG_STORES_TIP = 'Store Tip';
 const _AD_XUPDATE_LANG_MODULES = 'モジュール一覧';
 const _AD_XUPDATE_LANG_MODULES_TIP = 'Store Module Tip';
 const _AD_XUPDATE_LANG_THEMES = 'Themes list';
 const _AD_XUPDATE_LANG_THEMES_TIP = 'Store Themes Tip';
 const _AD_XUPDATE_LANG_PRELOADS = 'Preloads';
 const _AD_XUPDATE_LANG_PRELOADS_TIP = 'Store Preloads Tip';
-const _AD_XUPDATE_LANG_THEME_FINDER = 'Theme Finder';
 const _AD_XUPDATE_LANG_THEME_FINDER = 'テーマファインダー';
+const _AD_XUPDATE_LANG_THEME_FINDER_TIP = 'ThemeFinder Tip';
 
 const _AD_XUPDATE_LANG_TYPE = 'タイプ';
 const _AD_XUPDATE_LANG_LICENSE = 'ライセンス';

@@ -1,4 +1,6 @@
 <?php
+// Syntax replace define with const v2.3.0 2021/05/15 @gigamaster XCL-PHP7
+
 const _MB_XUPDATE_MODULEUPDATE = 'Update module';
 const _MB_XUPDATE_THEMEUPDATE = 'Update theme';
 const _MB_XUPDATE_PRELOADUPDATE = 'Update preload';
