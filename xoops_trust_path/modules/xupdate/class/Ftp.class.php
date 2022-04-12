@@ -131,7 +131,13 @@ class Xupdate_Ftp extends Xupdate_Ftp_ {
 		return $ret;
 	}
 
-	public function uploadNakami( $sourcePath, $targetPath ) {
+    /**
+     * FTP content
+     * @param $sourcePath
+     * @param $targetPath
+     * @return array|bool
+     */
+    public function uploadNakami($sourcePath, $targetPath ) {
 		$this->mes .= ' start FTP put (normal mode) form `' . htmlspecialchars( substr( $sourcePath, strlen( $this->exploredDirPath ) + 1 ), ENT_QUOTES, _CHARSET ) . '` to `' . htmlspecialchars( $targetPath, ENT_QUOTES, _CHARSET ) . "` ..<br>\n";
 		$result    = $this->_ftpPutNakami( $sourcePath, $targetPath );
 

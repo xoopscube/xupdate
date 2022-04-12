@@ -43,7 +43,7 @@
 
         <tbody>
         <{foreach item=id from=$ids}>
-        <tr';>
+        <tr>
             <td class="legacy_list_id"><{$id}></td>
             <td class="legacy_list_select">
                 <{if $actionForm->get('dirname',$id) == $moduleObjects[$id]->getVar('dirname')}>

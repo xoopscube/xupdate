@@ -98,7 +98,7 @@ class Xupdate_Admin_ModuleViewAction extends Xupdate_AbstractAction {
 			exit();
 		}
 
-		// Check install dirctory
+		// Check installation wizard directory
 		if ( XUPDATE_INSTALLERCHECKER_ACTIVE && is_dir( XOOPS_ROOT_PATH . '/install' ) ) {
 			while ( ob_get_level() && @ ob_end_clean() ) {
 			}
