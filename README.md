@@ -4,7 +4,7 @@
 
 ## ///// — X-Update :: Update Management Dashboard
 
-![alt text](https://repository-images.githubusercontent.com/4171652/9f71c520-9249-44cc-bd7c-c7b51f091fb)
+![alt text](https://repository-images.githubusercontent.com/4171652/9f71c520-9249-44cc-bd7c-c7b51f091fb3)
 
 
 MODULE | X-Update Manager
