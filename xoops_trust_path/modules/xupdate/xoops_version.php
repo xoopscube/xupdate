@@ -26,9 +26,11 @@ $basename = basename( $dirname );
 //
 // Define a basic manifesto.
 //
+$modversion['dirname']          = $myDirName;
+$modversion['trust_dirname']    = $basename;
 $modversion['name']             = _MI_XUPDATE_LANG_XUPDATE;
 $modversion['version']          = '2.31';
-$modversion['detailed_version'] = '2.31.0';
+$modversion['detailed_version'] = '2.31.1';
 $modversion['description']      = _MI_XUPDATE_DESC_XUPDATE;
 $modversion['author']           = _MI_XUPDATE_LANG_AUTHOR;
 $modversion['credits']          = _MI_XUPDATE_LANG_CREDITS;
@@ -37,11 +39,11 @@ $modversion['help']             = 'help.html';
 $modversion['license']          = 'GPL';
 $modversion['official']         = 0;
 // $modversion['image'] = 'module_icon.php';
-$modversion['image']         = 'images/module_xupdate.svg';
-$modversion['dirname']       = $myDirName;
-$modversion['trust_dirname'] = $basename;
+$modversion['image']            = 'images/module_xupdate.svg';
+$modversion['icon']             = 'images/module_icon.svg';
+$modversion['cube_style']       = true;
 
-$modversion['cube_style']                   = true;
+// Install
 $modversion['legacy_installer']             = [
 	'installer'   => [
 		'class'     => 'Installer',
@@ -61,6 +63,7 @@ $modversion['legacy_installer']             = [
 ];
 $modversion['disable_legacy_2nd_installer'] = false;
 
+// SQL
 $modversion['sqlfile']['mysql']     = 'sql/mysql.sql';
 $modversion['sqlfile']['pdo_pgsql'] = 'sql/pdo_pgsql.sql';
 $modversion['tables']               = [
@@ -388,7 +391,7 @@ $modversion['config'] = [
 		'description' => '',
 		'formtype'    => 'text',
 		'valuetype'   => 'string',
-		'default'     => 'http://xoopscube.net/uploads/xupdatemaster/stores_json_V1.txt',
+		'default'     => 'https://xoopscube.net/uploads/xupdatemaster/stores_json_V1.txt',
 		'options'     => [],
 	],
 

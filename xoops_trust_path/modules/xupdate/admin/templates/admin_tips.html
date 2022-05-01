@@ -31,8 +31,17 @@
                 buttons:
                     [
                         {
+                            text: "Help",
+                            icon: "ui-icon-help",
+                            class: "button",
+                            click: function() {
+                                window.location.href = "<{$xoops_url}>/modules/legacy/admin/index.php?action=Help&dirname=xupdate#help-store";
+                            }
+                        },
+                        {
                             text: "Ok",
                             icon: "ui-icon-check",
+                            class: "button",
                             click: function() {
                                 $( this ).dialog( "close" );
                             }
@@ -41,13 +50,6 @@
                             // resulting in the label being used as a tooltip
                             //showText: false
                         },
-                        {
-                            text: "Help",
-                            icon: " ui-icon-help",
-                            click: function() {
-                                window.location.href = "<{$xoops_url}>/modules/legacy/admin/index.php?action=Help&dirname=xupdate#help-store";
-                            }
-                        }
                     ]
             });
         });

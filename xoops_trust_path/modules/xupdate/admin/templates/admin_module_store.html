@@ -32,27 +32,27 @@
 
 
     <{* ////— ACTION-CONTROL —\\\\ *}>
-    <section layout="row center-justify sm-column" class="control-action">
+    <section layout="row center-justify sm-column" class="action-control">
 
         <div class="filtermenu" self="sm-full">
-            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>" class="ui-btn ui-btn-small">
+            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>" class="button">
                 <{$smarty.const._MI_XUPDATE_ALL}>
             </a>
-            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=installed" class="ui-btn ui-btn-small">
+            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=installed" class="button">
                 <{$smarty.const._MI_XUPDATE_INSTALLED}>
             </a>
-            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=updated" class="ui-btn ui-btn-small">
+            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=updated" class="button">
                 <{$smarty.const._MI_XUPDATE_UPDATED}>
             </a>
-            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=future" class="ui-btn ui-btn-small">
+            <a href="index.php?action=<{$action}>&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$sort_query}>filter=future" class="button">
                 <{$smarty.const._MI_XUPDATE_FUTURE}>
             </a>
         </div>
 
         <div class="control-view" self="sm-full">
-            <a href="<{$xoops_url}>/modules/legacy/admin/index.php?action=InstallList" class="ui-btn"><{$smarty.const._AD_LEGACY_LANG_MODINSTALL}></a>
-            <button class="help-admin ui-btn" type='button' data-id='4' data-module='xupdate' data-help-article='#help-store' title="Help">
-                <span class="ui-icon ui-icon-help"></span>
+            <a href="<{$xoops_url}>/modules/legacy/admin/index.php?action=InstallList" class="button"><{$smarty.const._AD_LEGACY_LANG_MODINSTALL}></a>
+            <button class="help-admin button" type='button' data-id='4' data-module='xupdate' data-help-article='#help-store' title="<{$smarty.const._HELP}>">
+                <b>?</b>
             </button>
         </div>
 
@@ -71,7 +71,7 @@
         <th>
         <{* ////— DROPDOWN SORT —\\\\ *}>
         <div class="dropdown" id="filter-sort">
-            <a href="#" class="dropdown-toggle ui-btn" aria-label="sort filter">
+            <a href="#" class="dropdown-toggle button" aria-label="sort filter">
                 <img class="svg" src="<{$xoops_url}>/images/icons/list-tree.svg" width="24px" height="24px" alt="options">
             </a>
             <{* ----- Dropdown-content ----- *}>
@@ -302,12 +302,12 @@
     <tr>
         <td colspan="<{if $sid}>4<{else}>4<{/if}>">
             <{xoops_token form=$actionForm}>
-            <input class="ui-btn" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
-            <input class="ui-btn" type="submit" value="<{$smarty.const._AD_LEGACY_LANG_MOD_NAME}><{$smarty.const._EDIT}>">
+            <input class="button" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
+            <input class="button" type="submit" value="<{$smarty.const._AD_LEGACY_LANG_MOD_NAME}><{$smarty.const._EDIT}>">
         </td>
         <td class="foot" colspan="2">
             <{if $xupdate_writable.result==true}>
-            <input class="ui-btn" type="submit" value="<{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}>" id="rapidModuleInstallButton">
+            <input class="button" type="submit" value="<{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}>" id="rapidModuleInstallButton">
             <{/if}>
         </td>
     </tr>

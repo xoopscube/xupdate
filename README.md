@@ -2,9 +2,9 @@
 ![License GPL](https://img.shields.io/badge/License-GPL-green)
 ![X-Updare Store](https://img.shields.io/badge/X--Update%20Store-Pending-red)
 
-## ///// — X-Update :: Update Manager Dashboard
+## ///// — X-Update :: Update Management Dashboard
 
-![alt text](https://repository-images.githubusercontent.com/461634439/038a5641-d653-4d78-ba55-898667ae73)
+![alt text](https://repository-images.githubusercontent.com/4171652/9f71c520-9249-44cc-bd7c-c7b51f091fb)
 
 
 MODULE | X-Update Manager

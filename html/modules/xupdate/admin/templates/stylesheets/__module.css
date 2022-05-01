@@ -21,7 +21,7 @@ ul.legacy_actionsearch_records {
 
 }
 .legacy_blocktype_custom {
-	color:var(--ui-color-blue)
+	color:var(--color-blue)
 }
 .legacy_blockside {
 	width:135px;
@@ -52,10 +52,10 @@ input[type="radio"] {
 	font-weight:bold;
 }
 .legacy_module_error {
-	color:var(--ui-color-red)
+	color:var(--color-red)
 }
 .legacy_module_warning {
-	color:var(--ui-color-orange)
+	color:var(--color-orange)
 }
 .legacy_module_message {
 
@@ -67,7 +67,7 @@ input[type="radio"] {
 	font-weight:bold;
 }
 .legacy_module_versionMsg {
-	color:var(--ui-color-blue);
+	color:var(--color-blue);
 	font-weight:bold;
 }
 
@@ -164,7 +164,7 @@ input[type="radio"] {
 	padding:2px 2px 2px 10px;
 }
 .help a {
-	color:var(--ui-color-link);
+	color:var(--color-link);
 	text-decoration:underline;
 	font-weight:bold;
 	margin:0 0.5em;

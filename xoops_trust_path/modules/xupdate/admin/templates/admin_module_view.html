@@ -11,16 +11,16 @@
     <{include file="admin_tips.html"}>
 
     <{* ////— ACTION-CONTROL —\\\\ *}>
-    <section layout="row center-justify sm-column" class="control-action">
+    <section layout="row center-justify sm-column" class="action-control">
         <div class="filtermenu" self="sm-full">
             <!-- No category selection -->
         </div>
         <div class="control-view" self="sm-full">
-            <a href="#" id="check-app" class="ui-btn">
+            <a href="#" id="check-app" class="button">
                 <img class="svg" src="<{$xoops_url}>/images/icons/check.svg" width="1em" height="1em" alt="check"> Configuration Checker
             </a>
-            <button class="help-admin ui-btn" type='button' data-id='4' data-module='xupdate' data-help-article='#help-store' title="Help">
-                <span class="ui-icon ui-icon-help"></span>
+            <button class="help-admin button" type='button' data-id='4' data-module='xupdate' data-help-article='#help-store' title="<{$smarty.const._HELP}>">
+                <b>?</b>
             </button>
         </div>
     </section>
