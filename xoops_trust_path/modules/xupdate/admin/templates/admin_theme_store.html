@@ -7,7 +7,7 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_THEMES}> <{if $storeObject}>: <{$storeObject->getShow('name')}><{/if}></h2>
+    <h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_THEMES}><{if $storeObject}> » <{$storeObject->getShow('name')}><{/if}></h2>
 
 
     <{include file="admin_tips.html"}>
@@ -47,7 +47,7 @@
 
             <a href="<{$xoops_url}>/modules/legacy/admin/index.php?action=ThemeList" class="button"><{$smarty.const._MI_XUPDATE_MANAGE}> <{$smarty.const._AD_LEGACY_LANG_THEME}></a>
 
-            <button class="help-admin button" type='button' data-id='4' data-module='xupdate' data-help-article='#help-store' title="<{$smarty.const._HELP}>">
+            <button class="help-admin button" type='button' data-id='4' data-module='xupdate' data-help-article='#help-theme' aria-label="<{$smarty.const._HELP}>">
                 <b>?</b>
             </button>
 
@@ -81,9 +81,9 @@
                     <h6><{$smarty.const._MD_XUPDATE_LANG_SID}></h6>
                     <div>
                         <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_SID}>"
-                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                           class="btn" aria-label="<{$smarty.const._ASCENDING}>">&uarr;</a>
                         <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_SID}>"
-                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
+                           class="btn" aria-label="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
                 <{/if}>
@@ -92,9 +92,9 @@
                     <h6><{$smarty.const._AD_LEGACY_LANG_THEME}></h6>
                     <div>
                         <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_DIRNAME}>"
-                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                           class="btn" aria-label="<{$smarty.const._ASCENDING}>">&uarr;</a>
                         <a href=index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_DIRNAME}>"
-                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;
+                           class="btn" aria-label="<{$smarty.const._DESCENDING}>">&darr;
                         </a>
                     </div>
                 </div>
@@ -103,19 +103,19 @@
                     <h6><{$smarty.const._AD_LEGACY_LANG_VERSION}></h6>
                     <div>
                         <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_VERSION}>"
-                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                           class="btn" aria-label="<{$smarty.const._ASCENDING}>">&uarr;</a>
                         <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_VERSION}>"
-                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
+                           class="btn" aria-label="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
 
                 <div layout="row center-justify">
                     <h6><{$smarty.const._AD_XUPDATE_LANG_LICENSE}></h6>
                     <div>
-                        <a href="index.php?action=ModuleStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"
-                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
-                        <a href="index.php?action=ModuleStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"
-                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
+                        <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"
+                           class="btn" aria-label="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                        <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LICENSE}>"
+                           class="btn" aria-label="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
 
@@ -123,9 +123,9 @@
                     <h6><{$smarty.const._AD_LEGACY_LANG_LASTUPDATE}></h6>
                     <div>
                         <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_LASTUPDATE}>"
-                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                           class="btn" aria-label="<{$smarty.const._ASCENDING}>">&uarr;</a>
                         <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_LASTUPDATE}>"
-                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
+                           class="btn" aria-label="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
 
@@ -133,9 +133,9 @@
                     <h6><{$smarty.const._AD_LEGACY_LANG_PACKAGE}></h6>
                     <div>
                         <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=<{$smarty.const.MODULE_SORT_KEY_TARGET_KEY}>"
-                           class="btn" title="<{$smarty.const._ASCENDING}>">&uarr;</a>
+                           class="btn" aria-label="<{$smarty.const._ASCENDING}>">&uarr;</a>
                         <a href="index.php?action=ThemeStore&amp;<{$pageNavi->getPrefix()}><{$sid_query}><{$filter_query}>sort=-<{$smarty.const.MODULE_SORT_KEY_TARGET_KEY}>"
-                           class="btn" title="<{$smarty.const._DESCENDING}>">&darr;</a>
+                           class="btn" aria-label="<{$smarty.const._DESCENDING}>">&darr;</a>
                     </div>
                 </div>
 
@@ -146,10 +146,9 @@
         <th><{$smarty.const._AD_LEGACY_LANG_THEME}></th>
         <th><{$smarty.const._AD_LEGACY_LANG_LASTUPDATE}></th>
         <th>screenshot</th>
-        <th><{$smarty.const._AD_LEGACY_LANG_PACKAGE}></th>
+        <th><{$smarty.const._AD_XUPDATE_DESCRIPTION}></th>
         <th><{$smarty.const._AD_LEGACY_LANG_CONTROL}></th>
-        <th><{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}><br>
-            <input id="rapidInstallCheckboxAll" type="checkbox"/>
+        <th><input id="rapidInstallCheckboxAll" type="checkbox" aria-label="<{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}>">
         </th>
         </tr>
     </thead>
@@ -161,7 +160,7 @@
 
             <td class="legacy_list_id">
                 <{if !$sid}>
-                <a class="button" href="index.php?action=ThemeStore&amp;sid=<{$module->getShow('sid')}>" title="<{$smarty.const._AD_XUPDATE_LANG_STORE}>">
+                <a class="button" href="index.php?action=ThemeStore&amp;sid=<{$module->getShow('sid')}>" aria-label="<{$smarty.const._AD_XUPDATE_LANG_STORE}>">
                     <{$module->getShow('sid')}>
                 </a>
                 <{/if}>
@@ -173,52 +172,65 @@
                            size="24"
                            name="dirname[<{$module->get('id')}>]"
                            value="<{$module->get('dirname')}>">
-                    <{$module->getShow('dirname')}>
+
+                    <input type="text"
+                           size="20"
+                           value="<{$module->getShow('dirname')}>"
+                           readonly>
+                    <{* $module->getShow('dirname') *}>
+                    <p>
+                    <{if $module->getShow('detail_url')}>
+                    <a href="<{$module->getShow('detail_url')}>" target="_blank">&#128230; <{$module->getShow('target_key')}> ↗</a>
+                    <{else}>
+                    <{$module->getShow('target_key')}>
+                    <{/if}>
+                    </p>
                 </div>
+
+
+            </td>
+            <td class="last_update">
+                <{if $module->getVar('last_update')}>
+                <{$module->getVar('last_update')|xoops_formattimestamp:l}>
+                <{/if}>
                 <{assign var="hasupdate" value=0}>
-                <div class="legacy_list_order">
+                <div class="version" aria-label="Version">
                     <{if $module->hasNeedUpdate()}>
                     <{assign var="hasupdate" value=1}>
-                    <{$module->mModule->getRenderedVersion()}> &rarr; <strong class="legacy_module_versionMsg"><{$module->getRenderedVersion()}></strong>
+                    <{$module->mModule->getRenderedVersion()}> &rarr; <b><{$module->getRenderedVersion()}></b>
                     <{else}>
                     <{$module->getRenderedVersion()}>
                     <{/if}>
                 </div>
                 <{if $module->options.detailed_version}>
-                <div class="legacy_list_control">
+                <div class="version_detail" aria-label="Version detail">
                     <{if $module->hasNeedUpdateDetail()}>
                     <{assign var="hasupdate" value=1}>
-                    <{$module->modinfo.detailed_version}> &rarr; <strong class="legacy_module_versionMsg"><{$module->options.detailed_version}></strong>
+                    <{$module->modinfo.detailed_version}> &rarr; <b><{$module->options.detailed_version}></b>
                     <{else}>
                     <{$module->options.detailed_version}>
                     <{/if}>
                 </div>
                 <{/if}>
                 <{if $hasupdate && $module->options.changes_url}>
-                <div class="legacy_list_control">
+                <div class="changlog">
                     <a href="<{$module->options.changes_url|escape:'html'}>" target="_blank"><{$smarty.const._AD_XUPDATE_RECENTCHANGES}> ↗</a>
                 </div>
                 <{/if}>
-                <div class="legacy_list_control">
+
+                <div class="license" aria-label="License">
                     <{$module->getShow('license')}>
                 </div>
             </td>
-            <td class="legacy_list_date">
-                <{if $module->getVar('last_update')}>
-                <{$module->getVar('last_update')|xoops_formattimestamp:l}>
-                <{/if}>
+            <td class="list_screenshot">
+                <{if $module->options.screen_shot}><img src="<{$module->options.screen_shot}>" height="60"><{/if}>
             </td>
-            <td class="legacy_list_screenshot">
-                <{if $module->options.screen_shot}>
-                <img src="<{$module->options.screen_shot}>" height="60"><{/if}>
-            </td>
-            <td class="legacy_list_select">
-                <{if $module->getShow('detail_url')}>
-                <a href="<{$module->getShow('detail_url')}>" target="_blank">&#128230; <{$module->getShow('target_key')}> ↗</a>
+            <td>
+                <{if $module->get('description')}>
+                <{$module->get('description')}>
                 <{else}>
-                <{$module->getShow('target_key')}>
+                <div class="error">No description available !</div>
                 <{/if}>
-                <br/><{$module->get('description')}>
             </td>
             <!--
             <td class="legacy_list_select">
@@ -228,11 +240,11 @@
             <td class="legacy_list_control">
                 <{if $xupdate_writable.result==true}>
                 <{if $module->getVar('isactive') > 0}>
-                <a href="<{$module->get_StoreUrl()}>" title="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
+                <a href="<{$module->get_StoreUrl()}>" aria-label="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
                     <img src="<{"icons/icon-package-update.svg"|theme}>" class="svg" alt="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>"></a>
                 <a href="<{$module->get_UpdateUrl()}>"></a>
                 <{else}>
-                <a href="<{$module->get_StoreUrl()}>" title="<{$smarty.const._AD_LEGACY_LANG_INSTALL}>">
+                <a href="<{$module->get_StoreUrl()}>" aria-label="<{$smarty.const._AD_LEGACY_LANG_INSTALL}>">
                     <img class="svg" src="<{$xoops_url}>/images/icons/download.svg"
                          width="24px"
                          height="24px"

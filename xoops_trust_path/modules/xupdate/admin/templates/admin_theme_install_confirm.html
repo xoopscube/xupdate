@@ -6,7 +6,7 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <h2 class="admintitle"><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}> : <{$target_key|xoops_escape:show}></h2>
+    <h2 class="admintitle"><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}> » <{$target_key|xoops_escape:show}></h2>
 
 
     <{include file="admin_tips.html"}>
@@ -48,18 +48,25 @@
 
             <tbody>
             <tr>
-                <td><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}> : <{$target_key|xoops_escape:show}></td>
+                <td><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}> : </td>
                 <td>
                     <a href="index.php?action=ThemeStore&amp;sid=<{$sid}>">
                         &#127978; <{$store_name|xoops_escape:show}></a>
-                    <{if $detail_url}>
-                    | <a href="<{$detail_url|xoops_escape:show}>" target="_blank">
-                    &#128230; <{$target_key|xoops_escape:show}> ↗</a>
+
+                </td>
+            </tr>
+            <tr>
+                <td><{$smarty.const._MI_XUPDATE_FTP_THEME_URL}></td>
+                <td> <{if $detail_url}>
+                    <a href="<{$detail_url|xoops_escape:show}>" target="_blank">
+                        &#128230; <{$target_key|xoops_escape:show}> ↗</a>
+                    <{else}>
+                        <{$target_key|xoops_escape:show}>
                     <{/if}>
                 </td>
             </tr>
             <tr>
-                <td><{$smarty.const._MI_XUPDATE_FTP_ADDON_URL}></td>
+                <td><{$smarty.const._MI_XUPDATE_ADMENU_PACKAGE}></td>
                 <td><{$addon_url|xoops_escape:show}></td>
             </tr>
             <tr>
@@ -71,9 +78,7 @@
             </tr>
             <tr>
                 <td><{$smarty.const._AD_XUPDATE_DESCRIPTION}></td>
-                <td>
-                    <{$description}>
-                </td>
+                <td><{$description}></td>
             </tr>
             <{include file='include_options_form.html'}>
             </tbody>
@@ -81,8 +86,8 @@
             <tfoot>
             <tr class="foot">
                 <td colspan="2">
-                    <input class="formButton" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
-                    <input class="formButton" type="submit" value="<{$smarty.const._MI_XUPDATE_DEPLOY}>">
+                    <input class="button" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
+                    <input class="button" type="submit" value="<{$smarty.const._MI_XUPDATE_DEPLOY}>">
                 </td>
             </tr>
             </tfoot>

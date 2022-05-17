@@ -17,14 +17,22 @@
 <{/if}>
 </div>
 
-
+<style>
+    .modal-footer {
+background: var(--color-5);
+    }
+</style>
 <script type="text/javascript">
     $(document).ready(function () {
         $(function() {
             $("#dialog-check-parameters").dialog({
                 autoOpen: false,
-                maxWidth:600,
+                classes: {
+                    "ui-dialog-buttonpane": "modal-footer"
+                },
+                maxWidth:540,
                 maxHeight: 390,
+                resizable: false,
                 width: 520,
                 height: 460,
                 modal: true,

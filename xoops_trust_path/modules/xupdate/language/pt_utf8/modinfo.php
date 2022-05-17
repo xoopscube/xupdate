@@ -44,7 +44,7 @@ define( '_MI_XUPDATE_INSTALL_ERROR_UPDATE_FINISHED' , 'Module could not updated.
 define( '_MI_XUPDATE_INSTALL_MSG_MODULE_UPDATED' , 'Module \'{0}\' is updated.');
 define( '_MI_XUPDATE_INSTALL_ERROR_MODULE_UPDATED' , 'Module \'{0}\' could not updated.');
 define( '_MI_XUPDATE_LANG_XUPDATE' , 'X-Update Store');
-define( '_MI_XUPDATE_DESC_XUPDATE' , 'X-Update Store is a user-friendly interface to deploy and manage the core system, modules, themes and preloads (plugin extension). You can add, update, disable and uninstall from a web interface to customize your web application platform.');
+define( '_MI_XUPDATE_DESC_XUPDATE' , 'X-Update Manager is a user-friendly interface to deploy and manage the core system, modules, themes and preloads (plugin extension). You can add, update, disable and uninstall from a web interface to customize your web application platform.');
 define( '_MI_XUPDATE_LANG_AUTHOR' , 'Naao, Domifara, Nao-pon, Gigamaster(XCL2.3)');
 define( '_MI_XUPDATE_LANG_CREDITS' , 'CREDITS');
 define( '_MI_XUPDATE_TPL_STORE_LIST' , 'STORE_LIST');
@@ -53,12 +53,12 @@ define( '_MI_XUPDATE_TPL_STORE_DELETE' , 'STORE_DELETE');
 define( '_MI_XUPDATE_TPL_STORE_VIEW' , 'STORE_VIEW');
 define( '_MI_XUPDATE_TPL_MODULESTORE_INC' , 'MODULESTORE_INC');
 
-define( '_MI_XUPDATE_DEPLOY' , 'Get and deploy');
+define( '_MI_XUPDATE_DEPLOY' , 'Get & deploy');
 define( '_MI_XUPDATE_UPDATE' , 'Update');
 define( '_MI_XUPDATE_MANAGE' , 'Manage');
 
 // A brief description of this module
-define( '_MI_XUPDATE_DESC' , 'Install and update modules, preloads and themes from X-Update Stores.');
+define( '_MI_XUPDATE_DESC' , 'You can download the add-on of your choice');
 define( '_MI_XUPDATE_MSG_SAVED' , 'Your settings have been saved');
 define( '_MI_XUPDATE_MSG_DO_MODULE_INSTALL' , 'Then, module install is performed.');
 define( '_MI_XUPDATE_MSG_DO_MODULE_UPDATE' , 'Then, module update is performed.');
@@ -126,7 +126,7 @@ define( '_MI_XUPDATE_FTP_STORE_URL' , 'Add-on Store URL');
 define( '_MI_XUPDATE_TAG_DIRNAME' , 'Tag Module');
 define( '_MI_XUPDATE_TAG_DIRNAMEDSC' , 'Set the tag module\'s dirname if installed.');
 define( '_MI_XUPDATE_XEL_DIRNAME' , 'X-elFinder Module');
-define( '_MI_XUPDATE_XEL_DIRNAMEDSC' , 'Preload files (php extensions) can be edited with X-elFinder.<br> X-elFinder settings require a config to "Volume Driver"<br>"<b>xelfinder:xelfinder:preload:Preload:gid=1</b>" (X-update on Direct mode)<br>Or<br>"<b>xelfinder:ftp:preload:Preload:gid=1</b>" (X-elFinder FTP settings)');
+define( '_MI_XUPDATE_XEL_DIRNAMEDSC' , 'Preload files (php extensions) can be edited with X-elFinder. X-elFinder settings require a config to "Volume Driver"<br>"<b>xelfinder:xelfinder:preload:Preload:gid=1</b>" (X-update on Direct mode)<br>Or<br>"<b>xelfinder:ftp:preload:Preload:gid=1</b>" (X-elFinder FTP settings)');
 define( '_MI_XUPDATE_SHOW_DISABLED_STORE' , 'Show disabled stores');
 define( '_MI_XUPDATE_SHOW_DISABLED_STOREDSC' , 'Show the store that was disabled at the Add-on store. (This is for developers)');
 define( '_MI_XUPDATE_PARALLEL_FETCH_MAX' , 'HTTP connection Max');

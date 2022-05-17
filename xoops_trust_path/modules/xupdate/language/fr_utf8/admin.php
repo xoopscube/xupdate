@@ -7,13 +7,21 @@ define( '_AD_XUPDATE_LANG_EXECUTION_TIME' , 'Temps d\'exécution maximal du PHP'
 define( '_AD_XUPDATE_LANG_EXECUTION_TIME_NOTICE' , 'Le temps d’exécution maximal du PHP est top court, les items les plus lourds ne pourront peut-être pas être mis à jour automatiquement.');
 
 define( '_AD_XUPDATE_LANG_STORES' , 'X-Update Stores');
-define( '_AD_XUPDATE_LANG_STORES_TIP' , 'Store Tip');
+define( '_AD_XUPDATE_LANG_STORES_TIP' , "Le moyen le plus simple et le plus rapide pour enrichir votre plate-forme 
+d'applications Web est de télécharger et d'installer un module, un Preload (plugin) ou un thème.<br>
+Tout module complémentaire installé s'affiche dans la liste avec une couleur différente. Il est recommandé d'utiliser la version la plus récente.<br>
+Toutefois, vous avez également la liberté d'utiliser des versions plus anciennes si celles-ci sont nécessaires pour des raisons de compatibilité.");
 define( '_AD_XUPDATE_LANG_MODULES' , 'Modules Stores');
-define( '_AD_XUPDATE_LANG_MODULES_TIP' , 'Module Tip');
-define( '_AD_XUPDATE_LANG_THEMES' , 'Themes Stores');
-define( '_AD_XUPDATE_LANG_THEMES_TIP' , 'Themes Tip');
-define( '_AD_XUPDATE_LANG_PRELOADS' , 'Preloads Stores');
-define( '_AD_XUPDATE_LANG_PRELOADS_TIP' , 'Preloads Tip');
+define( '_AD_XUPDATE_LANG_MODULES_TIP' , "<b>Attention aux versions des modules !</b> Vous êtes libre d'utiliser des versions plus anciennes pour des raisons de compatibilité.<br>
+Les modules Trust sont duplicables et permettent l'installation de plusieurs instances du même module du côté public.<br>
+Il est recommandé de renommer les modules afin de leur donner des noms significatifs.");
+define( '_AD_XUPDATE_LANG_THEMES' , 'Liste des Themes');
+define( '_AD_XUPDATE_LANG_THEMES_TIP' , "Il existe deux types de thèmes, frontend (côté client) et backend, tableau de bord d'administration et panneau de configuration.<br>
+Les deux types de thèmes peuvent avoir des modèles de modules personnalisés, et peuvent être construits avec des frameworks CSS.<br>
+Le thème est évidemment une affaire personnelle et assure l'aspect et l'ergonomie de votre site Web.");
+define( '_AD_XUPDATE_LANG_PRELOADS' , 'Liste des Preloads');
+define( '_AD_XUPDATE_LANG_PRELOADS_TIP' , "Un Preload est un composant à fichier unique, une forme de plugin permettant d'étendre les fonctionnalités existantes ou d'ajouter de nouvelles fonctions.
+<br>Le meilleur moyen pour désactiver un Preload est d'utiliser XelFinder et de déplacer le fichier Preload dans le dossier /disabled, ou de supprimer.");
 define( '_AD_XUPDATE_LANG_THEME_FINDER' , 'Theme Finder Install');
 define( '_AD_XUPDATE_LANG_THEME_FINDER_TIP' , 'ThemeFinder Tip');
 
@@ -35,6 +43,7 @@ define( '_AD_XUPDATE_LANG_PERM' , 'Permission');
 define( '_AD_XUPDATE_LANG_CHANGE' , 'Changement');
 define( '_AD_XUPDATE_LANG_CATEGORY_ID' , 'Catégorie');
 define( '_AD_XUPDATE_LANG_STORE' , 'Magasin (Store)');
+define( '_AD_XUPDATE_LANG_MODULE_RENAME' , 'Rename Trust Modules');
 
 define( '_AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL' , 'Opération par lots');
 define( '_AD_XUPDATE_LANG_MESSAGE_WAITING' , 'En attente');

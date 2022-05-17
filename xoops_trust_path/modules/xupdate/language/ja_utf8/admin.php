@@ -7,13 +7,20 @@ define( '_AD_XUPDATE_LANG_EXECUTION_TIME' , 'PHP 実行時間制限');
 define( '_AD_XUPDATE_LANG_EXECUTION_TIME_NOTICE' , 'PHP 実行時間制限が短いので大きなアイテムは自動更新できないことがあります。');
 
 define( '_AD_XUPDATE_LANG_STORES' , 'X-Update Stores');
-define( '_AD_XUPDATE_LANG_STORES_TIP' , 'Store Tip');
+define( '_AD_XUPDATE_LANG_STORES_TIP' , 'Web アプリケーションのプラットフォームを強化する最も簡単で迅速な方法は、モジュール、プリロード、またはテーマを入手してデプロイすることです。<br>
+インストールされているアドオンは、別の色で表示されます。最新のバージョンを使用することをお勧めします。<br>
+ただし、互換性のために必要な場合は、古いバージョンも自由に使用することができます。');
 define( '_AD_XUPDATE_LANG_MODULES' , 'モジュール一覧');
-define( '_AD_XUPDATE_LANG_MODULES_TIP' , 'Store Module Tip');
-define( '_AD_XUPDATE_LANG_THEMES' , 'Themes list');
-define( '_AD_XUPDATE_LANG_THEMES_TIP' , 'Store Themes Tip');
-define( '_AD_XUPDATE_LANG_PRELOADS' , 'Preloads');
-define( '_AD_XUPDATE_LANG_PRELOADS_TIP' , 'Store Preloads Tip');
+define( '_AD_XUPDATE_LANG_MODULES_TIP' , '<b>モジュールのバージョンに注意してください !</b>互換性のために古いバージョンを使用するのは自由です。<br>
+Trustモジュールは複製が可能で、パブリック側に複数のインスタンスをインストールすることができます。<br>
+Trustモジュールに意味のある名前を付けるために、名前を変更することをお勧めします。');
+define( '_AD_XUPDATE_LANG_THEMES' , 'テーマ一覧');
+define( '_AD_XUPDATE_LANG_THEMES_TIP' , 'テーマには、フロントエンド（クライアント側）とバックエンド、管理ダッシュボードとコントロールパネルの2種類があります。<br>
+どちらのタイプのテーマにもカスタムモジュールテンプレートを含めることができ、CSSフレームワークを使用して構築できます。<br>
+テーマは明らかに個人的な問題であり、Webサイトの適切な外観と人間工学を提供します。');
+define( '_AD_XUPDATE_LANG_PRELOADS' , 'プリロード、拡張機能');
+define( '_AD_XUPDATE_LANG_PRELOADS_TIP' , 'プリロードとは、Single File Componentsのことで、既存の機能を拡張したり、新しい機能を追加したりするプラグインのようなものです。
+<br>プリロードを無効にするには、XelFinder を使用してプリロードを /disabled フォルダに移動するか、単純に削除するのがベストプラクティスとなります。');
 define( '_AD_XUPDATE_LANG_THEME_FINDER' , 'テーマファインダー');
 define( '_AD_XUPDATE_LANG_THEME_FINDER_TIP' , 'ThemeFinder Tip');
 
@@ -35,6 +42,7 @@ define( '_AD_XUPDATE_LANG_PERM' , 'パーミッション');
 define( '_AD_XUPDATE_LANG_CHANGE' , '変更');
 define( '_AD_XUPDATE_LANG_CATEGORY_ID' , 'カテゴリ');
 define( '_AD_XUPDATE_LANG_STORE' , 'ストア');
+define( '_AD_XUPDATE_LANG_MODULE_RENAME' , 'Trustのモジュール名を変更する。');
 
 define( '_AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL' , '一括操作');
 define( '_AD_XUPDATE_LANG_MESSAGE_WAITING' , '待機中');

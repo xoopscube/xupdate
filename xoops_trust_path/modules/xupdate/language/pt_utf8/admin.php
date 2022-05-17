@@ -6,31 +6,33 @@ define( '_AD_XUPDATE_LANG_EXECUTION_TIME' , 'PHP Max execution time');
 define( '_AD_XUPDATE_LANG_EXECUTION_TIME_NOTICE' , 'PHP max execution time is too short, so the large item may be unable to be updated automatically.');
 
 define( '_AD_XUPDATE_LANG_STORES' , 'X-Update Stores');
-define( '_AD_XUPDATE_LANG_STORES_TIP' , 'The easiest and fastest way to expand your web application platform is to get and deploy a module, a preload or a theme.<br>
-Any installed add-on is displayed with a different color. It is recommended to use the most recent version.<br>
-However, you are also given the freedom to use older versions if those are necessary for compatibility reasons.');
-define( '_AD_XUPDATE_LANG_MODULES' , 'Modules List');
-define( '_AD_XUPDATE_LANG_MODULES_TIP' , '<b>Beware of module versions !</b> You are free to use older versions for compatibility reasons.<br>
-Trust modules are duplicable and allow the installation of several instances on the public side.<br> It is recommended to rename Trust modules in order to give them meaningful names.');
-define( '_AD_XUPDATE_LANG_THEMES' , 'Themes List');
-define( '_AD_XUPDATE_LANG_THEMES_TIP' , 'There are two types of themes, frontend (client side) and backend, admin dashboard and control panel.<br>
-Both types of themes can have custom module templates, and can be built with CSS frameworks.<br>
-The theme is obviously a personal matter and provides the proper look and ergonomics for the website.');
-define( '_AD_XUPDATE_LANG_PRELOADS' , 'Preloads List');
-define( '_AD_XUPDATE_LANG_PRELOADS_TIP' , 'Preloads are Single File Components, which are like plug-ins that extend existing functionality or add new functionality. <br>
-To disable a preload, the best practice is to use XelFinder to move the preload to the /disabled folder or simply delete.');
+define( '_AD_XUPDATE_LANG_STORES_TIP' , 'A forma mais fácil e rápida de melhorar a sua plataforma de aplicação web é obter e implementar add-ons, pré-carregamentos ou temas.<br>
+Os suplementos instalados são exibidos numa cor diferente. Recomenda-se a utilização da versão mais recente.<br>
+No entanto, é livre de utilizar versões mais antigas, se necessário por razões de compatibilidade.');
+define( '_AD_XUPDATE_LANG_MODULES' , 'Lista de Módulos');
+define( '_AD_XUPDATE_LANG_MODULES_TIP' , '<b>Atenção às versões de módulos !</b> As versões mais antigas estão disponíveis por motivos de compatibilidade.<br>
+Os módulos Trust podem ser replicados e múltiplas instâncias podem ser instaladas no lado do público.<br>
+Recomenda-se renomear o módulo Trust para lhe dar um nome significativo.');
+define( '_AD_XUPDATE_LANG_THEMES' , 'Lista de Temas');
+define( '_AD_XUPDATE_LANG_THEMES_TIP' , 'Existem dois tipos de temas, front-end (lado do cliente) e back-end, painel de administração e painel de controle.<br>
+Ambos os tipos de temas podem ter modelos de módulos personalizados e podem ser criados com estruturas CSS.<br>
+O tema é obviamente uma questão pessoal que proporciona a aparência e ergonomia adequadas para o site.');
+define( '_AD_XUPDATE_LANG_PRELOADS' , 'Lista de Preloads');
+define( '_AD_XUPDATE_LANG_PRELOADS_TIP' , '
+Preload é um componente de ficheiro único, uma forma de plugin para estender uma funcionalidade existente ou adicionar novas funcionalidades.
+<br>Para desactivar um Preload, a melhor prática é usar XelFinder para mover o Preload para a pasta /disabled ou simplesmente suprimir.');
 define( '_AD_XUPDATE_LANG_THEME_FINDER' , 'Theme Finder Install');
 define( '_AD_XUPDATE_LANG_THEME_FINDER_TIP' , 'ThemeFinder Tip');
 
-define( '_AD_XUPDATE_LANG_TYPE' , 'Type');
+define( '_AD_XUPDATE_LANG_TYPE' , 'Tipo');
 define( '_AD_XUPDATE_LANG_LICENSE' , 'License');
 define( '_AD_XUPDATE_LANG_REQUIRED' , 'Required Level');
 define( '_AD_XUPDATE_HTML_ONLY' , 'HTML Only');
 define( '_AD_XUPDATE_HTML_ONLY_DESC' , 'If checked, only the public html side will be uploaded, when the trust path side does not need to be updated.');
 define( '_AD_XUPDATE_LANG_WRITABLE_DIR' , 'Directories writable');
-define( '_AD_XUPDATE_LANG_WRITABLE_FILE' , 'Files writable');
-define( '_AD_XUPDATE_LANG_NO_OVERWRITE' , 'The protected files or folders (prefix search) will be overwritten when this checkbox is checked.');
-define( '_AD_XUPDATE_LANG_NO_UPDATE' , 'The excluded files or folders (prefix search) will be overwritten or uploaded when this checkbox is checked.');
+define( '_AD_XUPDATE_LANG_WRITABLE_FILE' , 'Arquivos graváveis');
+define( '_AD_XUPDATE_LANG_NO_OVERWRITE' , 'Os ficheiros ou pastas protegidos (pesquisa por prefixo) serão substituídos quando esta caixa de seleção é ativada.');
+define( '_AD_XUPDATE_LANG_NO_UPDATE' , 'Os ficheiros ou pastas excluídos (pesquisa de prefixos) serão substituídos ou carregados quando esta caixa de seleção é ativada.');
 define( '_AD_XUPDATE_LANG_DELETE_DIR' , 'Delete the directory that are no longer needed');
 define( '_AD_XUPDATE_LANG_DELETE_FILE' , 'Delete files that are no longer needed');
 define( '_AD_XUPDATE_RECENTCHANGES' , 'Changes');

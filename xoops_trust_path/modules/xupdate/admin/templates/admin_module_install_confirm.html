@@ -6,7 +6,7 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <h2 class="admintitle"><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}> : <{$dirname|xoops_escape:show}></h2>
+    <h2 class="admintitle"><{$smarty.const._MI_XUPDATE_DEPLOY}> » <{$smarty.const._MI_XUPDATE_ADMENU_MODULE}> » <{$dirname|xoops_escape:show}></h2>
 
     <{* include file="admin_tips.html" *}>
 
@@ -37,32 +37,29 @@
     <table class="outer">
     <thead>
         <tr>
-            <th><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}> : <{$target_key|xoops_escape:show}></th>
-            <th>
-                <a href="index.php?action=<{$action}>&amp;sid=<{$sid}>">
-                    &#127978; <{$store_name|xoops_escape:show}></a>
-                <{if $detail_url}>
-                | <a href="<{$detail_url|xoops_escape:show}>" target="_blank">
-                    &#128230; <{$target_key|xoops_escape:show}> ↗</a>
-                <{/if}>
-            </th>
+            <th></th>
+            <th><{$target_key|xoops_escape:show}></th>
         </tr>
 
     </thead>
 
     <tbody>
-<!--    <tr>-->
-<!--        <td class="legacy_list_select"><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}></td>-->
-<!--        <td class="legacy_list_select">-->
-<!--            <a class="button" href="index.php?action=<{$action}>&amp;sid=<{$sid}>">-->
-<!--                &#127978; <{$store_name|xoops_escape:show}></a>-->
-<!--            <{if $detail_url}>-->
-<!--            | <a  class="button" href="<{$detail_url|xoops_escape:show}>" target="_blank">&#128230; <{$target_key|xoops_escape:show}> ↗</a>-->
-<!--            <{/if}>-->
-<!--        </td>-->
-<!--    </tr>-->
+    <tr>
+        <td><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}></td>
+        <td><a href="index.php?action=<{$action}>&amp;sid=<{$sid}>">&#127978; <{$store_name|xoops_escape:show}></a></td>
+    </tr>
     <tr>
         <td><{$smarty.const._MI_XUPDATE_FTP_ADDON_URL}></td>
+        <td>
+            <{if $detail_url}>
+            <a href="<{$detail_url|xoops_escape:show}>" target="_blank">&#128230; <{$target_key|xoops_escape:show}> ↗</a>
+            <{else}>
+                <{$target_key|xoops_escape:show}>
+            <{/if}>
+        </td>
+    </tr>
+    <tr>
+        <td><{$smarty.const._MI_XUPDATE_ADMENU_PACKAGE}></td>
         <td><{$addon_url|xoops_escape:show}></td>
     </tr>
     <tr>
