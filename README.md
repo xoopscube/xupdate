@@ -11,7 +11,7 @@ MODULE | X-Update Manager
 ------------ | -------------
 Description | Dashboard to install and update modules, preloads (extensions) and themes.
 Render Engine | Smarty v2 and XCube Layout
-Version | 2.3.1
+Version | 2.3.2
 Author | The XOOPSCube Project, 
 Author | @nao-pon @naao @kilica @hamaco
 Author | Update by @gigamaster (XCL7)
