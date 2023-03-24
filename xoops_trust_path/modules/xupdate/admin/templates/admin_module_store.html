@@ -7,7 +7,7 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_MODULES}><{if $storeObject}> » <{$storeObject->getShow('name')}><{/if}></h2>
+    <h2><{$smarty.const._AD_XUPDATE_LANG_MODULES}><{if $storeObject}> » <{$storeObject->getShow('name')}><{/if}></h2>
 
 
     <{include file="admin_tips.html"}>
@@ -265,7 +265,7 @@
         <{if $module->mModule && $module->mModule->getVar('mid') > 0}>
         <{if $module->mModule->getVar('isactive')}>
         <a href="<{$module->get_StoreUrl()}>" aria-label="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
-            <img class="svg" src="<{'icons/icon-package-update.svg'|theme}>"
+            <img class="svg" src="<{'icons/icon-install.svg'|theme}>"
             width="24px"
             height="24px"
             alt="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
@@ -273,16 +273,16 @@
         <a href="<{$module->get_UpdateUrl()}>"></a>
         <{if $module->mModule->getVar('dirname') === 'legacy'}>
         <br>
-        <span class="legacy_list_select" style="white-space:nowrap;">
+        <span class="list_select" style="white-space:nowrap;">
         <a href="<{$module->get_StoreUrl()}>"><{$smarty.const._AD_LEGACY_LANG_UPDATE}></a>
         </span>
         <{/if}>
         <{else}>
         <span class="uninstall" aria-label="<{$smarty.const._AD_LEGACY_LANG_BLOCK_INACTIVETOTAL}>">
-            <img class="svg" src="<{'icons/icon-package-open.svg'|theme}>"
-             alt="<{$smarty.const._AD_LEGACY_LANG_BLOCK_INACTIVETOTAL}>"
-             width="24px"
-             height="24px">
+            <img class="svg" src="<{'icons/icon-module-open.svg'|theme}>"
+                 width="24px"
+                 height="24px"
+                 alt="<{$smarty.const._AD_LEGACY_LANG_BLOCK_INACTIVETOTAL}>">
         </span>
         <{/if}>
         <{else}>
@@ -298,7 +298,7 @@
         </td>
 
         <{if $module->mModule->getVar('dirname') !== 'legacy'}>
-        <td class="legacy_list_select">
+        <td class="list_select">
             <{if $xupdate_writable.result==true}>
             <{if $module->mModule && $module->mModule->getVar('mid') > 0 }>
             <{if $module->mModule->getVar('isactive') && $module->isDirnameError() == false}>
@@ -313,14 +313,14 @@
     </tr>
     <{/foreach}>
     </tbody>
-    <tfoot class="foot">
+    <tfoot>
     <tr>
         <td colspan="<{if $sid}>4<{else}>4<{/if}>">
             <{xoops_token form=$actionForm}>
             <input class="button cancel" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
             <input class="button" type="submit" value="<{$smarty.const._AD_XUPDATE_LANG_MODULE_RENAME}>">
         </td>
-        <td class="foot" colspan="2">
+        <td colspan="2">
             <{if $xupdate_writable.result==true}>
             <input class="button" type="submit" value="<{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}>" id="rapidModuleInstallButton">
             <{/if}>

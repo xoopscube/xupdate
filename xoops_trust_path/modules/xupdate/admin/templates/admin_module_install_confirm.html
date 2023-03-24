@@ -6,7 +6,7 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <h2 class="admintitle"><{$smarty.const._MI_XUPDATE_DEPLOY}> » <{$smarty.const._MI_XUPDATE_ADMENU_MODULE}> » <{$dirname|xoops_escape:show}></h2>
+    <h2><{$smarty.const._MI_XUPDATE_DEPLOY}> » <{$smarty.const._MI_XUPDATE_ADMENU_MODULE}> » <{$dirname|xoops_escape:show}></h2>
 
     <{* include file="admin_tips.html" *}>
 
@@ -78,7 +78,7 @@
             <{$version}><{if $detailed_version}> [ <{$detailed_version}> ]<{/if}>
             <{if $options.changes_url}>
             <a href="<{$options.changes_url|escape:'html'}>"
-               class="button button-small"
+               class="button"
                target="_blank"><{$smarty.const._AD_XUPDATE_RECENTCHANGES}>
             </a>
             <{/if}>
@@ -90,8 +90,8 @@
     </tr>
     <{if $target_type == 'TrustModule'}>
     <tr>
-        <td class="legacy_list_select"><{$smarty.const._AD_XUPDATE_HTML_ONLY}></td>
-        <td class="legacy_list_select">
+        <td class="list_select"><{$smarty.const._AD_XUPDATE_HTML_ONLY}></td>
+        <td class="list_select">
             <table>
                 <tr>
                     <td>
@@ -110,7 +110,7 @@
 
     <tfoot>
     <tr>
-        <td class="foot" colspan="2">
+        <td colspan="2">
             <input class="formButton" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
             <input class="formButton" type="submit" value="<{$smarty.const._MI_XUPDATE_DEPLOY}>">
         </td>

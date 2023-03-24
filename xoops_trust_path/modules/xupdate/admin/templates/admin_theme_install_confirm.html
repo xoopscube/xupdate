@@ -6,7 +6,7 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <h2 class="admintitle"><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}> » <{$target_key|xoops_escape:show}></h2>
+    <h2><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}> » <{$target_key|xoops_escape:show}></h2>
 
 
     <{include file="admin_tips.html"}>
@@ -41,7 +41,7 @@
             <thead>
             <{if $screen_shot}>
                 <tr>
-                    <th colspan="2" class="legacy_list_select"><img src="<{$screen_shot}>" alt=""></th>
+                    <th colspan="2" class="list_select"><img src="<{$screen_shot}>" alt=""></th>
                 </tr>
             <{/if}>
             </thead>
@@ -84,7 +84,7 @@
             </tbody>
 
             <tfoot>
-            <tr class="foot">
+            <tr>
                 <td colspan="2">
                     <input class="button" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
                     <input class="button" type="submit" value="<{$smarty.const._MI_XUPDATE_DEPLOY}>">

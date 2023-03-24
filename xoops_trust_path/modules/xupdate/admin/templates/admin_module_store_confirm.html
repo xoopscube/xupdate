@@ -1,17 +1,17 @@
 <div class="ui-dev-mode"><{$smarty.template}></div>
 
 <div class="adminnavi">
-    <a href="<{$xoops_url}>/admin.php">Dashboard</a>
+    <a href="<{$xoops_url}>/admin.php"><{$smarty.const._CPHOME}></a>
 
     &raquo;&raquo;
     <a href="./index.php?action=ModuleStore"><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTORE}></a>
-    &raquo;&raquo; <span class="adminnaviTitle"><a href="./index.php?action=ModuleStore"><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTOREDEC}></a></span>
+    &raquo;&raquo; <span class="page-title"><a href="./index.php?action=ModuleStore"><{$smarty.const._MI_XUPDATE_ADMENU_ADDONSTOREDEC}></a></span>
 </div>
 
 
 <{include file="admin_menunavi.html"}>
 
-<h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_MODULES}> : <{$smarty.const._EDIT}></h2>
+<h2><{$smarty.const._AD_XUPDATE_LANG_MODULES}> : <{$smarty.const._EDIT}></h2>
 
 <{include file="admin_tips.html"}>
 
@@ -45,14 +45,14 @@
         <{foreach item=id from=$ids}>
         <tr>
             <td class="legacy_list_id"><{$id}></td>
-            <td class="legacy_list_select">
+            <td class="list_select">
                 <{if $actionForm->get('dirname',$id) == $moduleObjects[$id]->getVar('dirname')}>
                 <{$actionForm->get('dirname',$id)|xoops_escape}>
                 <{else}>
                 (<{$moduleObjects[$id]->getShow('dirname')}>) &raquo; <b class="legacy_module_error"><{$actionForm->get('dirname',$id)|xoops_escape}></b>
                 <{/if}>
             </td>
-            <td class="legacy_list_select">
+            <td class="list_select">
                 <{ $moduleObjects[$id]->getShow('target_key') }>
                 <input type="hidden" name="dirname[<{$id}>]" value="<{$actionForm->get('dirname',$id)|xoops_escape:edit}>">
             </td>
@@ -62,7 +62,7 @@
 
         <tfoot>
         <tr>
-            <td class="foot" colspan="3">
+            <td colspan="3">
                 <input class="formButton" type="submit" value="<{$smarty.const._AD_XUPDATE_LANG_BUTTON_UPDATE}>">
                 <input class="formButton" type="submit" value="<{$smarty.const._BACK}>" name="_form_control_cancel">
             </td>

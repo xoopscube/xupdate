@@ -7,7 +7,7 @@
  * @version 2.3
  * @author Other authors Gigamaster XCL/PHP7
  * @author Naoki Sawada, Naoki Okino
- * @copyright  (c) 2005-2022 Authors
+ * @copyright  (c) 2005-2023 Authors
  * @license GPL V2
  */
 
@@ -28,8 +28,8 @@ $basename = basename( $dirname );
 $modversion['dirname']          = $myDirName;
 $modversion['trust_dirname']    = $basename;
 $modversion['name']             = _MI_XUPDATE_LANG_XUPDATE;
-$modversion['version']          = '2.32';
-$modversion['detailed_version'] = '2.32.1';
+$modversion['version']          = '2.33';
+$modversion['detailed_version'] = '2.33.0';
 $modversion['description']      = _MI_XUPDATE_DESC_XUPDATE;
 $modversion['author']           = _MI_XUPDATE_LANG_AUTHOR;
 $modversion['credits']          = _MI_XUPDATE_LANG_CREDITS;
@@ -111,13 +111,13 @@ $modversion['adminmenu'] = [
 		'show'     => true,
 		'absolute' => false
 	],
-	[
-		'title'    => _MI_XUPDATE_ADMENU_THEMEFINDER,
-		'link'     => 'admin/index.php?action=ThemeFinder',
-		'keywords' => _MI_XUPDATE_ADMENU_THEMEFINDER,
-		'show'     => true,
-		'absolute' => false
-	],
+//	[
+//		'title'    => _MI_XUPDATE_ADMENU_THEMEFINDER,
+//		'link'     => 'admin/index.php?action=ThemeFinder',
+//		'keywords' => _MI_XUPDATE_ADMENU_THEMEFINDER,
+//		'show'     => true,
+//		'absolute' => false
+//	],
 	[
 		'title'    => _MI_XUPDATE_ADMENU_PRELOAD,
 		'link'     => 'admin/index.php?action=PreloadStore',
@@ -337,15 +337,15 @@ $modversion['config'] = [
 		'default'     => 0,
 		'options'     => [],
 	],
-	[
-		'name'        => 'Theme_download_Url_format',
-		'title'       => '_MI_XUPDATE_FTP_THEME_URL',
-		'description' => '',
-		'formtype'    => 'text',
-		'valuetype'   => 'string',
-		'default'     => 'http://cmsthemefinder.com/modules/lica/index.php?controller=download&id=%u',
-		'options'     => [],
-	],
+//	[
+//		'name'        => 'Theme_download_Url_format',
+//		'title'       => '_MI_XUPDATE_FTP_THEME_URL',
+//		'description' => '',
+//		'formtype'    => 'text',
+//		'valuetype'   => 'string',
+//		'default'     => 'http://cmsthemefinder.com/modules/lica/index.php?controller=download&id=%u',
+//		'options'     => [],
+//	],
 	[
 		'name'        => 'stores_json_url',
 		'title'       => '_MI_XUPDATE_FTP_STORE_URL',

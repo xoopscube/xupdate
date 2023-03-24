@@ -7,7 +7,7 @@
 
     <{include file="admin_menunavi.html"}>
 
-    <h2 class="admintitle"><{$smarty.const._AD_XUPDATE_LANG_THEMES}><{if $storeObject}> » <{$storeObject->getShow('name')}><{/if}></h2>
+    <h2><{$smarty.const._AD_XUPDATE_LANG_THEMES}><{if $storeObject}> » <{$storeObject->getShow('name')}><{/if}></h2>
 
 
     <{include file="admin_tips.html"}>
@@ -241,7 +241,7 @@
                 <{if $xupdate_writable.result==true}>
                 <{if $module->getVar('isactive') > 0}>
                 <a href="<{$module->get_StoreUrl()}>" aria-label="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>">
-                    <img src="<{"icons/icon-package-update.svg"|theme}>" class="svg" alt="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>"></a>
+                    <img class="svg" src="<{'icons/icon-install.svg'|theme}>" width="24px" height="24px" alt="<{$smarty.const._AD_LEGACY_LANG_UPDATE}>"></a>
                 <a href="<{$module->get_UpdateUrl()}>"></a>
                 <{else}>
                 <a href="<{$module->get_StoreUrl()}>" aria-label="<{$smarty.const._AD_LEGACY_LANG_INSTALL}>">
@@ -254,7 +254,7 @@
                 <{/if}>
                 <{/if}>
             </td>
-            <td class="legacy_list_select">
+            <td class="list_select">
                 <{if $xupdate_writable.result==true}>
                 <{if $module->mModule && $module->mModule->getVar('mid') > 0 }>
                 <{if $module->mModule->getVar('isactive') && $module->isDirnameError() == false}>
@@ -269,12 +269,12 @@
         <{/foreach}>
     </tbody>
 
-    <tfoot class="foot">
+    <tfoot>
         <tr>
             <td colspan="5">
             <{xoops_token form=$actionForm}>
             </td>
-            <td class="foot" colspan="2">
+            <td colspan="2">
                 <{if $xupdate_writable.result==true}>
                 <input class="formButton" type="submit"
                        value="<{$smarty.const._AD_XUPDATE_LANG_MESSAGE_BATCH_INSTALL}>"

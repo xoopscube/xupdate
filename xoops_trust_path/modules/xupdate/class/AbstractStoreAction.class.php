@@ -6,8 +6,8 @@
  * @subpackage Xupdate
  * @version 2.3
  * @author Naoki Sawada, Naoki Okino, Gigamaster (XCL 2.3)
- * @copyright Copyright 2005-2022 XOOPS Cube Project
- * @license https://github.com/xoopscube/xcl/blob/master/GPL_V2.txt
+ * @copyright Copyright 2005-2023 The XOOPSCube Project
+ * @license GPL v2.0
  */
 
 if ( ! defined( 'XOOPS_ROOT_PATH' ) ) {
@@ -407,7 +407,7 @@ jQuery(function($){
 		$('body').on('click', '#rapidModuleInstallButton', clickRapidModuleInstallButton)
 		.on('click', '#rapidInstallCheckboxAll', checkAll);
 		$('body').on('click', '#rapidInstallCheckboxAll,input.rapidInstallCheckbox', function(){
-			var target = $('td.legacy_list_select:first');
+			var target = $('td.list_select:first');
 			if (! target.data('widthset')) {
 				target.data('widthset', true);
 				setTimeout(function(){target.css({width: '10em'});}, 100);
