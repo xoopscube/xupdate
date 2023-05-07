@@ -6,7 +6,7 @@
  * @subpackage Xupdate
  * @version 2.3
  * @author Naoki Sawada, Naoki Okino, Gigamaster (XCL 2.3)
- * @copyright Copyright 2005-2022 XOOPSCube Project
+ * @copyright (c) 2005-2023 The XOOPSCube Project
  * @license GPL v2.0
  */
 
@@ -20,17 +20,8 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive {
 	public $dirname;
 	public $html_only;
 
-	private $systemModules = [];
-	private $systemDirs = [];
-
-	public function __construct() {
-		parent::__construct();
-
-		// @todo
-		$this->systemModules = [ 'legacy' ];
-
-		// @todo
-		$this->systemDirs = [
+	private $systemModules = [ 'legacy' ];
+	private $systemDirs = [
 			'html',
 			'html/class',
 			'html/class/database/*',
@@ -51,6 +42,9 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive {
 			'xoops_trust_path/settings/site_default.dist.ini',
 			'xoops_trust_path/settings/site_default.ini'
 		];
+
+	public function __construct() {
+		parent::__construct();
 	}
 
 	/**
@@ -61,7 +55,8 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive {
 	 * @return    bool
 	 **/
 	public function execute( $caller ) {
-		$result        = true;
+		$cHandler      = null;
+        $result        = true;
 		$siteCloseConf = null;
 		if ( true === $this->Xupdate->params['is_writable']['result'] ) {
 			$this->retry_phase = isset( $_POST['upload_retry'] ) ? (int) $_POST['upload_retry'] : 0;
@@ -451,19 +446,19 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive {
 			$module  =& $hModule->getByDirname( $dirname );
 			if ( is_object( $module ) ) {
 				if ( $module->getVar( 'isactive' ) ) {
-					$ret = '<a href="' . XOOPS_MODULE_URL . '/legacy/admin/index.php?action=ModuleUpdate&dirname=' . $dirname . '">' . _MI_XUPDATE_ADMENU_MODULE . _MI_XUPDATE_UPDATE . '</a>';
+					$ret = _MI_XUPDATE_ADMENU_MODULE . ' <a class="button" href="' . XOOPS_MODULE_URL . '/legacy/admin/index.php?action=ModuleUpdate&dirname=' . $dirname . '">' .  _MI_XUPDATE_UPDATE . '</a>';
 				} else {
 					$ret = _AD_LEGACY_LANG_BLOCK_INACTIVETOTAL;
 				}
 			} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $dirname ) ) {
 				$ret = '<a href="' . XOOPS_MODULE_URL . '/legacy/admin/index.php?action=ModuleInstall&dirname=' . $dirname . '">' . _MI_XUPDATE_ADMENU_MODULE . _INSTALL . '</a>';
 			} else {
-				$ret = '<a href="' . XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=ModuleStore">' . _AD_XUPDATE_LANG_MESSAGE_GETTING_FILES . _AD_XUPDATE_LANG_MESSAGE_SUCCESS . '</a>';
+				$ret = _AD_XUPDATE_LANG_MESSAGE_GETTING_FILES . ' <a class="button" href="' . XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=ModuleStore">'. _AD_XUPDATE_LANG_MESSAGE_SUCCESS . '</a>';
 			}
 		} elseif ( 'theme' === $caller ) {
-			$ret = '<a href="' . XOOPS_MODULE_URL . '/legacy/admin/index.php?action=ThemeList">' . _MI_XUPDATE_ADMENU_THEME . _MI_XUPDATE_MANAGE . '</a>';
+			$ret = _MI_XUPDATE_ADMENU_THEME . ' <a class="button" href="' . XOOPS_MODULE_URL . '/legacy/admin/index.php?action=ThemeList">' .  _MI_XUPDATE_MANAGE . '</a>';
 		} elseif ( 'preload' === $caller ) {
-			$ret = '<a href="' . XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=PreloadStore">' . _AD_XUPDATE_LANG_MESSAGE_GETTING_FILES . _AD_XUPDATE_LANG_MESSAGE_SUCCESS . '</a>';
+			$ret = _AD_XUPDATE_LANG_MESSAGE_GETTING_FILES . ' <a class="button" href="' . XOOPS_MODULE_URL . '/xupdate/admin/index.php?action=PreloadStore">' .  _AD_XUPDATE_LANG_MESSAGE_SUCCESS . '</a>';
 		}
 
 		return $ret;
@@ -538,7 +533,7 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive {
 			$this->Ftp->localMkdir( $directory );
 		}
 		if ( file_exists( $directory ) && is_dir( $directory ) ) {
-			$this->Ftp->localChmod( $directory, ( 0 === strpos( $directory, XOOPS_TRUST_PATH ) ) ? _MD_XUPDATE_WRITABLE_DIR_PERM_T : _MD_XUPDATE_WRITABLE_DIR_PERM );
+			$this->Ftp->localChmod( $directory, ( 0 === strpos( $directory, (string) XOOPS_TRUST_PATH ) ) ? _MD_XUPDATE_WRITABLE_DIR_PERM_T : _MD_XUPDATE_WRITABLE_DIR_PERM );
 		}
 	}
 
@@ -552,14 +547,14 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive {
 	private function _chmod_file( &$file ) {
 		if ( file_exists( $file ) ) {
 			if ( ! is_dir( $file ) ) {
-				$this->Ftp->localChmod( $file, ( 0 === strpos( $file, XOOPS_TRUST_PATH ) ) ? _MD_XUPDATE_WRITABLE_FILE_PERM_T : _MD_XUPDATE_WRITABLE_FILE_PERM );
+				$this->Ftp->localChmod( $file, ( 0 === strpos( $file, (string) XOOPS_TRUST_PATH ) ) ? _MD_XUPDATE_WRITABLE_FILE_PERM_T : _MD_XUPDATE_WRITABLE_FILE_PERM );
 			}
 		} else {
 			// make empty file
 			$tmp = $this->exploredDirPath . '/_empty.tmp';
 			if ( @ touch( $tmp ) ) {
 				if ( $this->Ftp->localPut( $tmp, $file ) ) {
-					$this->Ftp->localChmod( $file, ( 0 === strpos( $file, XOOPS_TRUST_PATH ) ) ? _MD_XUPDATE_WRITABLE_FILE_PERM_T : _MD_XUPDATE_WRITABLE_FILE_PERM );
+					$this->Ftp->localChmod( $file, ( 0 === strpos( $file, (string) XOOPS_TRUST_PATH ) ) ? _MD_XUPDATE_WRITABLE_FILE_PERM_T : _MD_XUPDATE_WRITABLE_FILE_PERM );
 				}
 			}
 		}
@@ -573,7 +568,7 @@ class Xupdate_FtpModuleInstall extends Xupdate_FtpCommonZipArchive {
 	 * @return void
 	 */
 	private function _rename( $pair ) {
-		list( $from, $to ) = explode( '|', $pair );
+		[$from, $to] = explode( '|', $pair );
 		if ( $from && $to && ! file_exists( $to ) ) {
 			$this->Ftp->localRename( $from, $to );
 		}
@@ -717,25 +712,31 @@ function xupdate_on_shutdown( $cache_dir, $download_url ) {
 		}
 		$msg                   = [];
 		$upload_retry          = isset( $_POST['upload_retry'] ) ? (int) $_POST['upload_retry'] : 0;
-		$uploaded_count        = count( $GLOBALS['xupdate_retry_cache']['uploaded_files'] );
-		$uploaded_count_before = isset( $_POST['uploaded_count'] ) ? $_POST['uploaded_count'] : 0;
+		$uploaded_count        = is_countable($GLOBALS['xupdate_retry_cache']['uploaded_files']) ? count( $GLOBALS['xupdate_retry_cache']['uploaded_files'] ) : 0;
+		$uploaded_count_before = $_POST['uploaded_count'] ?? 0;
 		$total_files           = 0;
 		if ( isset( $GLOBALS['xupdate_retry_cache']['file_list'] ) ) {
 			foreach ( $GLOBALS['xupdate_retry_cache']['file_list'] as $list ) {
-				$total_files += count( $list['file'] );
+				$total_files += is_countable($list['file']) ? count( $list['file'] ) : 0;
 			}
 		}
-		$msg[] = '<html><head><title>' . _AD_XUPDATE_LANG_TIMEOUT_ERROR . '</title></head><body>';
-		$msg[] = '<h1>' . _AD_XUPDATE_LANG_TIMEOUT_ERROR . '</h1>';
+		//$msg[] = '<html><head><title>' . _AD_XUPDATE_LANG_TIMEOUT_ERROR . '</title></head><body>';
+        $msg[] = '<!DOCTYPE html><html data-theme="dark" lang="en"><head>
+<meta charset="UTF-8"><title>' . _AD_XUPDATE_LANG_TIMEOUT_ERROR . '</title>
+<link type="text/css" rel="stylesheet" href="'.XOOPS_URL.'/modules/legacy/admin/theme/style.css">
+<link type="text/css" rel="stylesheet" href="'.XOOPS_URL.'/modules/legacy/admin/theme/stylesheets/ui-notification.css"></head>
+<body><main style="width:80vw;margin:4em auto"><h1>X-Update Manager</h1>';
+		$msg[] = '<div class="error">' . _AD_XUPDATE_LANG_TIMEOUT_ERROR . '</div>';
+
 		$start = $upload_retry ?: 1;
 		for ( $i = $start; $i <= $GLOBALS['xupdate_stage']; $i ++ ) {
 			$done_files = '';
 			if ( 5 === $i ) {
-				$done_files = ' (' . _AD_XUPDATE_LANG_MESSAGE_SUCCESS . ': ' . $uploaded_count . '/' . $total_files . ')';
+				$done_files = '<div class="success">'. _AD_XUPDATE_LANG_MESSAGE_SUCCESS . ': ' . $uploaded_count . '/' . $total_files . ')</div>';
 			}
-			$msg[] = constant( '_AD_XUPDATE_LANG_STAGE_' . $i ) . $done_files;
+			$msg[] = '<div class="ui-card-full">'. constant( '_AD_XUPDATE_LANG_STAGE_' . $i ) . $done_files.'</div>';
 		}
-		$msg[] = _AD_XUPDATE_LANG_STAGE_TIMEOUT;
+		$msg[] = '<div class="error">' . _AD_XUPDATE_LANG_STAGE_TIMEOUT . '</div>';
 		if ( $GLOBALS['xupdate_stage'] < 2 ) {
 			$msg[] = sprintf( _AD_XUPDATE_LANG_STAGE_UPLOAD_NOT_COMPLETE, $download_url );
 		} else {
@@ -758,17 +759,18 @@ function xupdate_on_shutdown( $cache_dir, $download_url ) {
 				if ( $GLOBALS['xupdate_do_closesite'] ) {
 					$post['do_closesite'] = 1;
 				}
-				$form = '<form method="post" action="./?' . $_SERVER['QUERY_STRING'] . '" onsubmit="document.getElementById(\'retry\').disabled=\'disabled\'">';
+				$form = '<form class="ui-card-full" method="post" action="./?' . $_SERVER['QUERY_STRING'] . '" onsubmit="document.getElementById(\'retry\').disabled=\'disabled\'">';
 				foreach ( $post as $key => $val ) {
 					if ( is_array( $val ) ) {
 						foreach ( $val as $_val ) {
-							$form .= '<input type="hidden" name="' . htmlspecialchars( $key ) . '[]" value="' . htmlspecialchars( $_val, ENT_COMPAT, _CHARSET ) . '" />';
+							$form .= '<input type="hidden" name="' . htmlspecialchars( $key ) . '[]" value="' . htmlspecialchars( $_val, ENT_COMPAT, _CHARSET ) . '">';
 						}
 					} else {
-						$form .= '<input type="hidden" name="' . htmlspecialchars( $key ) . '" value="' . htmlspecialchars( $val, ENT_COMPAT, _CHARSET ) . '" />';
+						$form .= '<input type="hidden" name="' . htmlspecialchars( $key ) . '" value="' . htmlspecialchars( $val, ENT_COMPAT, _CHARSET ) . '">';
 					}
 				}
-				$form  .= '<input id="retry" type="submit" value="' . ( ( 5 === $GLOBALS['xupdate_stage'] ) ? _AD_XUPDATE_LANG_STAGE_UPLOAD_RETRY : _AD_XUPDATE_LANG_STAGE_TASK_RETRY ) . '" />';
+				$form  .= '<input id="retry" type="submit" class="button" value="' . ( ( 5 === $GLOBALS['xupdate_stage'] ) ? _AD_XUPDATE_LANG_STAGE_UPLOAD_RETRY : _AD_XUPDATE_LANG_STAGE_TASK_RETRY ) . '">';
+                $form  .= '<input type="button" value="' . _CANCEL . '" onclick="history.back();history.back();">';
 				$form  .= '</form>';
 				$msg[] = $form;
 			}
@@ -778,7 +780,7 @@ function xupdate_on_shutdown( $cache_dir, $download_url ) {
 			$msg[] = 'PHP error message:';
 			$msg[] = $buf;
 		}
-		$msg[] = '</body></html>';
+		$msg[] = '</main></body></html>';
 		if ( ! headers_sent() ) {
 			header( 'Content-type: text/html; charset=' . _CHARSET );
 		}

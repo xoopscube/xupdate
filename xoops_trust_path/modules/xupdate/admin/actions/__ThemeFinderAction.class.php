@@ -7,7 +7,7 @@
  * @version 2.3.1
  * @author Other authors Gigamaster (XCL 2.3)
  * @author Naoki Sawada, Naoki Okino
- * @copyright  (c) 2005-2022 Author
+ * @copyright  (c) 2005-2023 Authors
  * @license GPL v2.0
  */
 
@@ -33,7 +33,7 @@ require_once XUPDATE_TRUST_PATH . '/class/AbstractAction.class.php';
  * ThemeSelect preload in Legacy module.
  */
 class Xupdate_Admin_ThemeFinderAction extends Xupdate_AbstractAction {
-	const THEME_FINDER_API_VERSION = '1';
+	public const THEME_FINDER_API_VERSION = '1';
 
 	protected $themeFinderUrl = 'http://cmsthemefinder.com/store/enter_store.php';
 

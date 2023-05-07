@@ -6,7 +6,7 @@
  * @subpackage Xupdate
  * @version 2.3
  * @author Naoki Sawada, Naoki Okino, Gigamaster (XCL 2.3)
- * @copyright Copyright 2005-2022 XOOPSCube Project
+ * @copyright (c) 2005-2023 The XOOPSCube Project
  * @license GPL v2.0
  */
 
@@ -146,12 +146,12 @@ abstract class Xupdate_AbstractFilterForm {
 	/**
 	 * &getCriteria
 	 *
-	 * @param int $start
-	 * @param int $limit
+	 * @param int|null $start
+	 * @param int|null $limit
 	 *
 	 * @return \CriteriaCompo|null
 	 */
-	public function &getCriteria( /*** int ***/ $start = null, /*** int ***/ $limit = null ) {
+	public function &getCriteria( /*** int ***/ int $start = null, /*** int ***/ int $limit = null ) {
 		$t_start = ( null === $start ) ? $this->mNavi->getStart() : (int) $start;
 		$t_limit = ( null === $limit ) ? $this->mNavi->getPerpage() : (int) $limit;
 

@@ -45,12 +45,12 @@ class Xupdate_Ftp_Abstract {
 	/* Public variables */
 	protected $LocalEcho;
 	protected $Verbose;
-	protected $OS_local;
-	protected $OS_remote;
+	protected $OS_local = FTP_OS_Unix;
+	protected $OS_remote = FTP_OS_Unix;
 	public $exploredDirPath;
 
 	/* Private variables */
-	protected $_lastaction;
+	protected $_lastaction = null;
 	protected $_errors;
 	protected $_type;
 	protected $_umask;
@@ -64,17 +64,17 @@ class Xupdate_Ftp_Abstract {
 	protected $_ftp_control_sock;
 	protected $_ftp_data_sock;
 	protected $_ftp_temp_sock;
-	protected $_ftp_buff_size;
-	protected $_login;
-	protected $_password;
-	protected $_connected;
-	protected $_ready;
-	protected $_code;
-	protected $_message;
-	protected $_can_restore;
+	protected $_ftp_buff_size = 4096;
+	protected $_login = 'anonymous';
+	protected $_password = 'anon@ftp.com';
+	protected $_connected = false;
+	protected $_ready = false;
+	protected $_code = 0;
+	protected $_message = '';
+	protected $_can_restore = false;
 	protected $_port_available;
-	protected $_curtype;
-	protected $_features;
+	protected $_curtype = null;
+	protected $_features = [];
 
 	protected $_conn_id; // connection id stream on PHP_FTP
 
