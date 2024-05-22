@@ -16,11 +16,11 @@ MODULE | X-Update Manager
 ------------ | -------------
 Description | Software Update Service to install new Add-ons, Modules and Themes for XCL Web Application Platform.
 Render Engine | Smarty v2 and XCube Layout
-Version | 2.33.0
+Version | 2.40.0
 Author | Nobuhiro Yasutomi @nbuy XCL PHP8  
 Author | Nuno Luciano @gigamaster XCL PHP7  
 Author | @nao-pon @naao @kilica @hamaco
-Copyright | 2005-2023 Authors
+Copyright | 2005-2024 Authors
 License | GPL
 
 
@@ -29,9 +29,9 @@ License | GPL
 
 
           Apache, Nginx, etc.
-          PHP 7.4.x with cURL extension
+          PHP 8.x.x with cURL extension
           MySQL 5.7, MariaDB  InnoDB utf8 / utf8mb4
-          XCL version 2.3.+
+          XCL version 2.4.0
 
 
 
